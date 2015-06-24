@@ -1,0 +1,40 @@
+Metadata-Version: 1.1
+Name: raspybot
+Version: 0.1.0
+Summary: Multipurpose library oriented to the Raspberry Pi.
+Home-page: http://raspybot.com
+Author: Bentejuy Lopez
+Author-email: bentejuy@gmail.com
+License: UNKNOWN
+Download-URL: http://raspybot.com/download
+Description: Multipurpose library oriented to the Raspberry Pi for managing
+        devices that interact with the GPIO channels.
+        
+        -------------------------------------
+        
+         - This version requires Python 2.7 or later.
+         - Depends on Python Modules :
+            RPi Module -> https://pypi.python.org/pypi/RPi.GPIO
+        
+        
+        Change Log
+        ==========
+        
+        0.1.0
+        ------
+        - First version.
+        - Partially tested but almost everything works.
+        
+        
+        
+Keywords: Raspberry Pi,GPIO
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Development Status :: 1 - Beta
+Classifier: Environment :: Other Environment
+Classifier: Intended Audience :: End Users
+Classifier: Intended Audience :: Developers
+Classifier: License :: GNU GPLv3
+Classifier: Topic :: Software Development :: Libraries :: Raspberry Pi

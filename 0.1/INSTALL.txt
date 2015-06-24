@@ -1,0 +1,7 @@
+On Raspbian to install the module:
+
+$ sudo python setup.py install
+
+or as root:
+
+# python setup.py install
