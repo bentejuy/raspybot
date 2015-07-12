@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/27/2015
-# Modified:     03/30/2015
-# Version:      0.0.17
+# Modified:     07/08/2015
+# Version:      0.0.23
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -56,7 +56,7 @@ logger = logging.getLogger(__name__)
 
 
 class MotorServo(MotorBase):
-    def __init__(self, iface, pulses, angles, speed, name=None, start=None, stop=None):
+    def __init__(self, iface, pulses, angles, speed=None, frec=None, name=None, start=None, stop=None):
         super(MotorServo, self).__init__(iface, name, start, stop)
 
         self._delay  = 0.02
@@ -64,7 +64,7 @@ class MotorServo(MotorBase):
         self._speed  = 0.01
         self._pulses = [None, None]
         self._angles = [None, None]
-        self._timeout = 0.005
+        self._timeout = 0.0005
 
         self._worker =  Worker(self.__run__)
 
@@ -74,7 +74,9 @@ class MotorServo(MotorBase):
         if not isinstance(angles, (tuple, list)) or len(angles) <> 2:
             raise InvalidRangeError('angles')
 
-        self.set_speed(speed)
+        if speed:
+            self.set_speed(speed)
+
         self.set_min(pulses[0], angles[0])
         self.set_max(pulses[1], angles[1])
 
@@ -104,7 +106,7 @@ class MotorServo(MotorBase):
 
     def __degrees2cicles__(self, degrees):
         if degrees >= 0:
-            return int(self._speed * degrees / self._delay)
+            return self._speed * degrees / self._delay
         else:
             return 0
 
@@ -129,8 +131,17 @@ class MotorServo(MotorBase):
         return self._worker.alive()
 
 
+    def set_frequency(self, herz):
+        ''' ... '''
+        if not isinstance(herz, (int, long, float)):
+            raise InvalidTypeError('The frequency', 'numeric')
+
+        self._delay = 1 / herz
+
+
     def set_speed(self, speed):
-        ''' Esta funcion define el tiempo que necesita el servo para moverse un grado, es un parametro definido de fabrica'''
+        """ Allow define the time it takes the servo to move a degree, this parameter depends on the design of the servo """
+
         if not isinstance(speed, (int, long, float)):
             raise InvalidTypeError('The speed for degrees', 'numeric')
 
