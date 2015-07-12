@@ -140,12 +140,6 @@ class MotorStepper(MotorBase):
         pass
 
 
-    def reset(self):
-        """  """
-        self.stop()
-        self._state = -1
-
-
     def stop(self):
         """  """
         if self._worker.alive():

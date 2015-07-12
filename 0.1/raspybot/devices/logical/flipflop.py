@@ -74,7 +74,8 @@ class FlipFlop(Device):
 
     def get(self):
         """ Return the value of internal state of channels as integer. """
-        return self._value;
+
+        return self._value
 
 
     def set(self, index=None):
@@ -131,4 +132,3 @@ class FlipFlop(Device):
         """ Invert the value of all channels. """
         self._value = ~ self._value
         self.__write__(self._value)
-

@@ -31,7 +31,9 @@
 
 import logging
 
-from ..interface import gpio, Interface, TaskGPIO
+from ..interface import gpio
+from ..interface import Interface
+from ..interface import TaskGPIO
 from ..interface import InvalidTypeError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -106,7 +108,7 @@ class InterfaceGPIO(Interface):
         state = task.get_state()
 
         if task.action == task.GPIO_WRITE:
-            if state == task.WAITING:            # La tarea esta en un estado inicial y empieza a contar su tiempo
+            if state == task.WAITING:           # La tarea esta en un estado inicial y empieza a contar su tiempo
                 self.__write__(task.data)
 
                 return task.set_state(task.RUNNING)
