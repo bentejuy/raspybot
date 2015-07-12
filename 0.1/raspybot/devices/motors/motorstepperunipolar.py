@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     03/27/2015
-# Version:      0.0.67
+# Modified:     07/10/2015
+# Version:      0.0.73
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -36,6 +36,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 import logging
+import itertools
 
 from ..motor import MotorStepper
 from ..motor import InvalidTypeError, UnknowMotorModeError, IsRunningError
@@ -68,6 +69,28 @@ class MotorStepperUnipolar(MotorStepper):
 
 
     def __next__(self):
+        if self._mode == self.MODE_HALF:
+            limit = 7
+            index = range(0, 8)
+
+        elif self._mode == self.MODE_SINGLE:
+            limit = 6
+            index = range(0, 7, 2)
+
+        else:
+            limit = 7
+            index = range(1, 8, 2)
+
+        iterator = itertools.cycle(index)
+
+        if self._index < limit:
+            while self._index > next(iterator):
+                pass
+
+        return iterator
+
+
+        """
         if self._mode == self.MODE_SINGLE:
             # Steps in this mode 0, 2, 4, 6
             if self._state >= 6:
@@ -89,9 +112,31 @@ class MotorStepperUnipolar(MotorStepper):
                 self._state += 1
 
         return self._state
-
+        """
 
     def __prev__(self):
+        if self._mode == self.MODE_HALF:
+            limit = 0
+            index = range(7, -1, -1)
+
+        elif self._mode == self.MODE_SINGLE:
+            limit = 0
+            index = range(6, -1, -2)
+
+        else:
+            limit = 1
+            index = range(7, 0, -2)
+
+        iterator = itertools.cycle(index)
+
+        if self._index > limit:
+            while self._index < next(iterator):
+                pass
+
+        return iterator
+
+
+        """
         if self._mode == self.MODE_SINGLE:
             # Steps in this mode 0, 2, 4, 6
             if self._state <= 0:
@@ -113,16 +158,14 @@ class MotorStepperUnipolar(MotorStepper):
                 self._state -= 1
 
         return self._state
-
+        """
 
     def __time2steps__(self, time):
         if not isinstance(time, (int, long, float)):
             raise InvalidTypeError('Time', 'numeric')
 
         if time >= 0:
-            # Must be checked...
             return int(time / float(self._delay))
-#           return int((time / self._delay) - float(time * (self._delay) / self._timeout))
 
         else:
             return 0
@@ -142,6 +185,8 @@ class MotorStepperUnipolar(MotorStepper):
 
 
     def set_mode(self, mode):
+        """ """
+
         if not isinstance(mode, (int, long)):
             raise InvalidTypeError('Mode' , 'motor mode')
 

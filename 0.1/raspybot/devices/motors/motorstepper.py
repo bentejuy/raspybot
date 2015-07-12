@@ -6,9 +6,9 @@
 # Purpose:
 #
 # Author:       Bentejuy Lopez
-# Created:      07/01/2015
-# Modified:     27/03/2015
-# Version:      0.0.63
+# Created:      01/07/2015
+# Modified:     07/11/2015
+# Version:      0.0.77
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -31,7 +31,8 @@
 
 import logging
 
-from ..motor import Worker, MotorBase
+from ..motor import Worker
+from ..motor import MotorBase
 from ..motor import InvalidTypeError, IsRunningError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -51,7 +52,7 @@ class MotorStepper(MotorBase):
     def __init__(self, iface, name, start, stop):
         super(MotorStepper, self).__init__(iface, name, start, stop)
 
-        self._state = -1                                     # Ultimo estado del motor
+        self._index = -1                                     # Ultimo estado del motor
         self._delay = 0.001                                  # Retardo hasta el siguiente paso
         self._steps = None                                   # Tupla con todos los posibles pasos
         self._degrees = None                                 # Grados que avanza el motor por cada paso dado
@@ -71,6 +72,39 @@ class MotorStepper(MotorBase):
     def __run__(self, steps, moveto):
         self.action_start()
 
+        delay = self._delay - 0.001  # Factor de correccion, ya que delay es el tiempo que duerme, no contabiliza el tiempo que tarda en procesar las instrucciones restantes....
+
+        if moveto == self.MOVE_LEFT:
+            for self._index in self.__prev__():
+                self.__write__(self._steps[self._index])
+
+                if steps > 0:
+                    steps -= 1
+
+                elif steps == 0:
+                    self._worker.set()
+
+                if self._worker.is_set():
+                    break
+
+                self._worker.wait(delay)
+
+        else:
+            for self._index in self.__next__():
+                self.__write__(self._steps[self._index])
+
+                if steps > 0:
+                    steps -= 1
+
+                elif steps == 0:
+                    self._worker.set()
+
+                if self._worker.is_set():
+                    break
+
+                self._worker.wait(delay)
+
+        """
         while not self._worker.is_set():
             try:
                 if moveto == self.MOVE_LEFT:
@@ -88,7 +122,9 @@ class MotorStepper(MotorBase):
 
             except Exception, error:
                 logger.critical(error)
+        """
 
+        self.__write__(0)
         self.action_stop()
 
 

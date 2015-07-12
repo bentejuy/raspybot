@@ -41,7 +41,7 @@ from ..interface import WorkerTask
 
 
 class Interface(WorkerTask):
-    def __init__(self, manager, parser, delay=0.0001, checker=None):
+    def __init__(self, manager, parser, delay=0.00005, checker=None):
         super(Interface, self).__init__(parser, delay)
 
         self._manager = manager
