@@ -1,2 +1,2 @@
 
-__all__ = ('tasks', 'worker', 'exceptions')
+__all__ = ('tasks', 'worker', 'exceptions', 'timeit')
