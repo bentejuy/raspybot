@@ -36,6 +36,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 import logging
+import itertools
 
 from ..motor import MotorStepper
 from ..motor import InvalidTypeError
@@ -55,38 +56,55 @@ logger = logging.getLogger(__name__)
 
 class MotorStepperBipolar(MotorStepper):
     def __init__(self, iface, name=None, start=None, stop=None):
-        super(MotorStepperBipolar, self).__init__(name, iface, start, stop)
+        super(MotorStepperBipolar, self).__init__(iface, name, start, stop)
 
-        self._state = -1
         self._steps = (0b0101, 0b0110, 0b1010, 0b1001)
 
 
     def __next__(self):
+        iterator = itertools.cycle(range(4))
+
+        if self._index < 3:
+            while self._index > next(iterator):
+                pass
+
+        return iterator
+
+        """
         if self._state >= 3:
             self._state = 0
         else:
             self._state += 1
 
         return self._state
+        """
 
 
     def __prev__(self):
+        iterator = itertools.cycle(range(3, -1, -1))
+
+        if self._index > 0:
+            while self._index < next(iterator):
+                pass
+
+        return iterator
+
+        """
         if self._state <= 0:
             self._state = 3
         else:
             self._state -= 1
 
         return self._state
-
+        """
 
     def __time2steps__(self, time):
         if not isinstance(time, (int, long, float)):
             raise InvalidTypeError('Time', 'numeric')
 
         if time >= 0:
-            # Must be checked....
             return int(time / float(self._delay))
-#           return int((time * (time * (self._delay - self._timeout)) / float(self._delay - self._timeout)))
+
         else:
             return 0
 
