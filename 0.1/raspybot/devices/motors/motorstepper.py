@@ -52,11 +52,11 @@ class MotorStepper(MotorBase):
     def __init__(self, iface, name, start, stop):
         super(MotorStepper, self).__init__(iface, name, start, stop)
 
-        self._index = -1                                     # Ultimo estado del motor
-        self._delay = 0.001                                  # Retardo hasta el siguiente paso
-        self._steps = None                                   # Tupla con todos los posibles pasos
-        self._degrees = None                                 # Grados que avanza el motor por cada paso dado
-        self._timeout = -1                                   # Tiempo de vida de cada tarea enviada al interfaz, o sea tiempo de vida de los impulsos
+        self._index = -1                                     # Last position in the tuple of steps
+        self._delay = 0.001                                  # Delay until next step
+        self._steps = None                                   # Tuple with all possible steps
+        self._degrees = None                                 # Degrees that the stepper  motor moves per each step taken
+        self._timeout = -1                                   # Lifetime of each job sent to the interface, or the lifetime of the pulse (unused)
 
         self._worker =  Worker(self.__run__)
 
@@ -72,7 +72,7 @@ class MotorStepper(MotorBase):
     def __run__(self, steps, moveto):
         self.action_start()
 
-        delay = self._delay - 0.001  # Factor de correccion, ya que delay es el tiempo que duerme, no contabiliza el tiempo que tarda en procesar las instrucciones restantes....
+        delay = self._delay - 0.00075  # Correction factor, because "delay" is the sleeping time, it does not count the time it takes to process the remaining instructions ....
 
         if moveto == self.MOVE_LEFT:
             for self._index in self.__prev__():
