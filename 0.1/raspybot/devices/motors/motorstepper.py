@@ -143,9 +143,8 @@ class MotorStepper(MotorBase):
     def stop(self):
         """  """
         if self._worker.alive():
+            self.__write__(0)
             self._worker.__stop__()
-
-        self.__write__(0)
 
 
     def join(self):
