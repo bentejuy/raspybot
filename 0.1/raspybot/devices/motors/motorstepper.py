@@ -180,7 +180,7 @@ class MotorStepper(MotorBase):
         self._degrees = degrees
 
 
-    def backward(self, time=0, degrees=0, steps=-1):
+    def backward(self, steps=-1, degrees=0, time=0):
         """ Move the motor to the left, the parameters are mutually exclusive, only accepts one on each call.
             Without parameters the motor will move indefinitely in the opposite direction of clockwise. """
 
@@ -192,7 +192,7 @@ class MotorStepper(MotorBase):
         self._worker.__start__(args=(steps, self.MOVE_LEFT))
 
 
-    def forward(self, time=0, degrees=0, steps=-1):
+    def forward(self, steps=-1, degrees=0, time=0):
         """ Move the motor to the right, the parameters are mutually exclusive, only accepts one on each call.
             Without parameters the motor will move indefinitely in the opposite direction of clockwise. """
 
