@@ -82,7 +82,7 @@ class MotorStepper(MotorBase):
                     steps -= 1
 
                 elif steps == 0:
-                    self._worker.set()
+                    break
 
                 if self._worker.is_set():
                     break
@@ -97,7 +97,7 @@ class MotorStepper(MotorBase):
                     steps -= 1
 
                 elif steps == 0:
-                    self._worker.set()
+                    break;
 
                 if self._worker.is_set():
                     break
@@ -124,7 +124,9 @@ class MotorStepper(MotorBase):
                 logger.critical(error)
         """
 
+        self._worker.wait(delay)
         self.__write__(0)
+
         self.action_stop()
 
 
