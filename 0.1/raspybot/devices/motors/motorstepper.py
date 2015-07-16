@@ -210,7 +210,7 @@ class MotorStepper(MotorBase):
         """ This function moves the motor a certain number of degrees. To function properly, previously you need
             set the ratio of degrees per steps determined by the manufacturer. """
 
-        if degress > 0:
-            self.forward(degress=degress)
-        elif degress < 0:
-            self.backward(degress=degress * -1)
+        if degrees > 0:
+            self.forward(degrees=degrees)
+        elif degrees < 0:
+            self.backward(degrees=degrees * -1)
