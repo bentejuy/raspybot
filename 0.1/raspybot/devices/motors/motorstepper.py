@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/11/2015
-# Version:      0.0.77
+# Modified:     07/15/2015
+# Version:      0.0.79
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,7 +33,7 @@ import logging
 
 from ..motor import Worker
 from ..motor import MotorBase
-from ..motor import InvalidTypeError, IsRunningError
+from ..motor import InvalidTypeError, IsRunningError, MinMaxValueError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -52,11 +52,12 @@ class MotorStepper(MotorBase):
     def __init__(self, iface, name, start, stop):
         super(MotorStepper, self).__init__(iface, name, start, stop)
 
-        self._index = -1                                     # Last position in the tuple of steps
-        self._delay = 0.001                                  # Delay until next step
-        self._steps = None                                   # Tuple with all possible steps
-        self._degrees = None                                 # Degrees that the stepper  motor moves per each step taken
-        self._timeout = -1                                   # Lifetime of each job sent to the interface, or the lifetime of the pulse (unused)
+        self._index = -1                                    # Last position in the tuple of steps
+        self._steps = None                                  # Tuple with all possible steps
+        self._delay = 0.001                                 # Delay until next step
+        self._factor = 0.0005                               # Correction factor, because "delay" is the sleeping time, it does not count the time it takes to process the remaining instructions ....
+        self._degrees = None                                # Degrees that the stepper  motor moves per each step taken
+        self._timeout = -1                                  # Lifetime of each job sent to the interface, or the lifetime of the pulse (unused)
 
         self._worker =  Worker(self.__run__)
 
@@ -72,7 +73,7 @@ class MotorStepper(MotorBase):
     def __run__(self, steps, moveto):
         self.action_start()
 
-        delay = self._delay - 0.00075  # Correction factor, because "delay" is the sleeping time, it does not count the time it takes to process the remaining instructions ....
+        delay = self._delay - self._factor
 
         if moveto == self.MOVE_LEFT:
             for self._index in self.__prev__():
@@ -155,6 +156,20 @@ class MotorStepper(MotorBase):
 
     def alive(self):
         return self._worker.alive()
+
+
+    def set_factor(self, factor):
+        """  """
+        if self._worker.alive():
+            raise IsRunningError(self.__class__, ' Correction factor')
+
+        if not isinstance(factor, (int, float)):
+            raise InvalidTypeError('The Factor correction', 'numeric', 'defined in seconds')
+
+        if factor >= self._delay:
+            raise MinMaxValueError('Correction Factor', '', 'less', 'delay')
+
+        self._factor = factor
 
 
     def set_speed(self, rpm):
