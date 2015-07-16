@@ -1,6 +1,29 @@
 Change Log
 ==========
 
+0.1.2
+-----
+
+- Update of test files
+- Added function to modified the correction factor
+- Correction of wrong word
+- Fixed bug: The last step is lost because there is no delay before turning off the windings.
+- Reordering parameters, if you do not define any "keyword", the parameter by default will be steps
+- English translation of comments
+- Optimizations to improve speed of stepper bipolar motor
+- Fixed bug: It tries to write in worker when the thread is dead
+
+
+0.1.1
+-----
+
+- Added the "timeit" decorator for speed tests
+- Added timeit.py
+- Update MotorServo object
+- Cosmetic changes and remove unused fuction
+- Some optimizations to improve speed of stepper motors
+
+
 0.1.0
 ------
 - First version.

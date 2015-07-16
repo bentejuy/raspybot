@@ -45,7 +45,7 @@ def find_packages(path, excludes=None):
 setup(
     name = "raspybot",
     packages = find_packages('raspybot'),
-    version = "0.1.0",
+    version = "0.1.2",
     description = "Multipurpose library oriented to the Raspberry Pi.",
     author = "Bentejuy Lopez",
     author_email = "bentejuy@gmail.com",
