@@ -3,7 +3,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         tests/motorstepper1
-# Purpose:
+# Purpose:      Testing MotorStepperUnipolar object with blocking mode
 #
 # Author:       Bentejuy Lopez
 # Created:      03/20/2015
@@ -55,31 +55,43 @@ def stopinfo(motor):
 
 manager = InterfaceManager()
 
-iface1 = InterfaceGPIO(manager, pinout=(17,18,22,23))
-iface2 = InterfaceGPIO(manager, pinout=(16,19,20,26))
+iface1 = InterfaceGPIO(manager, pinout=(17, 18, 22, 23))
+iface2 = InterfaceGPIO(manager, pinout=(9, 25, 11, 8))
 
-motor1 = MotorStepperUnipolar(iface1, 'Motor 1', start=startinfo, stop=stopinfo)
-motor2 = MotorStepperUnipolar(iface2, 'Motor 2', start=startinfo, stop=stopinfo)
+
+motor1 = MotorStepperUnipolar(iface1, 'Motor stepper 1', start=startinfo, stop=stopinfo)
+motor2 = MotorStepperUnipolar(iface2, 'Motor stepper 2', start=startinfo, stop=stopinfo)
 
 try:
-    motor1.set_mode(motor1.MODE_SINGLE)
-    motor2.set_mode(motor2.MODE_HALF)
+    motor1.set_mode(motor1.MODE_HALF)
+    motor1.set_degrees(5.625/64)                    #  Default steps for stepper motor 28BYJ-48
+    motor1.set_speed(20)
 
-    motor1.forward(steps=8096)
-    motor1.backward(steps=8096)
+    motor2.set_mode(motor2.MODE_DUAL)
+    motor2.set_degrees(5.625/64)                    #  Default steps for stepper motor 28BYJ-48
+    motor2.set_speed(20)
 
-    while True:
-        print "Running..."
+    motor1.forward(degrees=360)
+    motor2.forward(degrees=360)
 
-        if not motor1.alive() and not motor2.alive():
-            break
+    motor1.join()
+    motor2.join()
 
-        time.sleep(1)
+    motor1.backward(steps=2048)
+    motor2.backward(steps=2048)
+
+    motor1.join()
+    motor2.join()
 
 except KeyboardInterrupt:
+    logger.info('Script stopped...')
+
+except Exception, error:
+    logger.error(error)
+
+finally:
     motor1.stop()
     motor2.stop()
 
-finally:
     manager.cleanup()
 

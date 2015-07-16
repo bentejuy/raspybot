@@ -3,12 +3,12 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         tests/motorstepper2
-# Purpose:
+# Purpose:      Testing MotorStepperUnipolar object with mode not blocking
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     04/01/2015
-# Version:      0.0.07
+# Modified:     07/15/2015
+# Version:      0.0.13
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
@@ -55,25 +55,22 @@ def stopinfo(motor):
 
 manager = InterfaceManager()
 
-iface1 = InterfaceGPIO(manager, pinout=(17,18,22,23))
-iface2 = InterfaceGPIO(manager, pinout=(16,19,20,26))
+iface1 = InterfaceGPIO(manager, pinout=(17, 18, 22, 23))
+iface2 = InterfaceGPIO(manager, pinout=(9, 25, 11, 8))
 
 motor1 = MotorStepperUnipolar(iface1, 'Motor 1', start=startinfo, stop=stopinfo)
 motor2 = MotorStepperUnipolar(iface2, 'Motor 2', start=startinfo, stop=stopinfo)
 
 try:
     motor1.set_mode(motor1.MODE_SINGLE)
-    motor1.set_degrees(5.625/64)                #  Default steps for stepper motor 28BYJ-48
-#   motor1.set_speed(5)
+    motor1.set_degrees(5.625/64)                #  Default degreess by step for stepper motor 28BYJ-48
+    motor1.set_speed(25)
 
-    motor2.set_mode(motor2.MODE_HALF)
-    motor2.set_degrees(5.625/64)                #  Default steps for stepper motor 28BYJ-48
-#   motor2.set_speed(5)
+    motor2.set_mode(motor2.MODE_DUAL)
+    motor2.set_degrees(5.625/64)                #  Default degreess by step for stepper motor 28BYJ-48
+    motor2.set_speed(25)
 
-    motor1.forward(steps=1024)
-    motor1.backward(steps=1024)
-
-    count = 10
+    count = 5
 
     while count:
         if not motor1.alive() and not motor2.alive():
@@ -88,7 +85,16 @@ try:
 
             count -= 1
 
-        time.sleep(10)
+        time.sleep(0.5)
+
+
+    for angle in (-90, 180, -180, 180, -90):
+        motor1.angle_to(angle)
+        motor2.angle_to(angle)
+
+        while motor1.alive() and motor2.alive():
+            time.sleep(1)
+
 
 except KeyboardInterrupt:
     logger.info('Script stopped...')

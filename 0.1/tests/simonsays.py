@@ -2,7 +2,7 @@
 # -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
-# Name:         tests/flipflop.py
+# Name:         tests/simonsays.py
 # Purpose:
 #
 # Author:       Bentejuy Lopez
