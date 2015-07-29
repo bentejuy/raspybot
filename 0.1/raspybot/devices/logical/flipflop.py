@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     05/04/2015
-# Version:      0.0.21
+# Modified:     07/08/2015
+# Version:      0.0.33
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GPLv3
 #
@@ -31,7 +31,9 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from ..logic import Device
-from ..logic import OutRangeError,InvalidFunctionError, InvalidTypeError
+from ..logic import OutRangeError,InvalidFunctionError, InvalidTypeError, InterfaceNoSupported
+
+from ..logic import InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -46,6 +48,10 @@ class FlipFlop(Device):
     """ Store the value of one or more states for work with him and simulate a FlipFlop electronic element. """
 
     def __init__(self, iface, name=None, initial=0):
+
+        if not isinstance(iface, InterfaceGPIO):
+            raise InterfaceNoSupported(self.__class__, iface.__class__)
+
         super(FlipFlop, self).__init__(iface, name)
 
         if len(iface) < 0 or len(iface) > 8:
@@ -59,7 +65,7 @@ class FlipFlop(Device):
 
 
     def __write__(self, value):
-        self._iface.write(value, -1)
+        self._iface.write(value)
 
 
     def __index2bin__(self, index):
@@ -130,5 +136,6 @@ class FlipFlop(Device):
 
     def toggle(self):
         """ Invert the value of all channels. """
+
         self._value = ~ self._value
         self.__write__(self._value)

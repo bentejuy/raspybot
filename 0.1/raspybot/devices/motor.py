@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/11/2015
-# Version:      0.0.73
+# Modified:     07/28/2015
+# Version:      0.0.75
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -30,9 +30,12 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from device import ActionDevice
+
 from ..utils.worker import Worker
 from ..utils.timeit import timeit
-from ..utils.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, MinMaxValueError
+from ..utils.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, MinMaxValueError,InterfaceNoSupported
+
+from ..io.interface import InterfaceGPIO
 
 from motors.motorbase import MotorBase
 from motors.motorservo import MotorServo

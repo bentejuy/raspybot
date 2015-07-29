@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2015
-# Modified:     04/02/2015
-# Version:      0.0.33
+# Modified:     05/29/2015
+# Version:      0.0.37
 # Copyright:    (c) 2012-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -82,6 +82,11 @@ class InvalidInterfaceError(Exception):
         return 'The interface must be a valid "Interface" object'
 
 
+class InterfaceNoSupported(ExceptionFmt):
+    def __init__(self, name, value):
+        super(InterfaceNoSupported, self).__init__('The "{0}" does not support the class Interface {1}', name, value)
+
+
 class NoChannelInterfaceError(ExceptionFmt):
      def __init__(self, name, details):
         super(NoChannelInterfaceError, self).__init__('The Interface not have the channel {0} in channels {1} list'.format(name, details))
@@ -89,17 +94,17 @@ class NoChannelInterfaceError(ExceptionFmt):
 
 class OutRangeError(ExceptionFmt):
     def __init__(self, name, details):
-        super(OutRangeError, self).__init__('The {} is out of range {}', name, details)
+        super(OutRangeError, self).__init__('The {0} is out of range {1}', name, details)
 
 
 class InvalidFunctionError(ExceptionFmt):
     def __init__(self, func):
-        super(InvalidFunctionError, self).__init__('The parameter "{}" must be a valid function or None', func)
+        super(InvalidFunctionError, self).__init__('The parameter "{0}" must be a valid function or None', func)
 
 
 class InvalidTypeError(ExceptionFmt):
     def __init__(self, name, condition, details=''):
-        super(InvalidTypeError, self).__init__('{} must be a valid {} value {}', name, condition, details)
+        super(InvalidTypeError, self).__init__('{0} must be a valid {1} value {2}', name, condition, details)
 
 
 class InvalidRangeError(ExceptionFmt):

@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/15/2015
-# Version:      0.0.79
+# Modified:     07/22/2015
+# Version:      0.0.81
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,7 +33,9 @@ import logging
 
 from ..motor import Worker
 from ..motor import MotorBase
-from ..motor import InvalidTypeError, IsRunningError, MinMaxValueError
+from ..motor import InvalidTypeError, IsRunningError, MinMaxValueError, InterfaceNoSupported
+
+from ..motor import InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -50,6 +52,10 @@ logger = logging.getLogger(__name__)
 
 class MotorStepper(MotorBase):
     def __init__(self, iface, name, start, stop):
+
+        if not isinstance(iface, InterfaceGPIO):
+            raise InterfaceNoSupported(self.__class__, iface.__class__)
+
         super(MotorStepper, self).__init__(iface, name, start, stop)
 
         self._index = -1                                    # Last position in the tuple of steps

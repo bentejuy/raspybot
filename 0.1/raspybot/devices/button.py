@@ -31,7 +31,7 @@
 
 from device import Device
 from ..io.interface import gpio
-from ..utils.exceptions import InvalidFunctionError, NoChannelInterfaceError
+from ..utils.exceptions import InvalidFunctionError, NoChannelInterfaceError, InterfaceNoSupported
 
 from buttons.buttons import Buttons
 from buttons.switches import Switches

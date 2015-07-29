@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     04/05/2015
-# Version:      0.0.23
+# Modified:     06/07/2015
+# Version:      0.0.27
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -32,7 +32,7 @@
 import logging
 
 from ..button import gpio, Device
-from ..button import InvalidFunctionError, NoChannelInterfaceError
+from ..button import InvalidFunctionError, NoChannelInterfaceError, InterfaceNoSupported
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -48,10 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class Buttons(Device):
-    """
-        Supervise the state of one or more inputs channels  when they change the state to up or down.
-        It calls a callback function and passes the channel that generated the event and the new channel status.
-    """
+    """ Supervise the state of one or more inputs channels  when they change the state to up or down.
+        It calls a callback function and passes the channel that generated the event and the new channel status. """
 
     CLICKED, \
     PRESSED, \
@@ -61,6 +59,10 @@ class Buttons(Device):
     PUD_DOWN = gpio.PUD_DOWN
 
     def __init__(self, iface, name=None, clicked=None, pressed=None, release=None):
+
+        if not isinstance(iface, InterfaceGPIO):
+            raise InterfaceNoSupported(self.__class__, iface.__class__)
+
         super(Buttons, self).__init__(iface, name)
 
         if not any((clicked, pressed, release)):

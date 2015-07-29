@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      05/04/2015
-# Modified:     05/04/2015
-# Version:      0.0.03
+# Modified:     07/08/2015
+# Version:      0.0.05
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -32,8 +32,10 @@
 from device import Device
 from device import ActionDevice
 
+from ..io.interface import InterfaceGPIO
+
 from ..utils.worker import Worker
-from ..utils.exceptions import OutRangeError, InvalidFunctionError, InvalidTypeError, IsRunningError
+from ..utils.exceptions import OutRangeError, InvalidFunctionError, InvalidTypeError, IsRunningError, InterfaceNoSupported,
 
 from logical.blinker import Blinker
 from logical.flipflop import FlipFlop
