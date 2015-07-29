@@ -87,6 +87,7 @@ try:
 
         time.sleep(0.5)
 
+    time.sleep(1.5)
 
     for angle in (-90, 180, -180, 180, -90):
         motor1.angle_to(angle)
