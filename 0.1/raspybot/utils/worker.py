@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/17/2013
-# Modified:     05/18/2015
-# Version:      0.1.87
+# Modified:     07/27/2015
+# Version:      0.1.89
 # Copyright:    (c) 2013-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -126,7 +126,6 @@ class WorkerTask(Worker):
         if checker and not hasattr(checker, '__call__'):
             raise InvalidFunctionError('checker')
 
-#       self._task  = None
         self._delay = delay
         self._lock  = threading.Lock()
         self._queue = Queue.Queue()
@@ -144,7 +143,6 @@ class WorkerTask(Worker):
 
         try:
             self._lock.acquire()
-#           self._task = None
 
             while not self._queue.empty():
                 self._queue.get_nowait()
@@ -160,14 +158,10 @@ class WorkerTask(Worker):
 
         while not self._event.is_set():
             if task:
-#           if self._task:
-#               if self._checker:
-#                   self._checker(self._task)
-
                 delay = self._parser(task)
 
                 if delay:
-                    self._event.wait(delay)  # No poner, falla en los grados
+                    self._event.wait(delay)
 
                 else:
                     task = None
@@ -175,18 +169,14 @@ class WorkerTask(Worker):
             else:
                 if self._queue.empty():
                     task = self._queue.get(True)
-#                   self._queue.task_done()
+                    self._queue.task_done()
 
                 else:
                     self._lock.acquire()
                     task = self._queue.get()
                     self._lock.release()
-#                   self._queue.task_done()
 
                     self._event.wait(self._delay)
-
-#            except Exception, error:
-#                logger.critical(error)
 
 
     def __append__(self, *tasks):
