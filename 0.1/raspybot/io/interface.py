@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     04/02/2015
-# Version:      0.0.63
+# Modified:     07/25/2015
+# Version:      0.0.73
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,18 +29,28 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """
-        WorkerTask
-            |
-            |
         Interface
+            |
+            |
+        InterfaceActive
             |
             |---> InterfaceGPIO
             |
-            |---> InterfaceSPI
+            |---> InterfacePWM
             |
-            |---> InterfaceI2C
+            |---> InterfaceSPIMaster
+            |
+            |---> InterfaceI2CMaster
             |
             |---> InterfaceNet
+            |
+            |---> InterfaceSocket
+            |
+        InterfaceSlave
+            |
+            |---> InterfaceSPISlave
+            |
+            |---> InterfaceI2CSlave
 
 
         InterfaceManager
@@ -51,13 +61,17 @@ try:
     import RPi.GPIO as gpio
 
 except ImportError:
-    from interfaces.fakegpio import FakeGPIO as gpio
+    import interfaces.fakegpio as gpio
+    logger.warn('Initializing "InterfaceManager" in debug mode because RPi.GPIO module was not found')
+
 
 from .task import TaskGPIO
+
 from ..utils.worker import WorkerTask
-from ..utils.exceptions import InvalidTypeError, InvalidFunctionError, UnknowTypePortError, DuplicateInterfaceError, UnknowTypePortError, NotFoundInterfaceError
+from ..utils.exceptions import InvalidTypeError, InvalidFunctionError, InvalidInterfaceError, ExceptionFmt
 
 from interfaces.interface import Interface
+from interfaces.interface import InterfaceActive
 from interfaces.interfacegpio import InterfaceGPIO
 from interfaces.interfacemanager import InterfaceManager
 

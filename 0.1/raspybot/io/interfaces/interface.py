@@ -6,9 +6,9 @@
 # Purpose:
 #
 # Author:       Bentejuy Lopez
-# Created:      07/01/2015
-# Modified:     28/03/2015
-# Version:      0.0.59
+# Created:      01/07/2015
+# Modified:     06/07/2015
+# Version:      0.0.65
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -40,8 +40,39 @@ from ..interface import WorkerTask
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 
-class Interface(WorkerTask):
-    def __init__(self, manager, parser, delay=0.00005, checker=None):
-        super(Interface, self).__init__(parser, delay)
+class Interface(object):
+    pass
 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#
+# Class InterfaceSlave
+#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+
+class InterfaceSlave(Interface):
+    def __init__(self, master):
+
+        self._master = master
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#
+# Class InterfaceActive
+#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+
+class InterfaceActive(Interface, WorkerTask):
+    def __init__(self, manager, parser, delay=0.0001, checker=None):
+        super(InterfaceActive, self).__init__(parser, delay)
+
+        self._bus = None
         self._manager = manager
+
+
