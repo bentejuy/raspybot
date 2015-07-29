@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     05/21/2015
-# Version:      0.0.67
+# Modified:     07/28/2015
+# Version:      0.0.71
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -31,9 +31,8 @@
 
 import logging
 
-from ..interface import gpio
-from ..interface import Interface
 from ..interface import TaskGPIO
+from ..interface import InterfaceActive
 from ..interface import InvalidTypeError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -49,7 +48,7 @@ logger = logging.getLogger(__name__)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 
-class InterfaceGPIO(Interface):
+class InterfaceGPIO(InterfaceActive):
     """
         Interface to interact directly with the GPIO ports, it can receive four parameters
 
@@ -65,11 +64,13 @@ class InterfaceGPIO(Interface):
         self._pinin  = []
         self._pinout = []
 
+        self._bus = manager.get_connection(self)
+
         if pinout:
-            self.setup(pinout, gpio.OUT)
+            self.setup(pinout, self._bus.OUT)
 
         if pinin:
-            self.setup(pinin, gpio.IN, callback)
+            self.setup(pinin, self._bus.IN, callback)
 
         self._manager.add_interface(self)
 
@@ -91,14 +92,11 @@ class InterfaceGPIO(Interface):
         self._manager.del_interface(self)
 
 
-    def __write__(self, data, pin=None):
+    def __write__(self, data):
         try:
-            if pin:
-                gpio.output(self._pinout[pin], data)
-            else:
-                for pin in self._pinout:
-                    gpio.output(pin, data & 0x1)
-                    data = data >> 1
+            for pin in self._pinout:
+                self._bus.output(pin, data & 0x1)
+                data = data >> 1
 
         except Exception, error:
             logger.error(error)
@@ -141,33 +139,39 @@ class InterfaceGPIO(Interface):
 
 
     def setup(self, pin, mode, initial=0, callback=None, pud=None, edge=None, bouncetime=200):
-        pins = []
+        def append_in(pin, mode):
+            if mode == self._bus.IN:
+                if pin in self._pinout:
+                    self._pinout.remove(pin)
+                if pin not in self._pinin:
+                    self._pinin.append(pin)
 
-        if isinstance(pin, (int, long)):
-            pins.append(pin)
-        elif isinstance(pin, (tuple, list)):
-            pins.extend(pin)
+            else:
+                if pin in self._pinin:
+                    self._pinin.remove(p)
+                if pin not in self._pinout:
+                    self._pinout.append(pin)
+
+        if isinstance(pin, (tuple, list)):
+            for p in pin:
+                self._manager.setup(p, mode, initial, callback, pud, edge, bouncetime)
+                append_in(p, mode)
+
         else:
-            raise InvalidTypeError('Invalid port type,', 'intenger, tuple or list of integer', '(s)')
+            self._manager.setup(pin, mode, initial, callback, pud, edge, bouncetime)
+            append_in(pin, mode)
 
-        for pin in pins:
-            try:
-                self._manager.setup(pin, mode, initial, callback, pud, edge, bouncetime)
 
-                if mode == gpio.IN:
-                    if pin not in self._pinin:
-                        self._pinin.append(pin)
-                else:
-                    if pin not in self._pinout:
-                        self._pinout.append(pin)
+    def clear(self):
+        super(self.__class__, self).__stop__()
 
-            except Warning, error:
-                logger.warn(error)
 
-            except Exception, error:
-                logger.error(error)
-                break
+    def stop(self):
+        super(self.__class__, self).__stop__()
+        super(self.__class__, self).__append__(TaskGPIO(TaskGPIO.GPIO_STOP))
 
+        if not self.alive():
+            super(self.__class__, self).__start__()
 
 
     def write(self, data, timeout=-1):
