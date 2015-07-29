@@ -1,10 +1,22 @@
 Change Log
 ==========
 
+0.1.3
+-----
+
+- Removed unnecessary directory
+- Removed unused code
+- Deleting compressed files
+- Updated and added some test files
+- Update InterfaceGPIO
+- Allows objects check and filter by interface type
+- Rewritten InterfaceManager to manage more kinds of Interfaces
+
+
 0.1.2
 -----
 
-- Update of test files
+- Update test files
 - Added function to modified the correction factor
 - Correction of wrong word
 - Fixed bug: The last step is lost because there is no delay before turning off the windings.
