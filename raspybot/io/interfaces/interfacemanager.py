@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/28/2015
-# Version:      0.0.73
+# Modified:     07/30/2015
+# Version:      0.0.75
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,6 +33,7 @@ import logging
 import exceptions
 
 from ..interface import gpio
+from ..interface import InterfacePWM
 from ..interface import InterfaceGPIO
 from ..interface import ExceptionFmt, InvalidInterfaceError, InvalidTypeError
 
@@ -152,6 +153,10 @@ class InterfaceManager(object):
             gpio.setup(pin, mode, pud)
             gpio.add_event_detect(pin, edge, callback, bouncetime)
 
+        elif mode == gpio.HARD_PWM:
+            check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO))
+            gpio.setup(pin, gpio.OUT, gpio.PUD_OFF, initial)
+
         else:
             raise InvalidModeChannelError(pin)
 
@@ -166,6 +171,9 @@ class InterfaceManager(object):
         """ Returns the connection bus depending on the class that is passed. """
 
         if isinstance(iface, InterfaceGPIO):
+            return gpio
+
+        elif isinstance(iface, InterfacePWM):
             return gpio
 
         else:
@@ -198,7 +206,7 @@ class InterfaceManager(object):
                 raise NotImplementedError()
 
             elif mode == gpio.HARD_PWM:
-                raise NotImplementedError()
+                gpio.cleanup(pin)
 
             elif mode == gpio.SERIAL:
                 raise NotImplementedError()
@@ -219,6 +227,15 @@ class InterfaceManager(object):
 
             self._interfaces[self.GPIO].append(iface)
 
+        elif isinstance(iface, InterfacePWM):
+            if not self.PWM in self._interfaces:
+                self._interfaces[self.PWM] = []
+
+            if iface in self._interfaces[self.PWM]:
+                raise DuplicateInterfaceError()
+
+            self._interfaces[self.PWM].append(iface)
+
         else:
             UnknowInterfaceError(iface.__class__)
 
@@ -234,6 +251,15 @@ class InterfaceManager(object):
                 raise NotFoundInterfaceError()
 
             self._interfaces[self.GPIO].remove(iface)
+
+        elif isinstance(iface, InterfacePWM):
+            if not self.PWM in self._interfaces:
+                return
+
+            if not iface in self._interfaces[self.PWM]:
+                raise NotFoundInterfaceError()
+
+            self._interfaces[self.PWM].remove(iface)
 
         else:
             UnknowInterfaceError(iface.__class__)
