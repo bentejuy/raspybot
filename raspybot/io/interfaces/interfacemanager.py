@@ -119,6 +119,9 @@ class InterfaceManager(object):
         gpio.cleanup()
         gpio.setmode(mode)
 
+        # Alias functions for backward compatibility
+        setattr(self, 'add_interface', self.append)
+        setattr(self, 'del_interface', self.delete)
 
     def setup(self, pin, mode, initial, callback, pud, edge, bouncetime):
         """  """
@@ -203,7 +206,7 @@ class InterfaceManager(object):
                 raise UnknowTypeChannelError()
 
 
-    def add_interface(self, iface):
+    def append(self, iface):
         """ Add an interface of the InterfaceManager. """
 
         if isinstance(iface, InterfaceGPIO):
@@ -219,7 +222,7 @@ class InterfaceManager(object):
             UnknowInterfaceError(iface.__class__)
 
 
-    def del_interface(self, iface):
+    def delete(self, iface):
         """ Delete an interface of the InterfaceManager. """
 
         if isinstance(iface, InterfaceGPIO):

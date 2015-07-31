@@ -72,7 +72,7 @@ class InterfaceGPIO(InterfaceActive):
         if pinin:
             self.setup(pinin, self._bus.IN, callback)
 
-        self._manager.add_interface(self)
+        self._manager.append(self)
 
 
     def __len__(self):
