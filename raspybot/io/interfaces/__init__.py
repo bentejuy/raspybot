@@ -1,2 +1,2 @@
 
-__all__ = ('interface', 'interfacemanager', 'fakegpio', 'interfacegpio')
+__all__ = ('interface', 'interfacemanager', 'fakegpio', 'interfacegpio', 'interfacepwm')

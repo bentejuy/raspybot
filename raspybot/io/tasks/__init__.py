@@ -1,2 +1,2 @@
 
-__all__ = ('taskgpio')
+__all__ = ('taskgpio', 'taskpwm')

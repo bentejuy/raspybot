@@ -2,14 +2,14 @@
 # -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
-# Name:         tasks
+# Name:         taskpwm
 # Purpose:
 #
 # Author:       Bentejuy Lopez
-# Created:      01/24/2015
+# Created:      07/22/2015
 # Modified:     07/23/2015
-# Version:      0.0.33
-# Copyright:    (c) 2013-2015 Bentejuy Lopez
+# Version:      0.0.07
+# Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -29,11 +29,29 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from ..utils.tasks import Task
+from ..task import Task
 
-from tasks.taskpwm import TaskPWM
-from tasks.taskgpio import TaskGPIO
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#
+#  -. Class TaskPWM
+#
+#   @parameters :
+#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 
+class TaskPWM(Task):
+    PWM_STOP, \
+    PWM_START = range(2)
+
+    def __init__(self, action, dutycycle=0, timeout=-1):
+        super(TaskPWM, self).__init__(timeout)
+
+        self.action = action
+        self.dutycycle = dutycycle
+
+
+    def __str__(self):
+        return '{0} => action: {1} :: dutycycle: {2} :: timeout : {3}'.format(self.__class__, self.action, self.dutycycle, self._timeout)

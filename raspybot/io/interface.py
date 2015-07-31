@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/25/2015
-# Version:      0.0.73
+# Modified:     07/30/2015
+# Version:      0.0.75
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -65,6 +65,7 @@ except ImportError:
     logger.warn('Initializing "InterfaceManager" in debug mode because RPi.GPIO module was not found')
 
 
+from .task import TaskPWM
 from .task import TaskGPIO
 
 from ..utils.worker import WorkerTask
@@ -72,6 +73,7 @@ from ..utils.exceptions import InvalidTypeError, InvalidFunctionError, InvalidIn
 
 from interfaces.interface import Interface
 from interfaces.interface import InterfaceActive
+from interfaces.interfacepwm import InterfacePWM
 from interfaces.interfacegpio import InterfaceGPIO
 from interfaces.interfacemanager import InterfaceManager
 
