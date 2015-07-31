@@ -123,7 +123,8 @@ class InterfaceManager(object):
         setattr(self, 'add_interface', self.append)
         setattr(self, 'del_interface', self.delete)
 
-    def setup(self, pin, mode, initial, callback, pud, edge, bouncetime):
+
+    def setup(self, pin, mode, initial=0, callback=None, pud=gpio.PUD_DOWN, edge=gpio.BOTH, bouncetime=200):
         """  """
 
         if not isinstance(pin, (int, long)):
@@ -148,8 +149,8 @@ class InterfaceManager(object):
 
         elif mode == gpio.IN:
             check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO))
-            gpio.setup(pin, mode, pud or gpio.PUD_DOWN)
-            gpio.add_event_detect(pin, edge or gpio.BOTH, callback, bouncetime)
+            gpio.setup(pin, mode, pud)
+            gpio.add_event_detect(pin, edge, callback, bouncetime)
 
         else:
             raise InvalidModeChannelError(pin)
