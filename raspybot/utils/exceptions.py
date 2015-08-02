@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2015
-# Modified:     05/29/2015
-# Version:      0.0.37
+# Modified:     08/01/2015
+# Version:      0.0.39
 # Copyright:    (c) 2012-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -93,7 +93,7 @@ class NoChannelInterfaceError(ExceptionFmt):
 
 
 class OutRangeError(ExceptionFmt):
-    def __init__(self, name, details):
+    def __init__(self, name, details=''):
         super(OutRangeError, self).__init__('The {0} is out of range {1}', name, details)
 
 
