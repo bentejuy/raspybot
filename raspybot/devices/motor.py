@@ -35,6 +35,7 @@ from ..utils.worker import Worker
 from ..utils.timeit import timeit
 from ..utils.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, MinMaxValueError,InterfaceNoSupported
 
+from ..io.interface import InterfacePWM
 from ..io.interface import InterfaceGPIO
 
 from motors.motorbase import MotorBase

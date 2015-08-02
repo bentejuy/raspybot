@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/27/2015
-# Modified:     07/08/2015
-# Version:      0.0.23
+# Modified:     08/01/2015
+# Version:      0.0.33
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -30,8 +30,6 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 """
 
-    Important: This module has not been tested, it may contain multiple errors
-
     For more info see : https://www.youtube.com/watch?v=ddlDgUymbxc
 
 """
@@ -39,8 +37,11 @@
 
 import logging
 
-from ..motor import Worker, MotorBase
-from ..motor import InvalidTypeError, OutRangeError, IsRunningError, InvalidRangeError, MinMaxValueError
+from ..motor import Worker
+from ..motor import MotorBase
+from ..motor import InvalidTypeError, OutRangeError, IsRunningError, InvalidRangeError, MinMaxValueError, InterfaceNoSupported
+
+from ..motor import InterfacePWM
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -56,15 +57,17 @@ logger = logging.getLogger(__name__)
 
 
 class MotorServo(MotorBase):
-    def __init__(self, iface, pulses, angles, speed=None, frec=None, name=None, start=None, stop=None):
+    def __init__(self, iface, pulses, angles, frequency=50, speed=None, name=None, start=None, stop=None):
+
+        if not isinstance(iface, InterfacePWM):
+            raise InterfaceNoSupported(self.__class__, iface.__class__)
+
         super(MotorServo, self).__init__(iface, name, start, stop)
 
-        self._delay  = 0.02
-        self._state  = 0
-        self._speed  = 0.01
+        self._speed  = 0.02
         self._pulses = [None, None]
         self._angles = [None, None]
-        self._timeout = 0.0005
+        self._frequency = frequency
 
         self._worker =  Worker(self.__run__)
 
@@ -81,66 +84,60 @@ class MotorServo(MotorBase):
         self.set_max(pulses[1], angles[1])
 
 
-    def __run__(self, count):
+    def __run__(self, dutycycle, timeout):
         self.action_start()
 
-        while not self._worker.is_set():
-            try:
-                count -= 1
-                self.__write__(1)
-
-                if count <= 0:
-                    self._worker.set()
-
-                self._worker.wait(self._delay)
-
-            except Exception, error:
-                logger.critical(error)
+        self.__write__(dutycycle, timeout)
+        self._worker.wait(timeout)
 
         self.action_stop()
 
 
-    def __write__(self, value):
-        self._iface.write(value, self._timeout)
+    def __write__(self, dutycycle, timeout):
+        self._iface.write(dutycycle, timeout)
 
 
-    def __degrees2cicles__(self, degrees):
+    def __degrees2time__(self, degrees):
         if degrees >= 0:
-            return self._speed * degrees / self._delay
+            return self._speed * abs(degrees)
+
         else:
-            return 0
+            return self._speed * abs(self._angles[1])
+
 
     def __degrees2pulses__(self, degrees):
-        if not all(self._pulses) or not all(self._angles):
-            raise Exception('The "min" and "max" angle and pulse values must be defined')
+        if any(x is None for x in self._angles) and any(x is None for x in self._pulses):
+            raise Exception('The "minimum" and "maximum" values of angles and pulses must be defined')
 
-        if degrees > min(self._degrees) or degrees < max(self._degrees):
+        if degrees < self._angles[0] or degrees > self._angles[1]:
             raise OutRangeError('degrees parameter')
 
-        return float((((self._pulses[1] - self._pulses[0]) / (self._angles[1] - self._angles[0])) * degrees + self._pulses[0])/2)
+        return (((self._pulses[1] - self._pulses[0]) / (self._angles[1] - self._angles[0])) * degrees) + self._pulses[0]
+
+
+    def __pulses2dutycycle__(self, pulse):
+        if not all(self._pulses):
+            raise Exception('The "minimun" and "maximum" pulses values must be defined')
+
+        return 100 * pulse * self._frequency
 
 
     def stop(self):
-        if self._worker.alive():
-            self._worker.__stop__()
+        """  """
 
-        self.__write__(0)
+        if self._worker.alive():
+            self._iface.stop()
+            self._worker.__stop__()
 
 
     def alive(self):
+        """  """
+
         return self._worker.alive()
 
 
-    def set_frequency(self, herz):
-        ''' ... '''
-        if not isinstance(herz, (int, long, float)):
-            raise InvalidTypeError('The frequency', 'numeric')
-
-        self._delay = 1 / herz
-
-
     def set_speed(self, speed):
-        """ Allow define the time it takes the servo to move a degree, this parameter depends on the design of the servo """
+        """ Allows define the time it takes the servo to move a degrees, this parameter depends on the design/voltage of the servo """
 
         if not isinstance(speed, (int, long, float)):
             raise InvalidTypeError('The speed for degrees', 'numeric')
@@ -148,7 +145,21 @@ class MotorServo(MotorBase):
         self._speed = speed
 
 
+    def set_frequency(self, freq):
+        """  """
+
+        if not isinstance(freq, (int, long, float)):
+            raise InvalidTypeError('The frequency', 'numeric')
+
+        if freq <> self._frequency:
+            self._frequency = freq
+            self._iface.set_frequency(freq)
+
+
     def set_min(self, pulse, angle):
+        """  """
+
+
         if self._worker.alive():
             raise IsRunningError(self.__class__, 'minimum values')
 
@@ -165,16 +176,18 @@ class MotorServo(MotorBase):
             raise OutRangeError('Limit angle')
 
         if not self._pulses[1] is None and self._pulses[1] <= pulse:
-            raise MinMaxValueError('min', 'pulse', 'less', 'maximum')
+            raise MinMaxValueError('minimum', 'pulse', 'less', 'maximum')
 
         if not self._angles[1] is None and self._angles[1] <= angle:
-            raise MinMaxValueError('min', 'angle', 'less', 'maximum')
+            raise MinMaxValueError('minimum', 'angle', 'less', 'maximum')
 
         self._pulses[0] = pulse
         self._angles[0] = angle
 
 
     def set_max(self, pulse, angle):
+        """  """
+
         if self._worker.alive():
             raise IsRunningError(self.__class__, 'maximum values')
 
@@ -191,38 +204,25 @@ class MotorServo(MotorBase):
             raise OutRangeError('Limit angle')
 
         if not self._pulses[0] is None and self._pulses[0] >= pulse:
-            raise MinMaxValueError('max', 'pulse', 'greater' 'minimum')
+            raise MinMaxValueError('maximum', 'pulse', 'greater' 'minimum')
 
         if not self._angles[0] is None and self._angles[0] >= angle:
-            raise MinMaxValueError('max', 'angle', 'greater' 'minimum')
+            raise MinMaxValueError('maximum', 'angle', 'greater' 'minimum')
 
         self._pulses[1] = pulse
         self._angles[1] = angle
 
 
     def backward(self):
-        self._state = self._pulses[0]
-        self._timeout = self._pulses[1]
+        """ Mueve el servo a la posición mínima """
 
-        self._worker.__start__(args=(self.__degrees2cicles__(180),))
-#       self._worker.__start__(args=(self.__degrees2cicles__(self._angles[0]),))
+        self._worker.__start__(args=(self.__pulses2dutycycle__(self._pulses[0]), self.__degrees2time__(self._angles[1])))
 
 
     def forward(self):
-#       self._delay = self._pulses[1]
-        self._state = self._pulses[1]
-        self._timeout = self._pulses[0]
+        """ Mueve el servo a la posición máxima """
 
-        self._worker.__start__(args=(self.__degrees2cicles__(180),))
-#       self._worker.__start__(args=(self.__degrees2cicles__(self._angles[1]),))
-
-
-    def goto(self, degrees):
-#       self._delay = self.__degrees2pulses__(degrees)
-        self._state = self._delay
-        self._timeout = self._delay / 2
-
-        self._worker.__start__(args=(self.__degrees2cicles__(degrees),))
+        self._worker.__start__(args=(self.__pulses2dutycycle__(self._pulses[1]), self.__degrees2time__(self._angles[1])))
 
 
     def angle_to(self, degrees):
