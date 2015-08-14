@@ -106,22 +106,22 @@ class InterfaceGPIO(InterfaceActive):
         state = task.get_state()
 
         if task.action == task.GPIO_WRITE:
-            if state == task.WAITING:           # La tarea esta en un estado inicial y empieza a contar su tiempo
+            if state == task.WAITING:
                 self.__write__(task.data)
 
                 return task.set_state(task.RUNNING)
 
-            if state == task.CONSTANT:          # La tarea esta en un estado contante, escribe en los puerto y pasa
-                self.__write__(task.data)       # a la siguiente tarea si la hay
+            if state == task.CONSTANT:
+                self.__write__(task.data)
 
                 return 0
 
-            if state >= task.STOPPED:           # La tarea esta parada, pone a cero los puertos y continua con la siguiente tarea si la hay
+            if state >= task.STOPPED:
                 self.__write__(0)
 
                 return 0
 
-            if state == task.RUNNING:           # La tarea esta corriendo y no ha terminado o temporizado
+            if state == task.RUNNING:
                 return 0
 
         else:
