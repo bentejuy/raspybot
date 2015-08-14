@@ -141,10 +141,6 @@ class MotorStepper(MotorBase):
         self._iface.write(value, self._timeout)
 
 
-    def __time2steps__(self, time):
-        pass
-
-
     def __angle2steps__(self, angle):
         pass
 
@@ -203,25 +199,21 @@ class MotorStepper(MotorBase):
         self._degrees = degrees
 
 
-    def backward(self, steps=-1, degrees=0, time=0):
+    def backward(self, steps=-1, degrees=0):
         """ Move the motor to the left, the parameters are mutually exclusive, only accepts one on each call.
             Without parameters the motor will move indefinitely in the opposite direction of clockwise. """
 
-        if time:
-            steps = self.__time2steps__(time)
-        elif degrees:
+        if degrees:
             steps = self.__angle2steps__(degrees)
 
         self._worker.__start__(args=(steps, self.MOVE_LEFT))
 
 
-    def forward(self, steps=-1, degrees=0, time=0):
+    def forward(self, steps=-1, degrees=0):
         """ Move the motor to the right, the parameters are mutually exclusive, only accepts one on each call.
             Without parameters the motor will move indefinitely in the opposite direction of clockwise. """
 
-        if time:
-            steps = self.__time2steps__(time)
-        elif degrees:
+        if degrees:
             steps = self.__angle2steps__(degrees)
 
         self._worker.__start__(args=(steps, self.MOVE_RIGHT))

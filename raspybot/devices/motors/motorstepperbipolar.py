@@ -98,16 +98,6 @@ class MotorStepperBipolar(MotorStepper):
         return self._state
         """
 
-    def __time2steps__(self, time):
-        if not isinstance(time, (int, long, float)):
-            raise InvalidTypeError('Time', 'numeric')
-
-        if time >= 0:
-            return int(time / float(self._delay))
-
-        else:
-            return 0
-
 
     def __angle2steps__(self, angle):
         if not isinstance(angle, (int, long, float)):
