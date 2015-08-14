@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/10/2015
-# Version:      0.0.73
+# Modified:     08/13/2015
+# Version:      0.0.75
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -90,30 +90,6 @@ class MotorStepperUnipolar(MotorStepper):
         return iterator
 
 
-        """
-        if self._mode == self.MODE_SINGLE:
-            # Steps in this mode 0, 2, 4, 6
-            if self._state >= 6:
-                self._state = 0
-            else:
-                self._state += 2 - self._state % 2
-
-        elif self._mode == self.MODE_DUAL:
-            # Steps in this mode 1, 3, 5, 7
-            if self._state >= 7:
-                self._state = 1
-            else:
-                self._state += 1 + self._state % 2
-        else:
-            # All Steps
-            if self._state >= 7:
-                self._state = 0
-            else:
-                self._state += 1
-
-        return self._state
-        """
-
     def __prev__(self):
         if self._mode == self.MODE_HALF:
             limit = 0
@@ -134,31 +110,6 @@ class MotorStepperUnipolar(MotorStepper):
                 pass
 
         return iterator
-
-
-        """
-        if self._mode == self.MODE_SINGLE:
-            # Steps in this mode 0, 2, 4, 6
-            if self._state <= 0:
-                self._state = 6
-            else:
-                self._state -= 2 - self._state % 2
-
-        elif self._mode == self.MODE_DUAL:
-            # Steps in this mode 1, 3, 5, 7
-            if self._state <= 1:
-                self._state = 7
-            else:
-                self._state -= 1 + self._state % 2
-        else:
-            # All Steps
-            if self._state <= 0:
-                self._state = 7
-            else:
-                self._state -= 1
-
-        return self._state
-        """
 
 
     def __angle2steps__(self, angle):

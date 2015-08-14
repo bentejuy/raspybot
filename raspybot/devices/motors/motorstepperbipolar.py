@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/01/2015
-# Modified:     27/03/2015
-# Version:      0.0.67
+# Modified:     08/13/2015
+# Version:      0.0.71
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -70,15 +70,6 @@ class MotorStepperBipolar(MotorStepper):
 
         return iterator
 
-        """
-        if self._state >= 3:
-            self._state = 0
-        else:
-            self._state += 1
-
-        return self._state
-        """
-
 
     def __prev__(self):
         iterator = itertools.cycle(range(3, -1, -1))
@@ -88,15 +79,6 @@ class MotorStepperBipolar(MotorStepper):
                 pass
 
         return iterator
-
-        """
-        if self._state <= 0:
-            self._state = 3
-        else:
-            self._state -= 1
-
-        return self._state
-        """
 
 
     def __angle2steps__(self, angle):
