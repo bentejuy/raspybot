@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/27/2015
-# Modified:     08/01/2015
-# Version:      0.0.33
+# Modified:     08/08/2015
+# Version:      0.0.35
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -67,7 +67,7 @@ class MotorServo(MotorBase):
         self._speed  = 0.02
         self._pulses = [None, None]
         self._angles = [None, None]
-        self._frequency = frequency
+        self._frequency = None
 
         self._worker =  Worker(self.__run__)
 
@@ -79,6 +79,8 @@ class MotorServo(MotorBase):
 
         if speed:
             self.set_speed(speed)
+
+        self.set_frequency(frequency)
 
         self.set_min(pulses[0], angles[0])
         self.set_max(pulses[1], angles[1])
@@ -98,21 +100,22 @@ class MotorServo(MotorBase):
 
 
     def __degrees2time__(self, degrees):
-        if degrees >= 0:
+        if degrees <> 0:
             return self._speed * abs(degrees)
 
         else:
             return self._speed * abs(self._angles[1])
 
 
-    def __degrees2pulses__(self, degrees):
+    def __degrees2dutycycle__(self, degrees):
+
         if any(x is None for x in self._angles) and any(x is None for x in self._pulses):
             raise Exception('The "minimum" and "maximum" values of angles and pulses must be defined')
 
         if degrees < self._angles[0] or degrees > self._angles[1]:
             raise OutRangeError('degrees parameter')
 
-        return (((self._pulses[1] - self._pulses[0]) / (self._angles[1] - self._angles[0])) * degrees) + self._pulses[0]
+        return self.__pulses2dutycycle__((((self._pulses[1] - self._pulses[0]) / (self._angles[1] - self._angles[0])) * degrees) + self._pulses[0])
 
 
     def __pulses2dutycycle__(self, pulse):
@@ -214,16 +217,27 @@ class MotorServo(MotorBase):
 
 
     def backward(self):
-        """ Mueve el servo a la posición mínima """
+        """ Move the servo to lower angle """
 
         self._worker.__start__(args=(self.__pulses2dutycycle__(self._pulses[0]), self.__degrees2time__(self._angles[1])))
 
 
     def forward(self):
-        """ Mueve el servo a la posición máxima """
+        """ Move the servo to maximum angle """
 
         self._worker.__start__(args=(self.__pulses2dutycycle__(self._pulses[1]), self.__degrees2time__(self._angles[1])))
 
 
     def angle_to(self, degrees):
-        pass
+        """ Move the servo to a specific angle """
+
+        if any(x is None for x in self._angles):
+            raise Exception('The "minimum" and "maximum" values of angles must be defined')
+
+        if degrees < self._angles[0]:
+            raise MinMaxValueError('degrees parameter', 'angle', 'greater' 'minimum')
+
+        if degrees > self._angles[1]:
+            raise MinMaxValueError('degrees parameter', 'angle', 'less' 'maximum')
+
+        self._worker.__start__(args=(self.__degrees2dutycycle__(degrees), self.__degrees2time__(degrees)))
