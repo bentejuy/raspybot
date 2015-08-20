@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/27/2015
-# Modified:     08/08/2015
-# Version:      0.0.35
+# Modified:     08/16/2015
+# Version:      0.0.37
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -96,7 +96,7 @@ class MotorServo(MotorBase):
 
 
     def __write__(self, dutycycle, timeout):
-        self._iface.write(dutycycle, timeout)
+        self._iface.write(dutycycle, 0, timeout)
 
 
     def __degrees2time__(self, degrees):
@@ -108,7 +108,6 @@ class MotorServo(MotorBase):
 
 
     def __degrees2dutycycle__(self, degrees):
-
         if any(x is None for x in self._angles) and any(x is None for x in self._pulses):
             raise Exception('The "minimum" and "maximum" values of angles and pulses must be defined')
 
@@ -129,7 +128,7 @@ class MotorServo(MotorBase):
         """  """
 
         if self._worker.alive():
-            self._iface.stop()
+            self._iface.stop(0)
             self._worker.__stop__()
 
 
