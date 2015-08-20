@@ -110,7 +110,6 @@ class InterfacePWM(InterfaceActive):
         self._pwm = self._bus.PWM(pin, self._frequency)
 
 
-
     def stop(self):
         """  """
 

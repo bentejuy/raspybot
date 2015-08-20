@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/22/2015
-# Version:      0.0.81
+# Modified:     08/13/2015
+# Version:      0.0.83
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -111,26 +111,6 @@ class MotorStepper(MotorBase):
 
                 self._worker.wait(delay)
 
-        """
-        while not self._worker.is_set():
-            try:
-                if moveto == self.MOVE_LEFT:
-                    self.__write__(self._steps[self.__prev__()])
-                else:
-                    self.__write__(self._steps[self.__next__()])
-
-                if steps > 0:
-                    steps -= 1
-                elif steps == 0:
-                    self._worker.set()
-                    break
-
-                self._worker.wait(self._delay)
-
-            except Exception, error:
-                logger.critical(error)
-        """
-
         self._worker.wait(delay)
         self.__write__(0)
 
@@ -147,6 +127,7 @@ class MotorStepper(MotorBase):
 
     def stop(self):
         """  """
+
         if self._worker.alive():
             self.__write__(0)
             self._worker.__stop__()
@@ -162,6 +143,7 @@ class MotorStepper(MotorBase):
 
     def set_factor(self, factor):
         """  """
+
         if self._worker.alive():
             raise IsRunningError(self.__class__, ' Correction factor')
 

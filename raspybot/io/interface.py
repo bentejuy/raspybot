@@ -42,9 +42,6 @@
             |
             |---> InterfaceI2CMaster
             |
-            |---> InterfaceNet
-            |
-            |---> InterfaceSocket
             |
         InterfaceSlave
             |
