@@ -207,10 +207,10 @@ class MotorServo(MotorBase):
             raise OutRangeError('Limit angle')
 
         if not self._pulses[0] is None and self._pulses[0] >= pulse:
-            raise MinMaxValueError('maximum', 'pulse', 'greater' 'minimum')
+            raise MinMaxValueError('maximum', 'pulse', 'greater', 'minimum')
 
         if not self._angles[0] is None and self._angles[0] >= angle:
-            raise MinMaxValueError('maximum', 'angle', 'greater' 'minimum')
+            raise MinMaxValueError('maximum', 'angle', 'greater', 'minimum')
 
         self._pulses[1] = pulse
         self._angles[1] = angle
@@ -235,9 +235,9 @@ class MotorServo(MotorBase):
             raise Exception('The "minimum" and "maximum" values of angles must be defined')
 
         if degrees < self._angles[0]:
-            raise MinMaxValueError('degrees parameter', 'angle', 'greater' 'minimum')
+            raise MinMaxValueError('degrees parameter', 'angle', 'greater', 'minimum')
 
         if degrees > self._angles[1]:
-            raise MinMaxValueError('degrees parameter', 'angle', 'less' 'maximum')
+            raise MinMaxValueError('degrees parameter', 'angle', 'less', 'maximum')
 
         self._worker.__start__(args=(self.__degrees2dutycycle__(degrees), self.__degrees2time__(degrees)))
