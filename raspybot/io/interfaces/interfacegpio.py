@@ -79,19 +79,6 @@ class InterfaceGPIO(InterfaceActive):
         return len(self._pinin) + len(self._pinout)
 
 
-    def __del__(self):
-        for pin in self._pinin:
-            self._manager.cleanup(pin)
-
-        for pin in self._pinout:
-            self._manager.cleanup(pin)
-
-        del self._pinin
-        del self._pinout
-
-        self._manager.del_interface(self)
-
-
     def __write__(self, data):
         try:
             for pin in self._pinout:
@@ -132,10 +119,6 @@ class InterfaceGPIO(InterfaceActive):
 
     def __contains__(self, pin):
         return pin in self._pinin or pin in self._pinout
-
-
-    def clear(self):
-        super(self.__class__, self).__stop__()
 
 
     def setup(self, pin, mode, initial=0, callback=None, pud=None, edge=None, bouncetime=200):
