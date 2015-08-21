@@ -216,7 +216,7 @@ class MotorServo(MotorBase):
 
 
     def backward(self):
-        """ Move the servo to lower angle """
+        """ Move the servo to minimun angle """
 
         self._worker.__start__(args=(self.__pulses2dutycycle__(self._pulses[0]), self.__degrees2time__(self._angles[1])))
 
