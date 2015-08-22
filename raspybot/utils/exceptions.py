@@ -114,5 +114,5 @@ class InvalidRangeError(ExceptionFmt):
 
 class MinMaxValueError(ExceptionFmt):
     def __init__(self, name, var, condition, value):
-        super(MinMaxValueError, self).__init__('The "{}" {} value must be {} than the {}', name, var, condition, value)
+        super(MinMaxValueError, self).__init__('The "{0}" {1} value must be {2} than the {3}', name, var, condition, value)
 
