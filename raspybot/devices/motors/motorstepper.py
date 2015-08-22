@@ -62,7 +62,7 @@ class MotorStepper(MotorBase):
         self._steps = None                                  # Tuple with all possible steps
         self._delay = 0.001                                 # Delay until next step
         self._factor = 0.0005                               # Correction factor, because "delay" is the sleeping time, it does not count the time it takes to process the remaining instructions ....
-        self._degrees = None                                # Degrees that the stepper  motor moves per each step taken
+        self._degrees = None                                # Degrees that the stepper motor moves per each step taken
         self._timeout = -1                                  # Lifetime of each job sent to the interface, or the lifetime of the pulse (unused)
 
         self._worker =  Worker(self.__run__)
@@ -134,10 +134,12 @@ class MotorStepper(MotorBase):
 
 
     def join(self):
+        """  """
         self._worker.join()
 
 
     def alive(self):
+        """  """
         return self._worker.alive()
 
 
@@ -158,6 +160,7 @@ class MotorStepper(MotorBase):
 
     def set_speed(self, rpm):
         """  """
+
         if self._worker.alive():
             raise IsRunningError(self.__class__, 'speed')
 
@@ -169,6 +172,7 @@ class MotorStepper(MotorBase):
 
     def set_degrees(self, degrees):
         """  """
+
         if self._worker.alive():
             raise IsRunningError(self.__class__, 'degrees per step')
 

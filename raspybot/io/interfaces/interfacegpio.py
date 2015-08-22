@@ -122,6 +122,8 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def setup(self, pin, mode, initial=0, callback=None, pud=None, edge=None, bouncetime=200):
+        """ """
+
         def append_in(pin, mode):
             if mode == self._bus.IN:
                 if pin in self._pinout:
@@ -146,10 +148,13 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def clear(self):
+        """ """
         super(self.__class__, self).__stop__()
 
 
     def stop(self):
+        """ """
+
         super(self.__class__, self).__stop__()
         super(self.__class__, self).__append__(TaskGPIO(TaskGPIO.GPIO_STOP))
 
@@ -158,6 +163,8 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def write(self, data, timeout=-1):
+        """ """
+
         super(self.__class__, self).__append__(TaskGPIO(TaskGPIO.GPIO_WRITE, data, timeout))
 
         if not self.alive():
@@ -165,8 +172,10 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def get_in_ports(self):
+        """ """
         return self._pinin
 
 
     def get_out_ports(self):
+        """ """
         return self._pinout
