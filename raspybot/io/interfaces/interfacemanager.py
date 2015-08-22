@@ -250,6 +250,7 @@ class InterfaceManager(object):
             if not iface in self._interfaces[self.GPIO]:
                 raise NotFoundInterfaceError()
 
+            iface.free()
             self._interfaces[self.GPIO].remove(iface)
 
         elif isinstance(iface, InterfacePWM):
@@ -259,6 +260,7 @@ class InterfaceManager(object):
             if not iface in self._interfaces[self.PWM]:
                 raise NotFoundInterfaceError()
 
+            iface.free()
             self._interfaces[self.PWM].remove(iface)
 
         else:

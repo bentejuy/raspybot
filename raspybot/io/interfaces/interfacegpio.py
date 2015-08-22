@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/28/2015
-# Version:      0.0.71
+# Modified:     08/20/2015
+# Version:      0.0.73
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -119,6 +119,17 @@ class InterfaceGPIO(InterfaceActive):
 
     def __contains__(self, pin):
         return pin in self._pinin or pin in self._pinout
+
+
+    def free(self):
+        """  """
+
+        self.clear()
+        map(self._manager.cleanup, self._pinin)
+        map(self._manager.cleanup, self._pinout)
+
+        self._pinin = []
+        self._pinout = []
 
 
     def setup(self, pin, mode, initial=0, callback=None, pud=None, edge=None, bouncetime=200):

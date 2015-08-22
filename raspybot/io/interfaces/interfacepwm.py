@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/22/2015
-# Modified:     08/16/2015
-# Version:      0.0.33
+# Modified:     08/20/2015
+# Version:      0.0.35
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -109,6 +109,16 @@ class InterfacePWM(InterfaceActive):
 
     def __contains__(self, pin):
         return pin in self._pin
+
+
+    def free(self):
+        """  """
+
+        self.stop()
+        map(self._manager.cleanup, self._pin)
+
+        self._pin = []
+        self._pwm = []
 
 
     def setup(self, pin, frequency=50):
