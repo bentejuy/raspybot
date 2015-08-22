@@ -1,6 +1,32 @@
 Change Log
 ==========
 
+
+0.1.4
+-----
+
+- Frees channels when the interface is removed
+- Reordered parameters in write method
+- Removed unused or duplicate functions
+- Text correction
+- MotorServo updated to support new features in InterfacePWM
+- InterfacePWM and TaskPWM adapted to control more that one channel
+- Removed older code
+- Adapted InterfacePWM to control more that one channel
+- Fix bug: small bug in exceptions calls
+- Updated MotorServo object
+- Removed some comments
+- Removed older code
+- Removed the time parameter from some methods
+- Optional parameter in exception OutRangeError
+- Device MotorServo rewritten for work with InterfacePWM
+- MotorServo rewritten for work with InterfacePWM
+- Allows to control InterfacesPWM in the InterfaceManager
+- Set default values in setup method when they are omitted
+- Renamed object methods
+- Added InterfacePWM object and TaskPWM object to support PWM devices
+
+
 0.1.3
 -----
 
