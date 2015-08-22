@@ -96,7 +96,7 @@ class MotorServo(MotorBase):
 
 
     def __write__(self, dutycycle, timeout):
-        self._iface.write(dutycycle, 0, timeout)
+        self._iface.write(0, dutycycle, timeout)
 
 
     def __degrees2time__(self, degrees):

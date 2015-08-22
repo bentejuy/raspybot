@@ -143,7 +143,7 @@ class InterfacePWM(InterfaceActive):
             super(self.__class__, self).__start__()
 
 
-    def write(self, dutycycle, index, timeout=-1):
+    def write(self, index, dutycycle, timeout=-1):
         """ """
 
         if not self._pwm[index]:
