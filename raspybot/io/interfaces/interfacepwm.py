@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/22/2015
-# Modified:     08/20/2015
-# Version:      0.0.35
+# Modified:     09/11/2015
+# Version:      0.0.37
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -70,26 +70,6 @@ class InterfacePWM(InterfaceActive):
        return len(self._pin)
 
 
-    def __new_pwm__(self, index):
-        try:
-            self._pwm[index] = self._bus.PWM(self._pin[index], self._frequency)
-
-            return True
-        except:
-            return False
-
-
-    def __del_pwm__(self, index):
-        try:
-            if self._pwm[index]:
-                self._pwm[index].stop()
-                del self._pwm[index]
-                self._pwm[index] = None
-
-        except:
-            pass
-
-
     def __parser__(self, task):
         state = task.get_state()
 
@@ -99,10 +79,10 @@ class InterfacePWM(InterfaceActive):
                     self._pwm[task.index].start(task.dutycycle)
 
             elif task.action == task.PWM_STOP:
-                self.__del_pwm__(task.index)
+                self._pwm[task.index].stop()
 
         elif state == task.TIMEOUT or state == task.STOPPED:
-            self.__del_pwm__(task.index)
+                self._pwm[task.index].stop()
 
         return 0
 
@@ -157,7 +137,7 @@ class InterfacePWM(InterfaceActive):
         """ """
 
         if not self._pwm[index]:
-            self.__new_pwm__(index)
+            self._pwm[index] = self._bus.PWM(self._pin[index], self._frequency)
 
         super(self.__class__, self).__append__(TaskPWM(TaskPWM.PWM_START, dutycycle, index, timeout))
 
