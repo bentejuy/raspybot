@@ -35,7 +35,7 @@ import logging
 
 from ..logic import Worker
 from ..logic import ActionDevice
-from ..logic import OutRangeError, InvalidFunctionError, InvalidTypeError, IsRunningError
+from ..logic import OutRangeError, InvalidFunctionError, InvalidTypeError, IsRunningError, InterfaceNoSupported
 
 from ..logic import InterfaceGPIO
 
