@@ -49,17 +49,19 @@ class FlipFlop(Device):
 
     def __init__(self, iface, name=None, initial=0):
 
-        if not isinstance(iface, InterfaceGPIO):
+        if isinstance(iface, InterfaceGPIO):
+            if len(iface) < 0 or len(iface) > 8:
+                raise OutRangeError('The length of interface ports')
+
+            self._sizeof = len(iface.get_out_ports())
+
+        else:
             raise InterfaceNoSupported(self.__class__, iface.__class__)
 
         super(FlipFlop, self).__init__(iface, name)
 
-        if len(iface) < 0 or len(iface) > 8:
-            raise OutRangeError('The length of interface ports')
-
         self._iface  = iface
         self._value  = initial
-        self._sizeof = len(self._iface.get_out_ports())   # Cuando no sea una interfaceGPIO habra que ver como determino el tamaño en bits....
 
         self.__write__(initial)
 
