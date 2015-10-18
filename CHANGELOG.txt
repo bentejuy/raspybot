@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+0.1.5
+-----
+
+- Added the SevenSegment and SevenSegmentGroup objects
+- Added new exceptions
+- Fixed bug:  Corrected initialization of InUserChannelError exception
+- Fixed bug: Allows modify properties to a channel by the owner Interface
+- Replaced obsolete comparison "not equal"
+- Updated FlipFlop object
+- Cosmetic changes
+- Fixed bug: Reference to InterfaceGPIO forgotten
+- Fixed: Exception forgotten
+- Fixed wrong usage of the PWM object
+
 
 0.1.4
 -----
