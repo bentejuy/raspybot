@@ -53,8 +53,8 @@ class InterfaceGPIO(InterfaceActive):
         Interface to interact directly with the GPIO ports, it can receive four parameters
 
         manager: The manager interfaces
-        pinin  : An integer or a tuple or list of integers used as data inputs.
-        pinout : An integer or a tuple or list of integers used as data output.
+        pinin  : An integer, tuple or list of integers used as data inputs.
+        pinout : An integer, tuple or list of integers used as data output.
         callback: Function that will be called when data is received at the input channels (pinint)
     """
 
@@ -133,7 +133,7 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def setup(self, pin, mode, initial=0, callback=None, pud=None, edge=None, bouncetime=200):
-        """ """
+        """  """
 
         def append_in(pin, mode):
             if mode == self._bus.IN:

@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     07/08/2015
-# Version:      0.0.33
+# Modified:     10/18/2015
+# Version:      0.0.35
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GPLv3
 #
@@ -85,14 +85,13 @@ class FlipFlop(Device):
 
 
     def set(self, index=None):
-        """ Set one channel, a tuple or list of channel to 1 logical.
+        """
+        Set one channel, a tuple or list of channel to 1 logical.
 
-           Arg:
-              index: An integer, tuple or list of integers where the the integer is the index
-                     position into channel, starting of zero. If "index" is not defined then all
-                     channel are set to 1.
-           Return:
-              Nothing.
+        Arg:
+          index: An integer, tuple or list of integers where the the integer is the index
+                 position into channel, starting of zero. If "index" is not defined then all
+                 channel are set to 1.
         """
 
         if index is not None:
@@ -110,14 +109,13 @@ class FlipFlop(Device):
 
 
     def reset(self, index=None):
-        """ Set one channel, a tuple or list of channel to 0 logical.
+        """
+        Set one channel, a tuple or list of channel to 0 logical.
 
-           Arg:
-              index: An integer, tuple or list of integers where the the integer is the index
-                     position into channel, starting of zero. If "index" is not defined then all
-                     channel are set to 0.
-           Return:
-              Nothing.
+        Arg:
+          index: An integer, tuple or list of integers where the the integer is the index
+                 position into channel, starting of zero. If "index" is not defined then all
+                 channel are set to 0.
         """
 
         if index is not None:
