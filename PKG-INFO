@@ -1,11 +1,11 @@
 Metadata-Version: 1.1
 Name: raspybot
-Version: 0.1.4
+Version: 0.1.5
 Summary: Multipurpose library oriented to the Raspberry Pi.
 Home-page: http://raspybot.com
 Author: Bentejuy Lopez
 Author-email: bentejuy@gmail.com
-License: UNKNOWN
+License: GNU GPLv3
 Download-URL: http://raspybot.com/download
 Description: Multipurpose library oriented to the Raspberry Pi for managing
         devices that interact with the GPIO channels.
