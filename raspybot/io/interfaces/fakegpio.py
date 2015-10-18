@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/17/2015
-# Modified:     05/21/2015
-# Version:      0.0.43
+# Modified:     10/17/2015
+# Version:      0.0.45
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -94,10 +94,10 @@ class fakeGPIO(object):
         msg.append(self._mode == self.BCM and 'BCM' or 'BOARD')
 
         if mode == self.IN:
-            msg.append('Input' + (callback <> None and (' with function call : {}'.format(callback)) or ''))
+            msg.append('Input' + (callback != None and (' with function call : {}'.format(callback)) or ''))
 
         elif mode == self.OUT:
-            msg.append('Output' + (initial <> None and (' with value : {}'.format(initial)) or ''))
+            msg.append('Output' + (initial != None and (' with value : {}'.format(initial)) or ''))
 
         elif mode == self.ALT0:
             msg.append('ALT0')

@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/27/2015
-# Modified:     08/16/2015
-# Version:      0.0.37
+# Modified:     10/17/2015
+# Version:      0.0.39
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -71,10 +71,10 @@ class MotorServo(MotorBase):
 
         self._worker =  Worker(self.__run__)
 
-        if not isinstance(pulses, (tuple, list)) or len(pulses) <> 2:
+        if not isinstance(pulses, (tuple, list)) or len(pulses) != 2:
             raise InvalidRangeError('pulses')
 
-        if not isinstance(angles, (tuple, list)) or len(angles) <> 2:
+        if not isinstance(angles, (tuple, list)) or len(angles) != 2:
             raise InvalidRangeError('angles')
 
         if speed:
@@ -100,7 +100,7 @@ class MotorServo(MotorBase):
 
 
     def __degrees2time__(self, degrees):
-        if degrees <> 0:
+        if degrees != 0:
             return self._speed * abs(degrees)
 
         else:
@@ -153,7 +153,7 @@ class MotorServo(MotorBase):
         if not isinstance(freq, (int, long, float)):
             raise InvalidTypeError('The frequency', 'numeric')
 
-        if freq <> self._frequency:
+        if freq != self._frequency:
             self._frequency = freq
             self._iface.set_frequency(freq)
 
