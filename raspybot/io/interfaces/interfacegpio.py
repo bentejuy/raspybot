@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     08/20/2015
-# Version:      0.0.73
+# Modified:     10/18/2015
+# Version:      0.0.77
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -148,13 +148,17 @@ class InterfaceGPIO(InterfaceActive):
                 if pin not in self._pinout:
                     self._pinout.append(pin)
 
+        if mode == self._bus.IN:
+            pud = self._bus.PUD_DOWN if pud is None else pud
+            edge = self._bus.BOTH if edge is None else edge
+
         if isinstance(pin, (tuple, list)):
             for p in pin:
-                self._manager.setup(p, mode, initial, callback, pud, edge, bouncetime)
+                self._manager.setup(p, mode, initial, callback, pud, edge, bouncetime, self)
                 append_in(p, mode)
 
         else:
-            self._manager.setup(pin, mode, initial, callback, pud, edge, bouncetime)
+            self._manager.setup(pin, mode, initial, callback, pud, edge, bouncetime, self)
             append_in(pin, mode)
 
 

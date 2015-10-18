@@ -125,36 +125,44 @@ class InterfaceManager(object):
         setattr(self, 'del_interface', self.delete)
 
 
-    def setup(self, pin, mode, initial=0, callback=None, pud=gpio.PUD_DOWN, edge=gpio.BOTH, bouncetime=200):
+    def setup(self, pin, mode, initial=0, callback=None, pud=gpio.PUD_DOWN, edge=gpio.BOTH, bouncetime=200, owner=None):
         """  """
 
         if not isinstance(pin, (int, long)):
             raise InvalidTypeError('The "pin"', 'numeric')
 
-        def check_in_use(pin, modes):
+        def check_in_use(pin, modes, owner):
             for mode in modes:
                 if not mode in self._interfaces:
                     continue
 
                 if not hasattr(self._interfaces[mode], '__iter__'):
                     if pin in self._interfaces[mode]:
-                        raise InUseChannelError(pin, self._interfaces[mode], self._interfaces[mode].get_name())
+                        if owner and owner is self._interfaces[mode]:
+                            return
+
+                        raise InUseChannelError(pin, self._interfaces[mode].__class__)
                 else:
                     for iface in self._interfaces[mode]:
                         if pin in iface:
-                            raise InUseChannelError(pin, iface, iface.get_name())
+                            if owner and owner is iface:
+                                return
+
+                            raise InUseChannelError(pin, iface.__class__)
 
         if mode == gpio.OUT:
-            check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO))
+            check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO), owner)
             gpio.setup(pin, mode, gpio.PUD_OFF, initial)
 
         elif mode == gpio.IN:
-            check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO))
+            check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO), owner)
             gpio.setup(pin, mode, pud)
-            gpio.add_event_detect(pin, edge, callback, bouncetime)
+
+            if hasattr(callback, '__call__'):
+                gpio.add_event_detect(pin, edge, callback, bouncetime)
 
         elif mode == gpio.HARD_PWM:
-            check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO))
+            check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO), owner)
             gpio.setup(pin, gpio.OUT, gpio.PUD_OFF, initial)
 
         else:
@@ -163,7 +171,6 @@ class InterfaceManager(object):
 
     def get_mode(self):
         """ Returns the numbering mode of GPIO channels. """
-
         return gpio.get_mode()
 
 
