@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/30/2015
-# Version:      0.0.75
+# Modified:     10/17/2015
+# Version:      0.0.83
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -56,8 +56,8 @@ class UnknowTypeChannelError(Exception):
 
 
 class InUseChannelError(ExceptionFmt):
-    def __init__(self, value):
-        super(InUseChannelError, self).__init__('The channel {0} is in use by interface class {1}({2})', channel, iface, name)
+    def __init__(self, channel, iface):
+        super(InUseChannelError, self).__init__('The channel {0} is in use by interface class {1})', channel, iface)
 
 
 class InvalidModeChannelError(ExceptionFmt):
