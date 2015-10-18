@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2015
-# Modified:     08/01/2015
-# Version:      0.0.39
+# Modified:     10/15/2015
+# Version:      0.0.47
 # Copyright:    (c) 2012-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -82,9 +82,19 @@ class InvalidInterfaceError(Exception):
         return 'The interface must be a valid "Interface" object'
 
 
+class InterfaceTypeMustBe(ExceptionFmt):
+    def __init__(self, name, value):
+        super(InterfaceTypeMustBe, self).__init__('The "{0}" parameter must be a valid interface {1} class ', name, value)
+
+
+class InterfaceSizeMustBe(ExceptionFmt):
+    def __init__(self, name, value):
+        super(InterfaceSizeMustBe, self).__init__('The number of channels in the interface {0} must be equal or higher {1}', name, value)
+
+
 class InterfaceNoSupported(ExceptionFmt):
     def __init__(self, name, value):
-        super(InterfaceNoSupported, self).__init__('The "{0}" does not support the class Interface {1}', name, value)
+        super(InterfaceNoSupported, self).__init__('The "{0}" does not support the interface {1} class', name, value)
 
 
 class NoChannelInterfaceError(ExceptionFmt):
