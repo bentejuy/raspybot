@@ -32,6 +32,7 @@
 import logging
 
 from ..button import gpio, Device
+from ..button import InterfaceGPIO
 from ..button import InvalidFunctionError, NoChannelInterfaceError, InterfaceNoSupported
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
