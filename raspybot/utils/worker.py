@@ -74,7 +74,8 @@ class Worker(object):
 
         try:
             if self.alive():
-                self._thread.join()
+                self._thread.join(.1)
+
         except:
             pass
 
