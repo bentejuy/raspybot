@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/17/2013
-# Modified:     07/27/2015
-# Version:      0.1.89
+# Modified:     10/24/2015
+# Version:      0.1.91
 # Copyright:    (c) 2013-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -103,9 +103,9 @@ class Worker(object):
         return self._thread and self._thread.is_alive()
 
 
-    def join(self):
+    def join(self, timeout=None):
         if self._thread:
-            self._thread.join()
+            self._thread.join(timeout)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
