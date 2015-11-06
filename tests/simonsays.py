@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/07/2015
-# Modified:     05/28/2015
-# Version:      0.0.43
+# Modified:     10/28/2015
+# Version:      0.0.47
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
@@ -218,7 +218,7 @@ class SimonSays(object):
         self._buttons = Buttons(iface, 'buttons', release=self.on_response)
 
         # Defining all inputs channel on iface with the correct properties
-        for btn in iface.get_in_ports():
+        for btn in iface.get_input_channels_ports():
             self._buttons.setup(btn, self._buttons.RELEASE, self._buttons.PUD_UP, 500)
 
 
@@ -478,9 +478,17 @@ class SimonSays(object):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-mgr = InterfaceManager()
-ifg = InterfaceGPIO(mgr, pinin=(4, 14, 18, 17), pinout=(9, 25, 11, 8))
+
+try:
+    mgr = InterfaceManager()
+    ifg = InterfaceGPIO(mgr, pinin=(4, 14, 18, 17), pinout=(9, 25, 11, 8))
+
+    simon = SimonSays(ifg)
+    simon.start()
+
+finally:
+
+    mgr.delete(ifg)
+    mgr.cleanup()
 
 
-simon = SimonSays(ifg)
-simon.start()

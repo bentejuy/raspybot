@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     07/15/2015
-# Version:      0.0.13
+# Modified:     10/18/2015
+# Version:      0.0.15
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
@@ -107,5 +107,7 @@ finally:
     motor1.stop()
     motor2.stop()
 
+    manager.delete(iface1)
+    manager.delete(iface2)
     manager.cleanup()
 

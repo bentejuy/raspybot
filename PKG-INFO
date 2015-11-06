@@ -6,7 +6,7 @@ Home-page: http://raspybot.com
 Author: Bentejuy Lopez
 Author-email: bentejuy@gmail.com
 License: GNU GPLv3
-Download-URL: http://raspybot.com/download
+Download-URL: http://raspybot.com/download.html
 Description: Multipurpose library oriented to the Raspberry Pi for managing
         devices that interact with the GPIO channels.
 

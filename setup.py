@@ -50,7 +50,7 @@ setup(
     author = "Bentejuy Lopez",
     author_email = "bentejuy@gmail.com",
     url = "http://raspybot.com",
-    download_url = "http://raspybot.com/download",
+    download_url = "http://raspybot.com/download.html",
     keywords = ["Raspberry Pi", "GPIO"],
     classifiers = [
         "Programming Language :: Python :: 2.6",

@@ -7,8 +7,8 @@
 #
 # Author:        Bentejuy Lopez
 # Created:       05/01/2015
-# Modified:      05/02/2015
-# Version:       0.0.03
+# Modified:      10/18/2015
+# Version:       0.0.05
 # Copyright:     (c) 2015 Bentejuy Lopez
 # Licence:       MIT
 #
@@ -59,4 +59,5 @@ except KeyboardInterrupt:
     print '\nProgram stopped...'
 
 finally:
+    manager.delete(iface)
     manager.cleanup()

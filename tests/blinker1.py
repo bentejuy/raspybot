@@ -7,8 +7,8 @@
 #
 # Author:        Bentejuy Lopez
 # Created:       04/02/2015
-# Modified:      04/02/2015
-# Version:       0.0.03
+# Modified:      10/18/2015
+# Version:       0.0.05
 # Copyright:     (c) 2015 Bentejuy Lopez
 # Licence:       MIT
 #
@@ -90,4 +90,5 @@ except KeyboardInterrupt:
     blinker.stop()
 
 finally:
+    manager.delete(iface)
     manager.cleanup()
