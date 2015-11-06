@@ -53,7 +53,7 @@ class FlipFlop(Device):
             if len(iface) < 0 or len(iface) > 8:
                 raise OutRangeError('The length of interface ports')
 
-            self._sizeof = len(iface.get_out_ports())
+            self._sizeof = len(iface.get_output_channels())
 
         else:
             raise InterfaceNoSupported(self.__class__, iface.__class__)

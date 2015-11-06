@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     10/18/2015
-# Version:      0.0.77
+# Modified:     10/24/2015
+# Version:      0.0.79
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -186,11 +186,11 @@ class InterfaceGPIO(InterfaceActive):
             super(self.__class__, self).__start__()
 
 
-    def get_in_ports(self):
-        """ """
+    def get_input_channels(self):
+        """ Returns all input channels used by this Interface """
         return self._pinin
 
 
-    def get_out_ports(self):
-        """ """
+    def get_output_channels(self):
+        """ Returns all output channels used by this Interface """
         return self._pinout

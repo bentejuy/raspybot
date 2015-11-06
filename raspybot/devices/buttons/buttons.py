@@ -109,7 +109,7 @@ class Buttons(Device):
     def setup(self, pin, event, pud=gpio.PUD_UP, bouncetime=200):
         iface = self.get_interface()
 
-        if not pin in iface.get_in_ports():
+        if not pin in iface.get_input_channels():
             raise NoChannelInterfaceError(pin, 'input')
 
         try:
