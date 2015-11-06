@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     10/17/2015
-# Version:      0.0.29
+# Modified:     10/24/2015
+# Version:      0.0.31
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -31,7 +31,8 @@
 
 import logging
 
-from ..button import gpio, Device
+from ..button import gpio
+from ..button import Device
 from ..button import InterfaceGPIO
 from ..button import InvalidFunctionError, NoChannelInterfaceError, InterfaceNoSupported
 
@@ -50,8 +51,9 @@ logger = logging.getLogger(__name__)
 
 class Buttons(Device):
     """
-    Supervise the state of one or more inputs channels  when they change the state to up or down.
-    It calls a callback function and passes the channel that generated the event and the new channel status.
+    Supervise the state of one or more inputs channels  when they change the state
+    to up or down. It calls a callback function and passes the channel that generated
+    the event and the new channel status.
     """
 
     CLICKED, \

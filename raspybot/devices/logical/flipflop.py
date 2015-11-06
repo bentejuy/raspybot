@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     10/18/2015
-# Version:      0.0.35
+# Modified:     10/24/2015
+# Version:      0.0.37
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GPLv3
 #
@@ -82,7 +82,6 @@ class FlipFlop(Device):
 
     def get(self):
         """ Return the value of internal state of channels as integer. """
-
         return self._value
 
 
@@ -90,10 +89,9 @@ class FlipFlop(Device):
         """
         Set one channel, a tuple or list of channel to 1 logical.
 
-        Arg:
-          index: An integer, tuple or list of integers where the the integer is the index
-                 position into channel, starting of zero. If "index" is not defined then all
-                 channel are set to 1.
+        index: An integer, tuple or list of integers where the the integer is the index
+               position into channel, starting of zero. If "index" is not defined then all
+               channel are set to 1.
         """
 
         if index is not None:
@@ -114,10 +112,9 @@ class FlipFlop(Device):
         """
         Set one channel, a tuple or list of channel to 0 logical.
 
-        Arg:
-          index: An integer, tuple or list of integers where the the integer is the index
-                 position into channel, starting of zero. If "index" is not defined then all
-                 channel are set to 0.
+        index: An integer, tuple or list of integers where the the integer is the index
+               position into channel, starting of zero. If "index" is not defined then all
+               channel are set to 0.
         """
 
         if index is not None:

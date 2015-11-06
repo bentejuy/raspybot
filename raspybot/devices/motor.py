@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/28/2015
-# Version:      0.0.75
+# Modified:     10/15/2015
+# Version:      0.0.79
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,7 +33,8 @@ from device import ActionDevice
 
 from ..utils.worker import Worker
 from ..utils.timeit import timeit
-from ..utils.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, MinMaxValueError,InterfaceNoSupported
+from ..utils.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, \
+                               MinMaxValueError, InterfaceNoSupported
 
 from ..io.interface import InterfacePWM
 from ..io.interface import InterfaceGPIO
