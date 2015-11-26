@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/24/2015
-# Modified:     07/25/2015
-# Version:      0.0.37
+# Modified:     11/06/2015
+# Version:      0.0.39
 # Copyright:    (c) 2013-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -47,7 +47,7 @@ class TaskGPIO(Task):
     GPIO_READ, \
     GPIO_WRITE = range(3)
 
-    def __init__(self, action, data, timeout=-1):
+    def __init__(self, action, data=0, timeout=-1):
         super(TaskGPIO, self).__init__(timeout)
 
         self.data = data
