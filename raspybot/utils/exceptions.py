@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2015
-# Modified:     10/15/2015
-# Version:      0.0.47
+# Modified:     11/24/2015
+# Version:      0.0.49
 # Copyright:    (c) 2012-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -88,8 +88,8 @@ class InterfaceTypeMustBe(ExceptionFmt):
 
 
 class InterfaceSizeMustBe(ExceptionFmt):
-    def __init__(self, name, value):
-        super(InterfaceSizeMustBe, self).__init__('The number of channels in the interface {0} must be equal or higher {1}', name, value)
+    def __init__(self, name, value, details=''):
+        super(InterfaceSizeMustBe, self).__init__('The number of channels in the interface {0} must be equal or higher {1}', name, value, details)
 
 
 class InterfaceNoSupported(ExceptionFmt):
@@ -99,7 +99,7 @@ class InterfaceNoSupported(ExceptionFmt):
 
 class NoChannelInterfaceError(ExceptionFmt):
      def __init__(self, name, details):
-        super(NoChannelInterfaceError, self).__init__('The Interface not have the channel {0} in channels {1} list'.format(name, details))
+        super(NoChannelInterfaceError, self).__init__('The Interface not have the channel {0} in channels {1} list', name, details)
 
 
 class OutRangeError(ExceptionFmt):
