@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/19/2015
-# Modified:     09/27/2015
-# Version:      0.0.13
+# Modified:     11/24/2015
+# Version:      0.0.17
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -30,6 +30,8 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from device import Device
+
+from ..io.interface import InterfaceGPIO
 
 from ..utils.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported
 
