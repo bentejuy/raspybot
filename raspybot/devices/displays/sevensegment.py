@@ -32,7 +32,6 @@
 from ..display import Device
 from ..display import OutRangeError, InvalidTypeError, InterfaceNoSupported
 
-from ..display import ExceptionFmt
 from ..display import InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
