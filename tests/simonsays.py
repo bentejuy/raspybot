@@ -451,7 +451,6 @@ class SimonSays(object):
 
                             break
 
-
                     if action == self._deque[self._index]:
                         self.process(self.MODE_USER_TURN, action)
 
@@ -478,9 +477,9 @@ class SimonSays(object):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+mgr = InterfaceManager()
 
 try:
-    mgr = InterfaceManager()
     ifg = InterfaceGPIO(mgr, pinin=(4, 14, 18, 17), pinout=(9, 25, 11, 8))
 
     simon = SimonSays(ifg)
