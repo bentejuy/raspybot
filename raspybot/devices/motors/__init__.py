@@ -1,2 +1,2 @@
 
-__all__ = ('motorbase', 'motorstepper', 'motorstepperunipolar', 'motorstepperbipolar')
+__all__ = ('motorbase', 'motorstepper', 'motorstepperunipolar', 'motorstepperbipolar', 'motorservo')
