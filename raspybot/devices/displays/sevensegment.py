@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/17/2015
-# Modified:     09/27/2015
-# Version:      0.0.17
+# Modified:     11/26/2015
+# Version:      0.0.37
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,42 +29,59 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import logging
-
 from ..display import Device
 from ..display import OutRangeError, InvalidTypeError, InterfaceNoSupported
 
+from ..display import ExceptionFmt
 from ..display import InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-logger = logging.getLogger(__name__)
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-bcd2segment = {
-           # ABCDEFG.
-    0x00 : 0b11111100, \
-    0x01 : Ob01100000, \
-    0x02 : Ob11011010, \
-    0x03 : Ob11111010, \
-    0x04 : Ob01100110, \
-    0x01 : Ob01100000, \
-    0x05 : Ob10110110, \
-    0x06 : Ob10111110, \
-    0x07 : Ob11100000, \
-    0x08 : Ob11111110, \
-    0x09 : Ob11100110, \
-    0x0A : Ob11101110, \
-    0x0B : Ob00111110, \
-    0x0C : Ob10011100, \
-    0x0D : Ob01111010, \
-    0x0E : Ob10011110, \
-    0x0F : Ob10001110, \
-    0x10 : 0b00000010, \    # Minus
-    0x11 : 0b10000000, \    # Low Range
-    0x12 : 0b00010000       # High Range
+NUM2SEGMENTS = {
+           #.GFEDCBA
+    0x00: 0b00111111, \
+    0x01: 0b00000110, \
+    0x02: 0b01011011, \
+    0x03: 0b01001111, \
+    0x04: 0b01100110, \
+    0x05: 0b01101101, \
+    0x06: 0b01111101, \
+    0x07: 0b00000111, \
+    0x08: 0b01111111, \
+    0x09: 0b01100111, \
+    0x0A: 0b01110111, \
+    0x0B: 0b01111100, \
+    0x0C: 0b00111001, \
+    0x0D: 0b01011110, \
+    0x0E: 0b01111001, \
+    0x0F: 0b01110001, \
+    0x10: 0b01000000, \
+    0x11: 0b10000000, \
+    0x12: 0b00010000
 }
+
+'''
+    0x00 -> 0
+    0x01 -> 1
+    0x02 -> 2
+    0x03 -> 3
+    0x04 -> 4
+    0x05 -> 5
+    0x06 -> 6
+    0x07 -> 7
+    0x08 -> 8
+    0x09 -> 9
+    0x0A -> A
+    0x0B -> b
+    0x0C -> C
+    0x0D -> d
+    0x0E -> E
+    0x0F -> F
+    0x10 -> Minus
+    0x11 -> Low Range
+    0x12 -> High Range
+'''
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -78,8 +95,8 @@ bcd2segment = {
 class SevenSegment(Device):
     """  """
 
-    OUT_BCD, \
-    OUT_DIRECT = range(2)
+    BCD_MODE, \
+    DIRECT_MODE = range(2)
 
     def __init__(self, iface, mode=None, name=None):
 
@@ -88,49 +105,78 @@ class SevenSegment(Device):
 
         super(SevenSegment, self).__init__(iface, name)
 
-        if not mode or mode = self.OUT_BCD:
+        if not mode or mode == self.BCD_MODE:
             if len(iface) < 4:
-                raise Exception('The SevenSegment class in BCD mode must an InterfaceGPIO with four channel')
-        elif mode == self.OUT_DIRECT:
+                raise Exception('The SevenSegment object in BCD mode must an InterfaceGPIO with four channel')
+
+        elif mode == self.DIRECT_MODE:
             if len(iface) < 7:
-                raise Exception('The SevenSegment class in DIRECT mode must an InterfaceGPIO with seven channel')
+                raise Exception('The SevenSegment object in DIRECT mode must an InterfaceGPIO with seven channel')
+
         else:
             raise Exception('Unknow mode for SevenSegment object')
 
         self._data = 0
-        self._xord = 0
-        self._mode = self.OUT_BCD if not mode or mode
+        self._xord = 0xFF
+        self._mode = self.BCD_MODE if not mode else mode
+
+        self.off()
+
+
+    def __value2segment__(self, value):
+        if self._mode == self.BCD_MODE:
+            return value
+        elif self._mode == self.DIRECT_MODE:
+            return NUM2SEGMENTS[value]
+
+        return 0
 
 
     def __write__(self, value):
         self._iface.write(value)
 
 
-    def set(self, value):
-        """  """
+    def set(self, value, on=True):
+        """ Set the value to the seven segment display, optatively turn on with the new value  """
 
-        if self._mode == self.OUT_BCD and value > 9:
-            raise ...
+        if self._mode == self.BCD_MODE:
+            if value > 9:
+                raise OutRangeError(value, 'in BCD mode')
 
-        elif self._mode == self.OUT_DIRECT and value > 15:
-            raise ...
+            self._data = value ^ self._xord
 
-        self._data = value ^ self._xord
+        elif self._mode == self.DIRECT_MODE:
+            if value > 15:
+                raise OutRangeError(value, 'in Direct mode')
+
+            self._data = NUM2SEGMENTS[value]
+
+        if on:
+            self.__write__(self._data ^ self._xord)
 
 
     def on(self):
-        """  """
+        """ Turn on the segments with the value stored """
         self.__write__(self._data)
 
 
     def off(self):
-        """  """
-        self.__write__(0)
+        """ Turn off all segment """
+        self.__write__(0 ^ self._xord)
 
 
-    def reverse(self):
-        """  """
-        self._xord ~= 0xF
+    def inverted(self):
+        """ Inverts the output to control seven segment displays with common anode or cathode. """
+        self._xord ^= 0xFF
+
+
+    def dot(self, state):
+        """  Turn on or off the dot on the seven segment display. """
+
+        if self._mode == self.BCD_MODE:
+            self.__write__((self._data | (0x10 if state else 0x00)) ^ self._xord)
+        else:
+            self.__write__((self._data | (0x80 if state else 0x00)) ^ self._xord)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

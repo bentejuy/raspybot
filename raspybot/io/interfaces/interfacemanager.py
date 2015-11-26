@@ -7,7 +7,7 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     10/17/2015
+# Modified:     10/18/2015
 # Version:      0.0.83
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
@@ -188,7 +188,7 @@ class InterfaceManager(object):
 
 
     def cleanup(self, pin=None):
-        """ Clean the configuration of the one or more channels. """
+        """ Clean the configuration of one or more channels. """
 
         if pin == None:
             if any(self._interfaces.values()):
@@ -223,7 +223,7 @@ class InterfaceManager(object):
 
 
     def append(self, iface):
-        """ Add an interface of the InterfaceManager. """
+        """ Add an interface to the InterfaceManager. """
 
         if isinstance(iface, InterfaceGPIO):
             if not self.GPIO in self._interfaces:
@@ -248,7 +248,7 @@ class InterfaceManager(object):
 
 
     def delete(self, iface):
-        """ Delete an interface of the InterfaceManager. """
+        """ Delete an interface to the InterfaceManager. """
 
         if isinstance(iface, InterfaceGPIO):
             if not self.GPIO in self._interfaces:
