@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/27/2015
-# Modified:     10/17/2015
-# Version:      0.0.39
+# Modified:     11/26/2015
+# Version:      0.0.41
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -35,17 +35,11 @@
 """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import logging
-
 from ..motor import Worker
 from ..motor import MotorBase
 from ..motor import InvalidTypeError, OutRangeError, IsRunningError, InvalidRangeError, MinMaxValueError, InterfaceNoSupported
 
 from ..motor import InterfacePWM
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logging.getLogger(__name__)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -134,7 +128,6 @@ class MotorServo(MotorBase):
 
     def alive(self):
         """  """
-
         return self._worker.alive()
 
 
