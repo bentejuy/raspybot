@@ -1,6 +1,25 @@
 Change Log
 ==========
 
+
+0.1.6
+-----
+
+Small modifications in SimonSay tests file
+Some corrections in exceptions file
+Sets default data value when it's not defined
+Small fixed bug
+The "logging" module removed from files where it's not used
+Included motorservo module to __init__ file
+SevenSegment object rewrited
+Text correction.
+Updated tests files.
+Added timeout parameter to the "join" method in Worker class
+Fixed bug: Limited the time to wait to stop a Worker object
+Cosmetic changes
+Renamed some InterfaceGPIO class functions
+
+
 0.1.5
 -----
 
