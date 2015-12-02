@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/19/2015
-# Modified:     11/24/2015
-# Version:      0.0.17
+# Modified:     12/02/2015
+# Version:      0.0.19
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -36,7 +36,7 @@ from ..io.interface import InterfaceGPIO
 from ..utils.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported
 
 from displays.sevensegment import SevenSegment
-from displays.sevensegment import SevenSegmentGroup
+from displays.sevensegment import SevenSegments
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

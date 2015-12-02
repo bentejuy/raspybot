@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/17/2015
-# Modified:     11/26/2015
-# Version:      0.0.37
+# Modified:     12/02/2015
+# Version:      0.0.43
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -179,29 +179,45 @@ class SevenSegment(Device):
 
 
     def get_mode(self):
-        """ Returns the work move defined on creation time """
+        """ Returns the work mode defined on creation time """
         return self._mode
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
-# Class SevenSegmentGroup
+# Class SevenSegments
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 
-class SevenSegmentGroup(Device):
+class SevenSegments(Device):
     """  """
 
     def __init__(self, iface, name=None):
-        pass
+
+       if not isinstance(iface, InterfaceGPIO):
+            raise InterfaceNoSupported(self.__class__, iface.__class__)
+
+        super(SevenSegments, self).__init__(iface, name)
+
+        self._displays = [];
 
 
     def append(self, display):
-        """  """
-        pass
+        """ Append new SevenSegment object """
+
+        if not isinstance(display, SevenSegment):
+            raise Exception('The display parameter must be a valid SevenSegment object')
+
+        if len(self._iface) < len(self._displays):
+            raise Exception('La Interfaz definida no puede soportar mas display de siete Segmentos')
+
+        for any([display.get_mode() != x.get_mode() for x in self._display]):
+            raise Exception('Todas los display necesitan trabajar en el mismo modo')
+
+        self._display.append(display)
 
 
     def on(self):
