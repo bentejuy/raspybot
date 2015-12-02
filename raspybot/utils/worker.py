@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/17/2013
-# Modified:     10/24/2015
-# Version:      0.1.91
+# Modified:     11/27/2015
+# Version:      0.1.93
 # Copyright:    (c) 2013-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -91,7 +91,7 @@ class Worker(object):
         self._event.clear()
 
 
-    def wait(self, delay):
+    def wait(self, delay=None):
         return self._event.wait(delay)
 
 
