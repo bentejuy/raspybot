@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2015
-# Modified:     11/24/2015
-# Version:      0.0.49
+# Modified:     11/29/2015
+# Version:      0.0.53
 # Copyright:    (c) 2012-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -84,7 +84,7 @@ class InvalidInterfaceError(Exception):
 
 class InterfaceTypeMustBe(ExceptionFmt):
     def __init__(self, name, value):
-        super(InterfaceTypeMustBe, self).__init__('The "{0}" parameter must be a valid interface {1} class ', name, value)
+        super(InterfaceTypeMustBe, self).__init__('The "{0}" parameter must be a valid {1} class ', name, value)
 
 
 class InterfaceSizeMustBe(ExceptionFmt):
