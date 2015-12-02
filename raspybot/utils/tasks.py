@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/14/2013
-# Modified:     12/24/2013
-# Version:      0.1.33
+# Modified:     11/29/2015
+# Version:      0.1.37
 # Copyright:    (c) 2013 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -51,7 +51,7 @@ class Task(object):
     FINISHED = range(6)
 
     def __init__(self, timeout=0):
-        self._state   = timeout <= 0 and self.CONSTANT or self.WAITING
+        self._state = self.CONSTANT if timeout < 0 else self.WAITING
         self._started = 0
         self._timeout = timeout
 
