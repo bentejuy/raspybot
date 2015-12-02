@@ -7,7 +7,7 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/22/2015
-# Modified:     09/11/2015
+# Modified:     12/01/2015
 # Version:      0.0.37
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
@@ -133,7 +133,7 @@ class InterfacePWM(InterfaceActive):
             super(self.__class__, self).__start__()
 
 
-    def write(self, index, dutycycle, timeout=-1):
+    def write(self, index, dutycycle, timeout=0):
         """ """
 
         if not self._pwm[index]:
@@ -147,6 +147,5 @@ class InterfacePWM(InterfaceActive):
 
     def set_frequency(self, freq):
         """  """
-
         self._frequency = freq
 

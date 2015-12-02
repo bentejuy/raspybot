@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/22/2015
-# Modified:     08/16/2015
-# Version:      0.0.13
+# Modified:     12/01/2015
+# Version:      0.0.15
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -55,4 +55,4 @@ class TaskPWM(Task):
 
 
     def __str__(self):
-        return '{0} => action: {1} :: dutycycle: {2} :: index: {3} :: timeout: {4}'.format(self.__class__, self.action, self.dutycycle, self.index, self._timeout)
+        return '{0} => action: {1} :: dutycycle: {2} :: index: {3} :: state: {4} :: timeout: {5}'.format(self.__class__, self.action, self.dutycycle, self.index, self._state, self._timeout)
