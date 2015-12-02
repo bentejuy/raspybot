@@ -178,6 +178,11 @@ class SevenSegment(Device):
             self.__write__((self._data | (0x80 if state else 0x00)) ^ self._xord)
 
 
+    def get_mode(self):
+        """ Returns the work move defined on creation time """
+        return self._mode
+
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
