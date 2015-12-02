@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     10/15/2015
-# Version:      0.0.79
+# Modified:     11/29/2015
+# Version:      0.0.83
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -34,12 +34,14 @@ from device import ActionDevice
 from ..utils.worker import Worker
 from ..utils.timeit import timeit
 from ..utils.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, \
-                               MinMaxValueError, InterfaceNoSupported
+                               MinMaxValueError, InterfaceNoSupported, InterfaceTypeMustBe, InterfaceSizeMustBe
 
 from ..io.interface import InterfacePWM
 from ..io.interface import InterfaceGPIO
 
 from motors.motorbase import MotorBase
+
+from motors.motordc import MotorDC
 from motors.motorservo import MotorServo
 from motors.motorstepper import MotorStepper
 from motors.motorstepperbipolar import MotorStepperBipolar
