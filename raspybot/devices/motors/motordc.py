@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/23/2015
-# Modified:     11/10/2015
-# Version:      0.0.35
+# Modified:     12/03/2015
+# Version:      0.0.43
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -168,12 +168,8 @@ class MotorDC(MotorBase):
         if self._dutycycle >= 100:
             return
 
-        dutycycle =  self_dutycycle + value if (dutycycle + value) < 100 else 100
-
-        if self._direction == self.RIGHT:
-            self.forward(dutycycle)
-        else:
-            self.backward(dutycycle)
+        self._dutycycle = self._dutycycle + value if (self._dutycycle + value) < 100 else 100
+        self.__write_pwm__(0, self._dutycycle)
 
 
     def speed_down(self, value=1):
@@ -188,13 +184,8 @@ class MotorDC(MotorBase):
         if self._dutycycle <= 0:
             return
 
-        dutycycle =  self_dutycycle - value if (dutycycle - value) > 0 else 0
-
-        if self._direction == self.RIGHT:
-            self.forward(dutycycle)
-
-        else:
-            self.backward(dutycycle)
+        self._dutycycle = self._dutycycle - value if (self._dutycycle - value) > 0 else 0
+        self.__write_pwm__(0, self._dutycycle)
 
 
     def stop(self):
