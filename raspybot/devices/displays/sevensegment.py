@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/17/2015
-# Modified:     12/02/2015
-# Version:      0.0.43
+# Modified:     12/03/2015
+# Version:      0.0.57
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,6 +29,9 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+from math import log
+
+from ..display import Worker
 from ..display import Device
 from ..display import OutRangeError, InvalidTypeError, InterfaceNoSupported
 
@@ -155,12 +158,12 @@ class SevenSegment(Device):
 
 
     def on(self):
-        """ Turn on the segments with the value stored """
+        """ Turns on the segments with the value stored """
         self.__write__(self._data)
 
 
     def off(self):
-        """ Turn off all segment """
+        """ Turns off all segment """
         self.__write__(0 ^ self._xord)
 
 
@@ -197,12 +200,43 @@ class SevenSegments(Device):
 
     def __init__(self, iface, name=None):
 
-       if not isinstance(iface, InterfaceGPIO):
+        if not isinstance(iface, InterfaceGPIO):
             raise InterfaceNoSupported(self.__class__, iface.__class__)
 
         super(SevenSegments, self).__init__(iface, name)
 
+        self._value = 0
         self._displays = [];
+
+        self._worker =  Worker(self.__run__)
+
+
+    def __run__(self):
+        value = self._value
+        delay = 1 / (30.0 * len(self._displays))        # Trying to maintain a higher refresh time to 25 times per second
+
+        for display in self._displays:
+            display.off()
+
+            if value:
+                display.set(value % 10, False)
+                value /= 10
+
+        index = 0
+        value = (2 ** len(self._displays)) >> 1
+
+        while not worker.is_set():
+            if not index:
+                index = value
+            else
+                index >>= 1
+
+            self._displays[int(log(index, 2))].on()
+
+            self._iface.write(index)
+            self._worker.wait(delay)
+
+            index >>= 1
 
 
     def append(self, display):
@@ -221,14 +255,32 @@ class SevenSegments(Device):
 
 
     def on(self):
-        """  """
-        pass
+        """ Turns on all SevenSegment displays  """
+
+        if not self._worker.alive():
+            self._worker.__start__()
 
 
     def off(self):
-        """  """
-        pass
+        """ Turns off all SevenSegment displays """
+
+        if self._worker.alive():
+            self._worker.__stop__()
+
 
     def write(self, value=0):
-        """  """
-        pass
+        """ Writes a numeric value in the SevenSegment displays """
+
+        if not isinstance(value, (int, long)):
+            raise InvalidTypeError('Value', 'numeric')
+
+        if abs(value) > (10 ** len(self._display) - 1):
+            raise OverflowError('Value is out of range')
+
+
+        if self._worker.alive():
+            self._worker.__stop__()
+
+        self._value = abs(value)
+        self._worker.__start__()
+
