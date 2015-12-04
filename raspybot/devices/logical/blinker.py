@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     07/08/2015
-# Version:      0.0.49
+# Modified:     12/04/2015
+# Version:      0.0.53
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -35,7 +35,8 @@ import logging
 
 from ..logic import Worker
 from ..logic import ActionDevice
-from ..logic import OutRangeError, InvalidFunctionError, InvalidTypeError, IsRunningError, InterfaceNoSupported
+from ..logic import OutRangeError, InvalidFunctionError, InvalidTypeError, \
+                    MinMaxValueError, IsRunningError, InterfaceNoSupported
 
 from ..logic import InterfaceGPIO
 
@@ -53,7 +54,10 @@ logger = logging.getLogger(__name__)
 
 
 class Blinker(ActionDevice):
-    """ Send intermittent pulses, being able to vary the speed and the value we want to send. """
+    """
+    The 'Blinker' object send intermittent pulses, being able to vary the speed
+    and the value we want to send to one or more channels.
+    """
 
     def __init__(self, iface, name=None, delay=1, initial=0, checker=None, start=None, stop=None):
 
@@ -111,17 +115,17 @@ class Blinker(ActionDevice):
 
 
     def start(self, timelive=None):
-        """  """
+        """ Starts to work the 'Blinker' object """
 
         if isinstance(timelive, (int, long, float)):
             if timelive < self._delay:
-                raise ValueError('The "timelive" parameter must be greater that the delay time')
+                raise MinMaxValueError('timelive', 'parameter', 'greater', 'the delay time')
 
         self._worker.__start__((timelive,))
 
 
     def stop(self):
-        """  """
+        """ Stops the working of Blinker object """
 
         if self._worker.alive():
             self._worker.__stop__()
@@ -130,19 +134,17 @@ class Blinker(ActionDevice):
 
 
     def join(self):
-        """  """
-
+        """ Waits indefinitely or until the 'Blinker' object temporized """
         self._worker.join()
 
 
     def alive(self):
-        """  """
-
+        """ Checks if the object is working """
         return self._worker.alive()
 
 
     def set_delay(self, delay):
-        """  """
+        """ Sets the delay between changes of state """
 
         if not isinstance(delay, (int, long, float)):
             raise InvalidTypeError('The delay', 'numeric')
@@ -154,7 +156,7 @@ class Blinker(ActionDevice):
 
 
     def set_value(self, value):
-        """  """
+        """ Sets the value that stored by the 'Blinker' object """
 
         if not isinstance(value, (int, long, float)):
             raise InvalidTypeError('The delay', 'numeric')
@@ -169,24 +171,24 @@ class Blinker(ActionDevice):
 
 
     def set_callback(self, callback):
-        """  """
+        """ Sets the callback that define the next value depending on the value received """
 
         if callback and not hasattr(callback, '__call__'):
             raise InvalidFunctionError('checker')
 
         working = self.alive()
 
-        if working:
+        if callback and working:
             self.stop()
 
         self._checker = callback
 
-        if working:
+        if callback and working:
             self.start()
 
 
-    def set(self, delay, initial, checker):
-        """  """
+    def set(self, delay, initial, checker=None):
+        """ Sets all configurations parameters in only one call """
 
         self.set_delay(delay)
         self.set_value(initial)
