@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/23/2015
-# Modified:     12/03/2015
-# Version:      0.0.43
+# Modified:     12/04/2015
+# Version:      0.0.53
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -52,24 +52,53 @@ from ..motor import InterfaceGPIO, InterfacePWM
 
 
 class MotorDC(MotorBase):
+    """
+    MotorDC is an object designed to control DC motors and its operation depends
+    on the chosen mode when the object is created.
+
+    The operating modes are as follows:
+
+    GPIO_SIMPLE: This is the most basic mode and only allows us to start and stop
+    the engine. To function, we need a InterfaceGPIO with a single output channel.
+
+    GPIO_REVERSIBLE: wor start and stop the engine, it allows us to reverse the
+    direction of rotation. On the electronic level needs a H-bridge for controlling
+    the motor and an InterfaceGPIO with two output channels.
+
+    PWM_SIMPLE: It works exactly like the GPIO SIMPLE mode but with the ability to
+    control the speed. For this you need an InterfacePWM with one output channel.
+
+    PWM_REVERSIBLE: In this mode besides controlling the rotational speed, it allows
+    change the direction. Require an InterfacePWM with two output channels. Like the
+    GPIO_REVERSIBLE mode, we need an H-bridge to control the motor.
+
+    """
     GPIO_SIMPLE, \
-    PWM_SIMPLE = range(2);
+    GPIO_REVERSIBLE, \
+    PWM_SIMPLE, \
+    PWM_REVERSIBLE = range(4);
 
     def __init__(self, iface, mode=0, frequency=100, dutycycle=100, name=None, start=None, stop=None):
 
-        if not mode or mode == self.GPIO_SIMPLE:
+        if not mode or mode in (self.GPIO_SIMPLE, self.GPIO_REVERSIBLE):
             if not isinstance(iface, InterfaceGPIO):
                 raise InterfaceTypeMustBe('GPIO mode' , 'InterfaceGPIO')
 
             if mode == self.GPIO_SIMPLE and len(iface) < 1:
                 raise InterfaceSizeMustBe(iface.__class__, 1)
 
-        elif mode == self.PWM_SIMPLE:
+            elif mode == self.GPIO_REVERSIBLE and len(iface) < 2:
+                raise InterfaceSizeMustBe(iface.__class__, 2)
+
+        elif mode in (self.PWM_SIMPLE, self.PWM_REVERSIBLE):
             if not isinstance(iface, InterfacePWM):
                 raise InterfaceTypeMustBe('PWM mode' , 'InterfacePWM')
 
             if mode == self.PWM_SIMPLE and len(iface) < 1:
                 raise InterfaceSizeMustBe(iface.__class__, 1)
+
+            elif mode == self.PWM_REVERSIBLE and len(iface) < 2:
+                raise InterfaceSizeMustBe(iface.__class__, 2)
 
         else:
             raise Exception('Unknown working mode for MotorDC class')
@@ -80,7 +109,7 @@ class MotorDC(MotorBase):
         self._direction = None
         self._frequency = 50
         self._dutycycle = 100
-        self._pwm_enabled = mode in (self.PWM_SIMPLE,)
+        self._pwm_enabled = mode in (self.PWM_SIMPLE, self.PWM_REVERSIBLE)
 
         self._worker = Worker(self.__run__)
 
@@ -92,10 +121,17 @@ class MotorDC(MotorBase):
         self.action_start()
 
         if self._mode == self.GPIO_SIMPLE:
-            self.__write_gpio__(1)
+            self.__write_gpio__(0x01)
+
+        elif self._mode == self.GPIO_REVERSIBLE:
+            self.__write_gpio__(0x01 if moveto == self.MOVE_RIGHT else 0x02)
 
         elif self._mode == self.PWM_SIMPLE:
             self.__write_pwm__(0, self._dutycycle)
+
+        elif self._mode == self.PWM_REVERSIBLE:
+            self.__write_pwm__(0, self._dutycycle if moveto == self.MOVE_RIGHT else 0)
+            self.__write_pwm__(1, self._dutycycle if moveto == self.MOVE_LEFT else 0)
 
         if not timeout:
             self._worker.wait()
@@ -157,7 +193,7 @@ class MotorDC(MotorBase):
 
 
     def speed_up(self, value=1):
-        """ Increase the speed, this method only works with modes that an interfacePWM was defined """
+        """ Increase the speed, this method only works with modes that an InterfacePWM was defined """
 
         if not self._pwm_enabled or not self.alive():
             return
@@ -173,7 +209,7 @@ class MotorDC(MotorBase):
 
 
     def speed_down(self, value=1):
-        """ Decrease the speed, this method only works with modes that an interfacePWM was defined """
+        """ Decrease the speed, this method only works with modes that an InterfacePWM was defined """
 
         if not self._pwm_enabled or not self.alive():
             return
@@ -189,7 +225,7 @@ class MotorDC(MotorBase):
 
 
     def stop(self):
-        """ Stop the motor """
+        """ Stops the motor """
 
         if self._worker.alive():
             self._worker.__stop__()
