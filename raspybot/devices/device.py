@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/16/2015
-# Modified:     11/26/2015
-# Version:      0.0.19
+# Modified:     12/05/2015
+# Version:      0.0.23
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -48,11 +48,17 @@ class Device(object):
     """ The base class of all devices that interoperate with interfaces. """
 
     def __init__(self, iface, name=None):
-        if not isinstance(iface, Interface):
+
+        if isinstance(iface, (tuple, list)):
+            if any([not isinstance(x, Interface) for x in iface]):
+                raise InvalidInterfaceError()
+
+        elif not isinstance(iface, Interface):
             raise InvalidInterfaceError()
 
-        self._name  = name or str(uuid.uuid4())
+        self._name = name or str(uuid.uuid4())
         self._iface = iface
+
 
     def __str__(self):
         return '{} :: name : {}'.format(self.__class__, self._name)
