@@ -266,6 +266,7 @@ class MotorDC(MotorBase):
             else:
                 if not isinstance(self._iface, tuple):
                     self._iface.write(0, 0)
+                    self._iface.write(1, 0)
 
                 else:
                     self._iface[0].write(0)
