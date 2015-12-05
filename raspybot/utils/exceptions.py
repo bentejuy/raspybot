@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2015
-# Modified:     11/29/2015
-# Version:      0.0.53
+# Modified:     12/05/2015
+# Version:      0.0.55
 # Copyright:    (c) 2012-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -79,7 +79,7 @@ class IsRunningError(ExceptionFmt):
 
 class InvalidInterfaceError(Exception):
     def __str__(self):
-        return 'The interface must be a valid "Interface" object'
+        return 'The interface must be a valid "Interface" object or tuple of "Interface" objets'
 
 
 class InterfaceTypeMustBe(ExceptionFmt):
@@ -89,7 +89,7 @@ class InterfaceTypeMustBe(ExceptionFmt):
 
 class InterfaceSizeMustBe(ExceptionFmt):
     def __init__(self, name, value, details=''):
-        super(InterfaceSizeMustBe, self).__init__('The number of channels in the interface {0} must be equal or higher {1}', name, value, details)
+        super(InterfaceSizeMustBe, self).__init__('The number of channels in the interface {0} must be equal or higher to {1} {2}', name, value, details)
 
 
 class InterfaceNoSupported(ExceptionFmt):
