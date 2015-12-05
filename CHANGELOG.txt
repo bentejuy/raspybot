@@ -4,6 +4,10 @@ Change Log
 0.1.7
 -----
 
+Updated test files
+It does not change the dutycycle value of rotation changes
+Fixed bug: don't stop in PWM_REVERSIBLE mode
+Syntax wrong
 Added new test files for MotorDC
 Added new operation mode for MotorDC
 Corrected and updated exceptions
