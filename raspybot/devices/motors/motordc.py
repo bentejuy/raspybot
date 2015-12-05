@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/23/2015
-# Modified:     12/04/2015
-# Version:      0.0.53
+# Modified:     12/05/2015
+# Version:      0.0.63
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -72,11 +72,19 @@ class MotorDC(MotorBase):
     change the direction. Require an InterfacePWM with two output channels. Like the
     GPIO_REVERSIBLE mode, we need an H-bridge to control the motor.
 
+    ADV_REVERSIBLE: This mode is intended to control dc motors through integrated
+    circuit like the L298N, L293D, DRV8833 or similars. It need to receive a tuple with
+    an InterfaceGPIO object with two channels and an InterfacePWM object. The channels
+    of the InterfaceGPIO will control the power transistors that determine the direction
+    of the rotation and the InterfacePWM will control the output inhibitor of these
+    transistors, thereby we can control the speed and direction of rotation.
     """
+
     GPIO_SIMPLE, \
     GPIO_REVERSIBLE, \
     PWM_SIMPLE, \
-    PWM_REVERSIBLE = range(4);
+    PWM_REVERSIBLE, \
+    ADV_REVERSIBLE = range(5);
 
     def __init__(self, iface, mode=0, frequency=100, dutycycle=100, name=None, start=None, stop=None):
 
@@ -100,8 +108,20 @@ class MotorDC(MotorBase):
             elif mode == self.PWM_REVERSIBLE and len(iface) < 2:
                 raise InterfaceSizeMustBe(iface.__class__, 2)
 
+        elif mode == self.ADV_REVERSIBLE:
+            ifpwm = filter(lambda x: isinstance(x, InterfacePWM), iface)[0]
+            ifdir = filter(lambda x: isinstance(x, InterfaceGPIO), iface)[0]
+
+            if not ifpwm or not ifdir:
+                raise Exception('The ADV_REVERSIBLE mode need a tuple with an InterfaceGPIO and an InterfacePWM as interfaces')
+
+            if len(ifdir) < 2:
+                raise InterfaceSizeMustBe(ifdir.__class__, 2)
+
+            iface = ifdir, ifpwm
+
         else:
-            raise Exception('Unknown working mode for MotorDC class')
+            raise Exception('Unknown work mode for MotorDC class')
 
         super(MotorDC, self).__init__(iface, name, start, stop)
 
@@ -109,7 +129,7 @@ class MotorDC(MotorBase):
         self._direction = None
         self._frequency = 50
         self._dutycycle = 100
-        self._pwm_enabled = mode in (self.PWM_SIMPLE, self.PWM_REVERSIBLE)
+        self._pwm_enabled = mode in (self.PWM_SIMPLE, self.PWM_REVERSIBLE, self.ADV_REVERSIBLE)
 
         self._worker = Worker(self.__run__)
 
@@ -133,6 +153,10 @@ class MotorDC(MotorBase):
             self.__write_pwm__(0, self._dutycycle if moveto == self.MOVE_RIGHT else 0)
             self.__write_pwm__(1, self._dutycycle if moveto == self.MOVE_LEFT else 0)
 
+        elif self._mode == self.ADV_REVERSIBLE:
+            self.__write_pwm__(0, self._dutycycle)
+            self.__write_gpio__(0x01 if moveto == self.MOVE_RIGHT else 0x02)
+
         if not timeout:
             self._worker.wait()
 
@@ -144,11 +168,17 @@ class MotorDC(MotorBase):
 
 
     def __write_pwm__(self, channel, dutycycle):
-        self._iface.write(channel, dutycycle)
+        if not isinstance(self._iface, tuple):
+            self._iface.write(channel, dutycycle)
+        else:
+            self._iface[1].write(channel, dutycycle)
 
 
     def __write_gpio__(self, data):
-        self._iface.write(data)
+        if not isinstance(self._iface, tuple):
+            self._iface.write(data)
+        else:
+            self._iface[0].write(data)
 
 
     def set_dutycycle(self, pulse):
@@ -234,7 +264,13 @@ class MotorDC(MotorBase):
                 self._iface.write(0)
 
             else:
-                self._iface.write(0, 0)
+                if not isinstance(self._iface, tuple):
+                    self._iface.write(0, 0)
+
+                else:
+                    self._iface[0].write(0)
+                    self._iface[1].write(0, 0)
+
 
 
     def forward(self, dutycycle=100, timeout=None):
