@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      11/24/2015
-# Modified:     11/26/2015
-# Version:      0.0.07
+# Modified:     12/05/2015
+# Version:      0.0.09
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
@@ -41,7 +41,7 @@ def logger_init(debug=None):
 
 
 manager = InterfaceManager()
-iface = InterfaceGPIO(manager, pinout=(5, 6, 13, 19, 26, 21, 20, 16))   # 8 pins for 7 segment and point led in this order a,b,c,d,e,f,g, pointer
+iface = InterfaceGPIO(manager, pinout=(5, 6, 13, 19, 26, 21, 20, 16))   # 8 pins for 7 segment and dot led in this order a,b,c,d,e,f,g and dp
 
 display = SevenSegment(iface, SevenSegment.DIRECT_MODE)
 

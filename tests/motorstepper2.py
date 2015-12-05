@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     10/18/2015
-# Version:      0.0.15
+# Modified:     12/05/2015
+# Version:      0.0.17
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
@@ -64,11 +64,11 @@ motor2 = MotorStepperUnipolar(iface2, 'Motor 2', start=startinfo, stop=stopinfo)
 try:
     motor1.set_mode(motor1.MODE_SINGLE)
     motor1.set_degrees(5.625/64)                #  Default degreess by step for stepper motor 28BYJ-48
-    motor1.set_speed(25)
+    motor1.set_speed(15)
 
     motor2.set_mode(motor2.MODE_DUAL)
     motor2.set_degrees(5.625/64)                #  Default degreess by step for stepper motor 28BYJ-48
-    motor2.set_speed(25)
+    motor2.set_speed(15)
 
     count = 5
 

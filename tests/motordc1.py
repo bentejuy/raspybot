@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      08/18/2015
-# Modified:     12/03/2015
-# Version:      0.0.17
+# Modified:     12/05/2015
+# Version:      0.0.19
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
@@ -24,7 +24,7 @@ from raspybot.io.interface import InterfaceManager, InterfaceGPIO, InterfacePWM
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 def show_help():
-    print
+    print "Testing MotorDC in GPIO_SIMPLE mode"
     print " f : Move motor to right side"
     print " s : stop motor"
     print " q : quit..."

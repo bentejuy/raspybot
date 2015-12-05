@@ -8,7 +8,7 @@
 # Author:       Bentejuy Lopez
 # Created:      12/04/2015
 # Modified:     12/05/2015
-# Version:      0.0.07
+# Version:      0.0.09
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
@@ -24,7 +24,7 @@ from raspybot.io.interface import InterfaceManager, InterfaceGPIO, InterfacePWM
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 def show_help():
-    print
+    print "Testing MotorDC in PWM_REVERSIBLE mode"
     print " f : Move motor to right side"
     print " b : Move motor to left side"
     print " + : increment the speed"
