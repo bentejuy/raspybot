@@ -8,7 +8,7 @@
 # Author:       Bentejuy Lopez
 # Created:      07/23/2015
 # Modified:     12/05/2015
-# Version:      0.0.63
+# Version:      0.0.67
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -187,6 +187,9 @@ class MotorDC(MotorBase):
         if not self._pwm_enabled:
             return
 
+        if pulse is not None:
+            return
+
         if not isinstance(pulse, (int, long, float)):
             raise InvalidTypeError('The dutycycle', 'numeric')
 
@@ -273,15 +276,14 @@ class MotorDC(MotorBase):
                     self._iface[1].write(0, 0)
 
 
-
-    def forward(self, dutycycle=100, timeout=None):
+    def forward(self, dutycycle=None, timeout=None):
         """ Move the motor to the right """
 
         self.set_dutycycle(dutycycle)
         self._worker.__start__(args=(self.MOVE_RIGHT, timeout))
 
 
-    def backward(self, dutycycle=100, timeout=None):
+    def backward(self, dutycycle=None, timeout=None):
         """ Move the motor to the left """
 
         if self._mode in (self.GPIO_SIMPLE, self.PWM_SIMPLE):
