@@ -228,7 +228,7 @@ class SevenSegments(Device):
         while not worker.is_set():
             if not index:
                 index = value
-            else
+            else:
                 index >>= 1
 
             self._displays[int(log(index, 2))].on()
