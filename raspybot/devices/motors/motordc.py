@@ -187,7 +187,7 @@ class MotorDC(MotorBase):
         if not self._pwm_enabled:
             return
 
-        if pulse is not None:
+        if pulse is None:
             return
 
         if not isinstance(pulse, (int, long, float)):
