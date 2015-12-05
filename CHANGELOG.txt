@@ -1,6 +1,28 @@
 Change Log
 ==========
 
+0.1.7
+-----
+
+Added new test files for MotorDC
+Added new operation mode for MotorDC
+Corrected and updated exceptions
+Allows control of one or more interface objects by a device
+Added two new operating modes to MotorDC
+Updated the Blinker object
+Updated motorservo2 test file
+Updated SevenSegments object
+Corrected the methods to control speed
+Added MotorDC object.
+Renamed SevenSegmentGroup to SevenSegments and updated object.
+Added function
+Added some test files
+Small modifications in InterfacePWM
+Added default value in wait function
+Updated to inline if statement
+Small modification in exception message
+Removed unused exception
+
 
 0.1.6
 -----
