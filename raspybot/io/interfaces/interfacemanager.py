@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     10/18/2015
-# Version:      0.0.83
+# Modified:     12/10/2015
+# Version:      0.0.91
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,8 +33,13 @@ import logging
 import exceptions
 
 from ..interface import gpio
+from ..interface import smbus
+
 from ..interface import InterfacePWM
 from ..interface import InterfaceGPIO
+from ..interface import InterfaceI2CSlave
+from ..interface import InterfaceI2CMaster
+
 from ..interface import ExceptionFmt, InvalidInterfaceError, InvalidTypeError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -83,6 +88,21 @@ class DuplicateInterfaceError(Exception):
 class UnknowInterfaceError(ExceptionFmt):
     def __init__(self, value):
         super(UnknowInterfaceError, self).__init__('Invalid or Unknown Interface type "{0!r}"', value)
+
+
+class NoMasterInterfaceError(ExceptionFmt):
+    def __init__(self, value):
+        super(NoMasterInterfaceError, self).__init__('The {0} Slave Interface needs to have previously created a {0} Master Interface"', value)
+
+
+class OnlyOneInterfaceError(ExceptionFmt):
+    def __init__(self, value):
+        super(OnlyOneInterfaceError, self).__init__('There only can be one Interface "{0}"', value)
+
+
+class DuplicateAddressI2CError(ExceptionFmt):
+    def __init__(self, value):
+        super(DuplicateAddressI2CError, self).__init__('The address "{0:#X}" on the I2C bus is already in use"', value)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -161,6 +181,9 @@ class InterfaceManager(object):
             check_in_use(pin, (self.I2C, self.SPI, self.PWM, self.GPIO), owner)
             gpio.setup(pin, gpio.OUT, gpio.PUD_OFF, initial)
 
+        elif mode == gpio.I2C:
+            check_in_use(pin, (self.SPI, self.PWM, self.GPIO), owner)
+
         else:
             raise InvalidModeChannelError(pin)
 
@@ -178,6 +201,18 @@ class InterfaceManager(object):
 
         elif isinstance(iface, InterfacePWM):
             return gpio
+
+        elif isinstance(iface, InterfaceI2CMaster):
+            if hasattr(smbus, 'fake') and not self._debug:
+                raise ImportError('Error loading the module python-smbus, set to "True" the debug parameter to load the fakeSMBus module to make tests or install the python-smbus module')
+
+            return smbus.SMBus()
+
+        elif isinstance(iface, InterfaceI2CSlave):
+            if not self._interfaces[self.I2C]:
+                raise NoMasterInterfaceError('I2C')
+
+            return self._interfaces[self.I2C]
 
         else:
             raise UnknowInterfaceError(iface.__class__)
@@ -203,7 +238,7 @@ class InterfaceManager(object):
                 gpio.remove_event_detect(pin)
 
             elif mode == gpio.I2C:
-                raise NotImplementedError()
+                pass
 
             elif mode == gpio.SPI:
                 raise NotImplementedError()
@@ -239,6 +274,22 @@ class InterfaceManager(object):
 
             self._interfaces[self.PWM].append(iface)
 
+        elif isinstance(iface, InterfaceI2CMaster):
+            if self.I2C in self._interfaces:
+                raise OnlyOneInterfaceError(iface.__class__)
+
+            self._interfaces[self.I2C] = iface
+
+        elif isinstance(iface, InterfaceI2CSlave):
+            if not self.I2C in self._interfaces:
+                raise NoMasterInterfaceError('I2C')
+
+            try:
+                self._interfaces[self.I2C].register(iface)
+
+            except KeyError:
+                raise DuplicateAddressI2CError(iface.get_address())
+
         else:
             UnknowInterfaceError(iface.__class__)
 
@@ -265,6 +316,26 @@ class InterfaceManager(object):
 
             iface.free()
             self._interfaces[self.PWM].remove(iface)
+
+        elif isinstance(iface, InterfaceI2CMaster):
+            if not self.I2C in self._interfaces:
+                return
+
+            if not iface is self._interfaces[self.I2C]:
+                raise NotFoundInterfaceError()
+
+            iface.free()
+            del self._interfaces[self.I2C]
+
+        elif isinstance(iface, InterfaceI2CSlave):
+            if not self.I2C in self._interfaces:
+                return
+
+            try:
+                self._interfaces[self.I2C].remove(iface)
+
+            except KeyError:
+                raise NotFoundInterfaceError()
 
         else:
             UnknowInterfaceError(iface.__class__)
