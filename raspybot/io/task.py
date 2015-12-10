@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/24/2015
-# Modified:     07/23/2015
-# Version:      0.0.33
+# Modified:     12/07/2015
+# Version:      0.0.35
 # Copyright:    (c) 2013-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -32,6 +32,7 @@
 from ..utils.tasks import Task
 
 from tasks.taskpwm import TaskPWM
+from tasks.taski2c import TaskI2C
 from tasks.taskgpio import TaskGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

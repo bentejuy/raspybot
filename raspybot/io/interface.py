@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     07/30/2015
-# Version:      0.0.75
+# Modified:     12/09/2015
+# Version:      0.0.77
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -61,17 +61,28 @@ except ImportError:
     import interfaces.fakegpio as gpio
     logger.warn('Initializing "InterfaceManager" in debug mode because RPi.GPIO module was not found')
 
+try:
+    import smbus
+
+except ImportError:
+    import interfaces.fakesmbus as smbus
+    logger.warn('Error importing the "smbus" module, using the "fakesmbus" module  by default')
+
 
 from .task import TaskPWM
+from .task import TaskI2C
 from .task import TaskGPIO
 
 from ..utils.worker import WorkerTask
 from ..utils.exceptions import InvalidTypeError, InvalidFunctionError, InvalidInterfaceError, ExceptionFmt
 
 from interfaces.interface import Interface
+from interfaces.interface import InterfaceSlave
 from interfaces.interface import InterfaceActive
 from interfaces.interfacepwm import InterfacePWM
 from interfaces.interfacegpio import InterfaceGPIO
+from interfaces.interfacei2c import InterfaceI2CSlave
+from interfaces.interfacei2c import InterfaceI2CMaster
 from interfaces.interfacemanager import InterfaceManager
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
