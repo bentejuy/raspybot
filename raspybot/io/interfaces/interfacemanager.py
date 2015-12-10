@@ -120,10 +120,6 @@ class InterfaceManager(object):
         gpio.cleanup()
         gpio.setmode(mode)
 
-        # Alias functions for backward compatibility
-        setattr(self, 'add_interface', self.append)
-        setattr(self, 'del_interface', self.delete)
-
 
     def setup(self, pin, mode, initial=0, callback=None, pud=gpio.PUD_DOWN, edge=gpio.BOTH, bouncetime=200, owner=None):
         """  """
