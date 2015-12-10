@@ -167,7 +167,7 @@ class InterfaceManager(object):
 
     def get_mode(self):
         """ Returns the numbering mode of GPIO channels. """
-        return gpio.get_mode()
+        return gpio.getmode()
 
 
     def get_connection(self, iface):
