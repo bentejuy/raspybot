@@ -7,15 +7,12 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      12/03/2015
-# Modified:     12/05/2015
-# Version:      0.0.05
+# Modified:     12/09/2015
+# Version:      0.0.07
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-import sys
-import time
 
 from raspybot.devices.motor import MotorDC
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO, InterfacePWM
