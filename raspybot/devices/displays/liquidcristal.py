@@ -2,13 +2,13 @@
 # -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
-# Name:         display
+# Name:         liquidcristal
 # Purpose:
 #
 # Author:       Bentejuy Lopez
-# Created:      09/19/2015
-# Modified:     12/20/2015
-# Version:      0.0.23
+# Created:      11/29/2015
+# Modified:     11/29/2015
+# Version:      0.0.03
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,16 +29,26 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from device import Device
+from ..display import Device
 
-from ..io.interface import InterfaceI2C
-from ..io.interface import InterfaceGPIO
-
-from ..utils.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported
-
-from displays.sevensegment import SevenSegment
-from displays.sevensegment import SevenSegments
-from displays.liquidcrital import LiquidCristal
-
+from ..display import InterfaceI2C
+from ..display import InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#
+# Class LiquidCristal
+#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+class LiquidCristal(Device):
+    """  """
+
+    LCD5110,
+    HD4466_DIRECT, \
+    HD4466_I2C = range(2)
+
+
+    def __init__(self, iface, model=None, name=None):
+        pass
