@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     12/09/2015
-# Version:      0.0.43
+# Modified:     12/20/2015
+# Version:      0.0.57
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -120,6 +120,35 @@ class InterfaceI2CSlave(InterfaceSlave):
                 task = TaskI2C(TaskI2C.I2C_WRITE_BLOCK, self._address, data, comm, length)
 
         self._master.append(task)
+
+
+    def read(self):
+        """ """
+        self._master.append(TaskI2C(TaskI2C.I2C_READ_BYTE, self._address, data, self._comm))
+
+
+    def read_to(self, data, comm=0, length=None):
+        """  """
+
+        if not length:
+            task = TaskI2C(TaskI2C.I2C_WRITE if length is None else TaskI2C.I2C_READ_BYTE, self._address, data, comm)
+
+        else:
+            if isinstance(length, (int, long)) and length > 0:
+                logger.critical('Type or value  not valid  in "length" parameter calling to method "read" on device {0:#X}'.format(self._address))
+                return
+
+            if length == 1:
+                task = TaskI2C(TaskI2C.I2C_READ_BYTE, self._address, data)
+
+            elif length == 2:
+                task = TaskI2C(TaskI2C.I2C_REAd_WORD, self._address, data, comm)
+
+            else:
+                task = TaskI2C(TaskI2C.I2C_READ_BLOCK, self._address, data, comm, length)
+
+        self._master.append(task)
+
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
