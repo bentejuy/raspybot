@@ -5,59 +5,34 @@
 # Name:         tests/motorstepper1
 # Purpose:      Testing MotorStepperUnipolar object with blocking mode
 #
-# Author:       Bentejuy Lopez
 # Created:      03/20/2015
 # Modified:     12/05/2015
-# Version:      0.0.11
-# Copyright:    (c) 2015 Bentejuy Lopez
-# Licence:      MIT
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 import sys
 import time
-import logging
+
+from __future__ import ( print_function )
 
 from raspybot.devices.motor import MotorStepperUnipolar
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-def logger_init(debug=None):
-    log = logging.getLogger('')
-
-    hld = logging.StreamHandler(sys.stdout)
-    hld.setLevel(debug and logging.DEBUG or logging.WARNING)
-    hld.setFormatter(logging.Formatter('%(levelname)s :: %(name)s [%(lineno)d] --> %(message)s'))
-    log.addHandler(hld)
-
-    log.setLevel(debug and logging.DEBUG or logging.WARNING)
-
-    return log
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logger_init(True)
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 def startinfo(motor):
-    logger.debug("Starting Motor => %s" % motor.get_name())
+    print('Starting Motor =>', motor.get_name())
 
 
 def stopinfo(motor):
-    logger.debug("Stopping Motor => %s" % motor.get_name())
+    print('Stopping Motor =>', motor.get_name())
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
 
 manager = InterfaceManager()
 
 iface1 = InterfaceGPIO(manager, pinout=(17, 18, 22, 23))
 iface2 = InterfaceGPIO(manager, pinout=(9, 25, 11, 8))
-
 
 motor1 = MotorStepperUnipolar(iface1, 'Motor stepper 1', start=startinfo, stop=stopinfo)
 motor2 = MotorStepperUnipolar(iface2, 'Motor stepper 2', start=startinfo, stop=stopinfo)
@@ -101,12 +76,11 @@ try:
     motor1.join()
     motor2.join()
 
-
 except KeyboardInterrupt:
-    logger.info('Script stopped...')
+    print('\nScript stopped...')
 
-except Exception, error:
-    logger.error(error)
+except Exception as error:
+    print('Error :', error)
 
 finally:
     motor1.stop()

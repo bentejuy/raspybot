@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/07/2015
-# Modified:     10/28/2015
-# Version:      0.0.47
+# Modified:     12/17/2015
+# Version:      0.0.49
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      MIT
 #
@@ -144,7 +144,7 @@ class SoundSystem(object):
             fwav.writeframes(data.tostring())
             fwav.close()
 
-        except Exception, error:
+        except Exception as error:
             logger.error(error)
 
             return False
@@ -158,7 +158,7 @@ class SoundSystem(object):
         try:
             self._channel.play(self._sounds[name])
 
-        except Exception, error:
+        except Exception as error:
             logger.error(error)
 
 
@@ -235,7 +235,7 @@ class SimonSays(object):
             elif channel == 14:
                 pressed = self.LED_YELLOW
             else:
-                logger.error('Pressed the wrong button, probably bad configured')
+                logger.error('Pressed wrong button, probably bad configured')
                 return
 
             self._queue.put(pressed)
@@ -257,7 +257,7 @@ class SimonSays(object):
 
 
     def play_user(self, value, count):
-        """   Execute sound/light when it process """
+        """  Execute sound/light when it process """
 
         self.start_sound(value)
 
@@ -265,7 +265,7 @@ class SimonSays(object):
 
 
     def play_game(self, value, count):
-        """   Execute sound/light when to game stop """
+        """  Execute sound/light when to game stop """
 
         if count % 2:
             self.start_sound(value)
@@ -383,7 +383,6 @@ class SimonSays(object):
             self._action = self.MODE_STOP
 
         finally:
-
             if action == self.MODE_STOP:
                 pass
 
@@ -486,8 +485,5 @@ try:
     simon.start()
 
 finally:
-
     mgr.delete(ifg)
     mgr.cleanup()
-
-

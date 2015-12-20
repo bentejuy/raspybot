@@ -5,29 +5,25 @@
 # Name:         tests/motordc1
 # Purpose:      Test MotorDC in GPIO_SIMPLE mode
 #
-# Author:       Bentejuy Lopez
 # Created:      08/18/2015
-# Modified:     12/09/2015
-# Version:      0.0.21
-# Copyright:    (c) 2015 Bentejuy Lopez
-# Licence:      MIT
+# Modified:     12/17/2015
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+from __future__ import ( print_function )
 
 from raspybot.devices.motor import MotorDC
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO, InterfacePWM
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 def show_help():
-    print "Testing MotorDC in GPIO_SIMPLE mode"
-    print " f : Move motor to right side"
-    print " s : stop motor"
-    print " q : quit..."
-    print " h : show this help\n\n"
+    print('Testing MotorDC in GPIO_SIMPLE mode')
+    print(' f : Move motor to right side')
+    print(' s : stop motor')
+    print(' q : quit...')
+    print(' h : show this help\n\n')
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 manager = InterfaceManager()
@@ -53,10 +49,10 @@ try:
 
 
 except KeyboardInterrupt:
-    print '\nScript stopped...'
+    print('\nScript stopped...')
 
-except Exception, error:
-    print error
+except Exception as error:
+    print('Error :', error)
 
 finally:
     motor1.stop()

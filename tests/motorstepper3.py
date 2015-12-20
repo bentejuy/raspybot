@@ -5,52 +5,26 @@
 # Name:         tests/motorstepper3
 # Purpose:      Testing MotorStepperBipolar object with InterfaceGPIO
 #
-# Author:       Bentejuy Lopez
 # Created:      07/13/2015
-# Modified:     10/18/2015
-# Version:      0.0.09
-# Copyright:    (c) 2015 Bentejuy Lopez
-# Licence:      MIT
+# Modified:     12/17/2015
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import sys
 import time
-import logging
+
+from __future__ import ( print_function )
 
 from raspybot.devices.motor import MotorStepperBipolar
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-def logger_init(debug=None):
-    log = logging.getLogger('')
-
-    hld = logging.StreamHandler(sys.stdout)
-    hld.setLevel(debug and logging.DEBUG or logging.WARNING)
-    hld.setFormatter(logging.Formatter('%(levelname)s :: %(name)s [%(lineno)d] --> %(message)s'))
-    log.addHandler(hld)
-
-    log.setLevel(debug and logging.DEBUG or logging.WARNING)
-
-    return log
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logger_init(True)
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
 
 def startinfo(motor):
-    logger.debug("Starting Motor => %s" % motor.get_name())
+    print('Starting Motor =>', motor.get_name())
 
 
 def stopinfo(motor):
-    logger.debug("Stopping Motor => %s" % motor.get_name())
-
+    print('Stopping Motor =>', motor.get_name())
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -58,7 +32,6 @@ manager = InterfaceManager()
 
 iface1 = InterfaceGPIO(manager, pinout=(16, 19, 20, 26))
 motor1 = MotorStepperBipolar(iface1, 'Motor 1', start=startinfo, stop=stopinfo)
-
 
 try:
     motor1.set_degrees(7.5)                #  Default degreess by step for stepper motor KP54FP8-755
@@ -78,7 +51,7 @@ try:
 
     while count:
         if not motor1.alive():
-            print "Running...", count
+            print('Running...', count)
 
             if count % 2:
                 motor1.forward(degrees=180)
@@ -91,16 +64,14 @@ try:
 
     motor1.join()
 
-
 except KeyboardInterrupt:
-    logger.info('Script stopped...')
+    print('\nScript stopped...')
 
-except Exception, error:
-    logger.error(error)
+except Exception as error:
+    print('Error :', error)
 
 finally:
     motor1.stop()
 
     manager.delete(iface1)
     manager.cleanup()
-

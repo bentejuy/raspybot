@@ -5,32 +5,28 @@
 # Name:         tests/motordc4
 # Purpose:      Test MotorDC in PWM_REVERSIBLE mode
 #
-# Author:       Bentejuy Lopez
 # Created:      12/04/2015
-# Modified:     12/09/2015
-# Version:      0.0.11
-# Copyright:    (c) 2015 Bentejuy Lopez
-# Licence:      MIT
+# Modified:     12/17/2015
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+from __future__ import ( print_function )
 
 from raspybot.devices.motor import MotorDC
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO, InterfacePWM
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 def show_help():
-    print "Testing MotorDC in PWM_REVERSIBLE mode"
-    print " f : Move motor to right side"
-    print " b : Move motor to left side"
-    print " + : increment the speed"
-    print " - : decrement the speed"
-    print " s : stop motor"
-    print " q : quit..."
-    print " h : show this help\n\n"
+    print('Testing MotorDC in PWM_REVERSIBLE mode')
+    print(' f : Move motor to right side')
+    print(' b : Move motor to left side')
+    print(' + : increment the speed')
+    print(' - : decrement the speed')
+    print(' s : stop motor')
+    print(' q : quit...')
+    print(' h : show this help\n\n')
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 manager = InterfaceManager()
@@ -65,10 +61,10 @@ try:
 
 
 except KeyboardInterrupt:
-    print '\nScript stopped...'
+    print('\nScript stopped...')
 
-except Exception, error:
-    print error
+except Exception as error:
+    print('Error :', error)
 
 finally:
     motor1.stop()

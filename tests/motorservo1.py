@@ -5,41 +5,19 @@
 # Name:         tests/motorservo1
 # Purpose:
 #
-# Author:       Bentejuy Lopez
 # Created:      03/27/2015
-# Modified:     11/21/2015
-# Version:      0.0.27
-# Copyright:    (c) 2015 Bentejuy Lopez
-# Licence:      MIT
+# Modified:     12/17/2015
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import sys
 import time
-import logging
+
+from __future__ import ( print_function )
 
 from raspybot.devices.motor import MotorServo
 from raspybot.io.interface import InterfaceManager, InterfacePWM
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-def logger_init(debug=None):
-    log = logging.getLogger('')
-
-    hld = logging.StreamHandler(sys.stdout)
-    hld.setLevel(debug and logging.DEBUG or logging.WARNING)
-    hld.setFormatter(logging.Formatter('%(levelname)s :: %(name)s [%(lineno)d] --> %(message)s'))
-    log.addHandler(hld)
-
-    log.setLevel(debug and logging.DEBUG or logging.WARNING)
-
-    return log
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logger_init(True)
 
 # Angles for Servo 9G
 SG90_MIN_ANGLE = 0
@@ -53,14 +31,12 @@ MG996R_HALF_ANGLE = (abs(MG996R_MAX_ANGLE) - abs(MG996R_MIN_ANGLE)) / 4
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-
 def startinfo(motor):
-    logger.debug("Starting Motor => %s" % motor.get_name())
+    print('\tStarting Motor =>', motor.get_name())
 
 
 def stopinfo(motor):
-    logger.debug("Stopping Motor => %s" % motor.get_name())
-
+    print('\tStopping Motor =>', motor.get_name())
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -78,7 +54,7 @@ try:
 
     while count:
         if not servo1.alive() and not servo2.alive():
-            print "Running...", count
+            print('Running...', count
 
             if count % 2:
                 servo1.forward()
@@ -93,8 +69,8 @@ try:
 
 
     for x in xrange(20):
-        print "Moving Servo 1 to ", (x % 5) * SG90_HALF_ANGLE, "degrees"
-        print "Moving Servo 2 to ", (x % 5) * MG996R_HALF_ANGLE, "degrees"
+        print('Moving Servo 1 to', (x % 5) * SG90_HALF_ANGLE, 'degrees')
+        print('Moving Servo 2 to', (x % 5) * MG996R_HALF_ANGLE, 'degrees')
 
         servo1.angle_to((x % 5) * SG90_HALF_ANGLE)
         servo2.angle_to((x % 5) * MG996R_HALF_ANGLE)

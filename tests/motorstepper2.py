@@ -5,53 +5,29 @@
 # Name:         tests/motorstepper2
 # Purpose:      Testing MotorStepperUnipolar object with mode not blocking
 #
-# Author:       Bentejuy Lopez
 # Created:      04/01/2015
 # Modified:     12/05/2015
-# Version:      0.0.17
-# Copyright:    (c) 2015 Bentejuy Lopez
-# Licence:      MIT
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 import sys
 import time
-import logging
+
+from __future__ import ( print_function )
 
 from raspybot.devices.motor import MotorStepperUnipolar
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-def logger_init(debug=None):
-    log = logging.getLogger('')
-
-    hld = logging.StreamHandler(sys.stdout)
-    hld.setLevel(debug and logging.DEBUG or logging.WARNING)
-    hld.setFormatter(logging.Formatter('%(levelname)s :: %(name)s [%(lineno)d] --> %(message)s'))
-    log.addHandler(hld)
-
-    log.setLevel(debug and logging.DEBUG or logging.WARNING)
-
-    return log
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logger_init(True)
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 def startinfo(motor):
-    logger.debug("Starting Motor => %s" % motor.get_name())
+    print('Starting Motor =>', motor.get_name()
 
 
 def stopinfo(motor):
-    logger.debug("Stopping Motor => %s" % motor.get_name())
+    print('Stopping Motor =>', motor.get_name()
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
 
 manager = InterfaceManager()
 
@@ -74,7 +50,7 @@ try:
 
     while count:
         if not motor1.alive() and not motor2.alive():
-            print "Running...", count
+            print('Running...', count)
 
             if count % 2:
                 motor1.forward(degrees=180)
@@ -96,12 +72,11 @@ try:
         while motor1.alive() and motor2.alive():
             time.sleep(1)
 
-
 except KeyboardInterrupt:
-    logger.info('Script stopped...')
+    print('\nScript stopped...')
 
-except Exception, error:
-    logger.error(error)
+except Exception as error:
+    print('Error :', error)
 
 finally:
     motor1.stop()
@@ -110,4 +85,3 @@ finally:
     manager.delete(iface1)
     manager.delete(iface2)
     manager.cleanup()
-

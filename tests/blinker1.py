@@ -5,55 +5,29 @@
 # Name:          tests/blinker1
 # Purpose:
 #
-# Author:        Bentejuy Lopez
 # Created:       04/02/2015
-# Modified:      10/18/2015
-# Version:       0.0.05
-# Copyright:     (c) 2015 Bentejuy Lopez
-# Licence:       MIT
+# Modified:      12/17/2015
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 import sys
 import time
-import logging
+
+from __future__ import ( print_function )
 
 from raspybot.devices.logic import Blinker
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-def logger_init(debug=None):
-    log = logging.getLogger('')
-
-    hld = logging.StreamHandler(sys.stdout)
-    hld.setLevel(debug and logging.DEBUG or logging.WARNING)
-    hld.setFormatter(logging.Formatter('%(levelname)s :: %(name)s [%(lineno)d] --> %(message)s'))
-    log.addHandler(hld)
-
-    log.setLevel(debug and logging.DEBUG or logging.WARNING)
-
-    return log
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logger_init(True)
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
 
 def startinfo(dev):
-    logger.debug("Starting => {}".format(dev))
+    print('Starting => {}'.format(dev))
 
 
 def stopinfo(dev):
-    logger.debug("Stopping => {}".format(dev))
-
+    print('Stopping => {}'.format(dev))
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
 
 manager = InterfaceManager()
 
