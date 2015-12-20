@@ -36,7 +36,8 @@ from ..interface import gpio
 from ..interface import TaskI2C
 from ..interface import InterfaceSlave
 from ..interface import InterfaceActive
-from ..interface import InvalidFunctionError
+
+from ..interface import InvalidFunctionError, OutRangeError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -61,8 +62,8 @@ class InterfaceI2CSlave(InterfaceSlave):
         if not isinstance(address, (int, long)):
             raise TypeError('...')
 
-        if address < 1 or address > 255:
-            raise OutRangeError('')
+        if address < 0x03 or address > 0x77:
+            raise OutRangeError('address')
 
         self._comm = comm
         self._master = manager.get_connection(self)
