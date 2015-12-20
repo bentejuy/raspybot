@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/17/2015
-# Modified:     12/03/2015
-# Version:      0.0.57
+# Modified:     12/15/2015
+# Version:      0.0.59
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -205,8 +205,9 @@ class SevenSegments(Device):
 
         super(SevenSegments, self).__init__(iface, name)
 
+        self._xord = 0xFF
         self._value = 0
-        self._displays = [];
+        self._displays = []
 
         self._worker =  Worker(self.__run__)
 
@@ -233,10 +234,15 @@ class SevenSegments(Device):
 
             self._displays[int(log(index, 2))].on()
 
-            self._iface.write(index)
+            self._iface.write(index ^ self.xord)
             self._worker.wait(delay)
 
             index >>= 1
+
+
+    def inverted(self):
+        """ Inverts the output to control seven segment displays with common anode or cathode. """
+        self._xord ^= 0xFF
 
 
     def append(self, display):
