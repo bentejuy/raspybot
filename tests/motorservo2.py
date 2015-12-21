@@ -12,7 +12,7 @@
 
 import time
 
-from __future__ import ( print_function )
+from __future__ import print_function
 
 from raspybot.devices.button import Buttons
 from raspybot.devices.motor import MotorServo

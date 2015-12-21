@@ -10,10 +10,11 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+
+from __future__ import print_function
+
 import sys
 import time
-
-from __future__ import ( print_function )
 
 from raspybot.devices.motor import MotorStepperUnipolar
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO

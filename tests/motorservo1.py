@@ -12,7 +12,7 @@
 
 import time
 
-from __future__ import ( print_function )
+from __future__ import print_function
 
 from raspybot.devices.motor import MotorServo
 from raspybot.io.interface import InterfaceManager, InterfacePWM
@@ -54,7 +54,7 @@ try:
 
     while count:
         if not servo1.alive() and not servo2.alive():
-            print('Running...', count
+            print('Running...', count)
 
             if count % 2:
                 servo1.forward()

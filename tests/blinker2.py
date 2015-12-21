@@ -9,10 +9,10 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+from __future__ import print_function
+
 import time
 import random
-
-from __future__ import ( print_function )
 
 from raspybot.devices.logic import Blinker
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO

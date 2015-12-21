@@ -10,9 +10,9 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import time
+from __future__ import print_function
 
-from __future__ import ( print_function )
+import time
 
 from raspybot.devices.button import Buttons
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO

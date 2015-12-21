@@ -10,7 +10,7 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from __future__ import ( print_function )
+from __future__ import print_function
 
 from raspybot.devices.motor import MotorDC
 from raspybot.io.interface import InterfaceManager, InterfaceGPIO, InterfacePWM
