@@ -187,7 +187,7 @@ class WorkerTask(Worker):
             for task in tasks:
                 self._queue.put(task)
 
-        except Exception, error:
+        except Exception as error:
             logger.critical(error)
 
         finally:

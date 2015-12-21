@@ -7,7 +7,7 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     10/24/2015
+# Modified:     12/21/2015
 # Version:      0.0.79
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
@@ -85,7 +85,7 @@ class InterfaceGPIO(InterfaceActive):
                 self._bus.output(pin, data & 0x1)
                 data = data >> 1
 
-        except Exception, error:
+        except Exception as error:
             logger.error(error)
 
 

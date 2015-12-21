@@ -7,7 +7,7 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     12/04/2015
+# Modified:     12/21/2015
 # Version:      0.0.53
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
@@ -108,7 +108,7 @@ class Blinker(ActionDevice):
                 if timelive and timelive <= time.time():
                     self.stop()
 
-            except Exception, error:
+            except Exception as error:
                 logger.critical(error)
 
         self.action_stop()
