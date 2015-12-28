@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/29/2015
-# Modified:     12/21/2015
-# Version:      0.0.19
+# Modified:     12/23/2015
+# Version:      0.0.27
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -43,18 +43,24 @@ from ..task import Task
 
 
 class TaskI2C(Task):
-    I2C_READ, \
-    I2C_READ_BYTE, \
-    I2C_READ_WORD, \
-    I2C_READ_BLOCK, \
-    I2C_WRITE, \
-    I2C_WRITE_BYTE, \
-    I2C_WRITE_WORD, \
-    I2C_WRITE_BLOCK, \
-    I2C_READ_ERROR, \
-    I2C_WRITE_ERROR, \
-    I2C_READ_SUCCESS, \
-    I2C_WRITE_SUCCESS = range(12)
+    READ, \
+    READ_BYTE, \
+    READ_WORD, \
+    READ_BLOCK, \
+    QUERY, \
+    QUERY_BYTE, \
+    QUERY_WORD, \
+    QUERY_BLOCK, \
+    WRITE, \
+    WRITE_BYTE, \
+    WRITE_WORD, \
+    WRITE_BLOCK, \
+    READ_ERROR, \
+    QUERY_ERROR, \
+    WRITE_ERROR, \
+    READ_SUCCESS, \
+    QUERY_SUCCESS, \
+    WRITE_SUCCESS = range(18)
 
     def __init__(self, action, address, data, comm=0, length=None, timeout=-1):
         super(TaskI2C, self).__init__(timeout)
@@ -67,4 +73,4 @@ class TaskI2C(Task):
 
 
     def __str__(self):
-        return '{} => action: {} :: data: {} :: address: {:#x} :: comm: {} :: started: {}'.format(self.__class__, self.action, self.data, self.address, self.comm, self._started)
+        return '{} => action: {} :: data: {} :: address: {:#x} :: comm: {:#x} :: started: {}'.format(self.__class__, self.action, self.data, self.address, self.comm, self._started)

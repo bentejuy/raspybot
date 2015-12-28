@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     12/21/2015
-# Version:      0.0.63
+# Modified:     12/23/2015
+# Version:      0.0.67
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -83,12 +83,12 @@ class InterfaceI2CSlave(InterfaceSlave):
 
     def __success__(self, task):
         if self._success:
-            self._success(task.address, task.data)
+            self._success(task.address, task.comm, task.data)
 
 
     def __failure__(self, task):
         if self._failure:
-            self._failure(task.address, task.data)
+            self._failure(task.address, task.comm, task.data)
         else:
             logger.error(task)
 
@@ -100,59 +100,72 @@ class InterfaceI2CSlave(InterfaceSlave):
 
     def write(self, data):
         """  """
-        self._master.append(TaskI2C(TaskI2C.I2C_WRITE_BYTE, self._address, data, self._comm))
+        self._master.append(TaskI2C(TaskI2C.WRITE , self._address, data))
 
 
-    def write_to(self, data, comm=0, length=None):
+    def write_byte(self, data, comm=None):
+        """  """
+        self._master.append(TaskI2C(TaskI2C.WRITE_BYTE, self._address, data, self._comm if comm is None else comm))
+
+
+    def write_to(self, comm, data, length=0):
         """  """
 
-        if not length:
-            task = TaskI2C(TaskI2C.I2C_WRITE if length is None else TaskI2C.I2C_WRITE_BYTE, self._address, data, comm)
+        if length <= 1:
+            task = TaskI2C(TaskI2C.WRITE_BYTE, self._address, data)
+
+        elif length == 2:
+            task = TaskI2C(TaskI2C.WRITE_WORD, self._address, data, comm)
 
         else:
-            if isinstance(length, (int, long)) and length > 0:
-                logger.critical('Type or value not valid in "length" parameter calling to method "write" on device {0:#x}'.format(self._address))
-                return
-
-            if length == 1:
-                task = TaskI2C(TaskI2C.I2C_WRITE_BYTE, self._address, data)
-
-            elif length == 2:
-                task = TaskI2C(TaskI2C.I2C_WRITE_WORD, self._address, data, comm)
-
-            else:
-                task = TaskI2C(TaskI2C.I2C_WRITE_BLOCK, self._address, data, comm, length)
+            task = TaskI2C(TaskI2C.WRITE_BLOCK, self._address, data, comm, length)
 
         self._master.append(task)
 
 
-    def read(self, comm=None):
-        """ """
-        self._master.append(TaskI2C(TaskI2C.I2C_READ_BYTE, self._address, None, self._comm if comm is None else comm))
+    def read(self):
+        """  """
+        self._master.append(TaskI2C(TaskI2C.READ, self._address, None))
 
 
-    def read_to(self, comm=0, length=None):
+    def read_byte(self, comm=None):
+        """  """
+        self._master.append(TaskI2C(TaskI2C.READ_BYTE, self._address, None, self._comm if comm is None else comm))
+
+
+    def read_to(self, comm, length=0):
         """  """
 
-        if not length:
-            task = TaskI2C(TaskI2C.I2C_READ_BYTE if length is None else TaskI2C.I2C_READ_BYTE, self._address, data, comm)
+        if length <= 1:
+            task = TaskI2C(TaskI2C.READ_BYTE, self._address, None, comm)
+
+        elif length == 2:
+            task = TaskI2C(TaskI2C.READ_WORD, self._address, None, comm)
 
         else:
-            if isinstance(length, (int, long)) and length > 0:
-                logger.critical('Type or value not valid in "length" parameter calling to method "read" on device {0:#x}'.format(self._address))
-                return
-
-            if length == 1:
-                task = TaskI2C(TaskI2C.I2C_READ_BYTE, self._address, None)
-
-            elif length == 2:
-                task = TaskI2C(TaskI2C.I2C_REAd_WORD, self._address, None, comm)
-
-            else:
-                task = TaskI2C(TaskI2C.I2C_READ_BLOCK, self._address, None, comm, length)
+            task = TaskI2C(TaskI2C.READ_BLOCK, self._address, None, comm, length)
 
         self._master.append(task)
 
+
+    def query(self, comm=None, data=0, length=0):
+        """  """
+
+        if not length:
+            self._master.append(TaskI2C(TaskI2C.QUERY, self._address, data, comm))
+
+        else:
+            if comm is None:
+                comm = self._comm
+
+            if length == 1:
+                task = TaskI2C(TaskI2C.QUERY_BYTE, self._address, data, comm)
+
+            elif length == 2:
+                task = TaskI2C(TaskI2C.QUERY_WORD, self._address, data, comm)
+
+            else:
+                task = TaskI2C(TaskI2C.QUERY_BLOCK, self._address, data, comm, length)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -198,64 +211,89 @@ class InterfaceI2CMaster(InterfaceActive):
         return False
 
 
+    def __read__(self, task):
+        try:
+            if task.action == TaskI2C.READ:
+                data = self._bus.read_byte(task.address)
+
+            elif task.action == TaskI2C.READ_BYTE:
+                data = self._bus.read_byte_data(task.address, task.comm)
+
+            elif task.action == TaskI2C.READ_WORD:
+                data = self._bus.read_word_data(task.address, task.comm)
+
+            elif task.action == TaskI2C.READ_BLOCK:
+                data = self._bus.read_i2c_block_data(task.address, task.comm, task.length if task.length else 32)
+
+            self.__response__(TaskI2C.READ_SUCCESS, task, data)
+
+        except IOError as error:
+            self.__response__(TaskI2C.READ_ERROR, task, error)
+
+
+    def __query__(self, task):
+        try:
+            if task.action == TaskI2C.QUERY:
+                self._bus.write_byte(task.address, task.comm)
+                data = self._bus.read_byte(task.address)
+
+            elif task.action == TaskI2C.QUERY_BYTE:
+                self._bus.write_byte(task.address, task.comm)
+                data = self._bus.read_byte(task.address)
+
+            elif task.action == TaskI2C.QUERY_WORD:
+                self._bus.write_byte_data(task.address, task.comm, task.data)
+                data = self._bus.read_word_data(task.address, task.comm)
+
+            elif task.action == TaskI2C.QUERY_BLOCK:
+                self._bus.write_byte(task.address, task.comm, task.data)
+                data = self._bus.read_i2c_block_data(task.address, task.comm, task.length if task.length else 32)
+
+            self.__response__(TaskI2C.QUERY_SUCCESS, task, data)
+
+        except IOError as error:
+            self.__response__(TaskI2C.QUERY_ERROR, task, error)
+
+
     def __write__(self, task):
         try:
-            if task.action == TaskI2C.I2C_WRITE:
+            if task.action == TaskI2C.WRITE:
                 self._bus.write_byte(task.address, task.data)
 
-            elif task.action == TaskI2C.I2C_WRITE_BYTE:
+            elif task.action == TaskI2C.WRITE_BYTE:
                 self._bus.write_byte_data(task.address, task.comm, task.data)
 
-            elif task.action == TaskI2C.I2C_WRITE_WORD:
+            elif task.action == TaskI2C.WRITE_WORD:
                 self._bus.write_word_data(task.address, task.comm, task.data)
 
-            elif task.action == TaskI2C.I2C_WRITE_BLOCK:
+            elif task.action == TaskI2C.WRITE_BLOCK:
                 self._bus.write_i2c_block_data(task.address, task.comm, task.data)
 
         except IOError as error:
-            self.__response__(TaskI2C.I2C_WRITE_ERROR, task, error)
+            self.__response__(TaskI2C.WRITE_ERROR, task, error)
 
-
-    def __read__(self, task):
-        try:
-            if task.action == TaskI2C.I2C_READ:
-                data = self._bus.read_byte(task.address)
-
-            elif task.action == TaskI2C.I2C_READ_BYTE:
-                data = self._bus.read_byte_data(task.address, task.comm)
-
-            elif task.action == TaskI2C.I2C_READ_WORD:
-                data = self._bus.read_word_data(task.address, task.comm)
-
-            elif task.action == TaskI2C.I2C_READ_BLOCK:
-                data = self._bus.read_i2c_block_data(task.address, task.comm, task.length if task.length else 32)
-
-            else:
-                logger.critical('Unknown I2C action reading :: Device => {0x%0.2x}'.format(task.address))
-
-            self.__response__(TaskI2C.I2C_READ_SUCCESS, task, data)
-
-        except IOError as error:
-            self.__response__(TaskI2C.I2C_READ_ERROR, task, error)
 
 
     def __parser__(self, task):
-        if task.action < TaskI2C.I2C_WRITE:
+        if task.action < TaskI2C.QUERY:
             self.__read__(task)
 
-        elif task.action < TaskI2C.I2C_READ_ERROR:
+        elif task.action < TaskI2C.WRITE:
+            self.__query__(task)
+
+        elif task.action < TaskI2C.READ_ERROR:
             self.__write__(task)
 
-        elif task.action < TaskI2C.I2C_READ_SUCCESS:
+        elif task.action < TaskI2C.READ_SUCCESS:
             try:
-                self._slaves[task.address].__success__(task)
+                self._slaves[task.address].__failure__(task)
 
             except Exception as error:
                 logger.critical(error)
 
         else:
             try:
-                self._slaves[task.address].__failure__(task)
+                self._slaves[task.address].__success__(task)
 
             except Exception as error:
                 logger.critical(error)
