@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     11/29/2015
-# Version:      0.0.83
+# Modified:     12/29/2015
+# Version:      0.0.85
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -38,6 +38,7 @@ from ..utils.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunning
 
 from ..io.interface import InterfacePWM
 from ..io.interface import InterfaceGPIO
+from ..io.interface import InterfaceI2CSlave
 
 from motors.motorbase import MotorBase
 

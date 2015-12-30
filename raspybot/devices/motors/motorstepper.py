@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     11/26/2015
-# Version:      0.0.85
+# Modified:     12/29/2015
+# Version:      0.0.87
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -34,6 +34,7 @@ from ..motor import MotorBase
 from ..motor import InvalidTypeError, IsRunningError, MinMaxValueError, InterfaceNoSupported
 
 from ..motor import InterfaceGPIO
+from ..motor import InterfaceI2CSlave
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -47,7 +48,7 @@ from ..motor import InterfaceGPIO
 class MotorStepper(MotorBase):
     def __init__(self, iface, name, start, stop):
 
-        if not isinstance(iface, InterfaceGPIO):
+        if not isinstance(iface, (InterfaceGPIO, InterfaceI2CSlave)):
             raise InterfaceNoSupported(self.__class__, iface.__class__)
 
         super(MotorStepper, self).__init__(iface, name, start, stop)
@@ -57,7 +58,6 @@ class MotorStepper(MotorBase):
         self._delay = 0.001                                 # Delay until next step
         self._factor = 0.0005                               # Correction factor, because "delay" is the sleeping time, it does not count the time it takes to process the remaining instructions ....
         self._degrees = None                                # Degrees that the stepper motor moves per each step taken
-        self._timeout = -1                                  # Lifetime of each job sent to the interface, or the lifetime of the pulse (unused)
 
         self._worker =  Worker(self.__run__)
 
@@ -112,7 +112,7 @@ class MotorStepper(MotorBase):
 
 
     def __write__(self, value):
-        self._iface.write(value, self._timeout)
+        self._iface.write(value)
 
 
     def __angle2steps__(self, angle):
