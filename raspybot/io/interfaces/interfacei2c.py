@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     12/23/2015
-# Version:      0.0.67
+# Modified:     12/28/2015
+# Version:      0.0.69
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -100,7 +100,7 @@ class InterfaceI2CSlave(InterfaceSlave):
 
     def write(self, data):
         """  """
-        self._master.append(TaskI2C(TaskI2C.WRITE , self._address, data))
+        self._master.append(TaskI2C(TaskI2C.WRITE_BYTE, self._address, data, self._comm))
 
 
     def write_byte(self, data, comm=None):
@@ -111,8 +111,11 @@ class InterfaceI2CSlave(InterfaceSlave):
     def write_to(self, comm, data, length=0):
         """  """
 
-        if length <= 1:
-            task = TaskI2C(TaskI2C.WRITE_BYTE, self._address, data)
+        if length < 1:
+            task = TaskI2C(TaskI2C.WRITE, self._address, data)
+
+        elif length == 1:
+            task = TaskI2C(TaskI2C.WRITE_BYTE, self._address, data, comm)
 
         elif length == 2:
             task = TaskI2C(TaskI2C.WRITE_WORD, self._address, data, comm)
@@ -136,7 +139,10 @@ class InterfaceI2CSlave(InterfaceSlave):
     def read_to(self, comm, length=0):
         """  """
 
-        if length <= 1:
+        if length < 1:
+            task = TaskI2C(TaskI2C.READ, self._address, None)
+
+        elif length == 1:
             task = TaskI2C(TaskI2C.READ_BYTE, self._address, None, comm)
 
         elif length == 2:
@@ -341,7 +347,7 @@ class InterfaceI2CMaster(InterfaceActive):
 
 
     def remove(self, iface):
-        """ Remove a I2C slave interface to the master """
+        """ Remove an I2C slave interface to the master """
 
         if isinstance(iface, InterfaceI2CSlave):
             del self._slaves[iface.get_address()]
