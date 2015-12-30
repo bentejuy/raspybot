@@ -1,6 +1,29 @@
 Change Log
 ==========
 
+0.1.8
+-----
+
+Added support to Interface I2C in the MotorStepper object
+Added support to Interface I2C in the Blinker object
+Updated new changes in I2C Objects
+Small corrections in test files
+Changed exceptions syntax
+Updated I2C objects
+Added LiquidCrystal Object
+Updated SevenSegments object
+Forgot exception
+Added functions to read in InterfaceI2CSlave
+Fixed small bugs in Interfacei2c
+Updated and simplified test files
+Updated InterfaceManager object to support the I2C protocol
+Adding the necessary classes to support I2C protocol
+Fixed bug: Function name misspelled
+Removed backward compatibility functions
+Removed unused import modules
+Fixed small bug
+
+
 0.1.7
 -----
 
