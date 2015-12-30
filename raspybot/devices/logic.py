@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      05/04/2015
-# Modified:     12/04/2015
-# Version:      0.0.09
+# Modified:     12/28/2015
+# Version:      0.0.11
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,6 +33,7 @@ from device import Device
 from device import ActionDevice
 
 from ..io.interface import InterfaceGPIO
+from ..io.interface import InterfaceI2CSlave
 
 from ..utils.worker import Worker
 from ..utils.exceptions import OutRangeError, InvalidFunctionError, InvalidTypeError, \

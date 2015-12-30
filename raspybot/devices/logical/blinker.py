@@ -8,7 +8,7 @@
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
 # Modified:     12/21/2015
-# Version:      0.0.53
+# Version:      0.0.57
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -39,6 +39,7 @@ from ..logic import OutRangeError, InvalidFunctionError, InvalidTypeError, \
                     MinMaxValueError, IsRunningError, InterfaceNoSupported
 
 from ..logic import InterfaceGPIO
+from ..logic import InterfaceI2CSlave
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -61,7 +62,7 @@ class Blinker(ActionDevice):
 
     def __init__(self, iface, name=None, delay=1, initial=0, checker=None, start=None, stop=None):
 
-        if not isinstance(iface, InterfaceGPIO):
+        if not isinstance(iface, (InterfaceGPIO, InterfaceI2CSlave)):
             raise InterfaceNoSupported(self.__class__, iface.__class__)
 
         super(Blinker, self).__init__(iface, name, start, stop)
