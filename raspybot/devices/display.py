@@ -34,6 +34,7 @@ from device import Device
 from ..io.interface import InterfaceGPIO
 from ..io.interface import InterfaceI2CSlave
 
+from ..utils.worker import Worker
 from ..utils.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported, \
                                InterfaceTypeMustBe, InterfaceSizeMustBe
 

@@ -254,7 +254,7 @@ class SevenSegments(Device):
         if len(self._iface) < len(self._displays):
             raise Exception('La Interfaz definida no puede soportar mas display de siete Segmentos')
 
-        for any([display.get_mode() != x.get_mode() for x in self._display]):
+        if any([display.get_mode() != x.get_mode() for x in self._display]):
             raise Exception('Todas los display necesitan trabajar en el mismo modo')
 
         self._display.append(display)
