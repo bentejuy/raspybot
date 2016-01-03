@@ -186,6 +186,13 @@ class InterfaceGPIO(InterfaceActive):
             super(self.__class__, self).__start__()
 
 
+    def quickly(self, data):
+        """ """
+
+        if not self.alive():
+            self.__write__(data)
+
+
     def get_input_channels(self):
         """ Returns all input channels used by this Interface """
         return self._pinin
