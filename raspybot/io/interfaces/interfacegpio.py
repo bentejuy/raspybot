@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     12/21/2015
-# Version:      0.0.79
+# Modified:     01/03/2015
+# Version:      0.0.83
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -50,7 +50,7 @@ logger = logging.getLogger(__name__)
 
 class InterfaceGPIO(InterfaceActive):
     """
-        Interface to interact directly with the GPIO ports, it can receive four parameters
+        Interface to interact directly with the GPIO ports, it can receive four parameters.
 
         manager: The manager interfaces
         pinin  : An integer, tuple or list of integers used as data inputs.
@@ -122,7 +122,7 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def free(self):
-        """  """
+        """ Frees all input and output channels. """
 
         self.clear()
         map(self._manager.cleanup, self._pinin)
@@ -133,7 +133,7 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def setup(self, pin, mode, initial=0, callback=None, pud=None, edge=None, bouncetime=200):
-        """  """
+        """ Sets the parameters of one or more channels as input or output. """
 
         def append_in(pin, mode):
             if mode == self._bus.IN:
@@ -163,12 +163,12 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def clear(self):
-        """ """
+        """ Empty the tasks from queue read and write. """
         super(self.__class__, self).__stop__()
 
 
     def stop(self):
-        """ """
+        """ Stops all pending writes and sets all channel to zero. """
 
         super(self.__class__, self).__stop__()
         super(self.__class__, self).__append__(TaskGPIO(TaskGPIO.GPIO_STOP))
@@ -178,7 +178,7 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def write(self, data, timeout=-1):
-        """ """
+        """ Adds a binary value to the queue to write in the output channels. """
 
         super(self.__class__, self).__append__(TaskGPIO(TaskGPIO.GPIO_WRITE, data, timeout))
 
@@ -187,17 +187,17 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def quickly(self, data):
-        """ """
+        """ Writes directly to the output channels without delay, only if it does not have any queued task. """
 
         if not self.alive():
             self.__write__(data)
 
 
     def get_input_channels(self):
-        """ Returns all input channels used by this Interface """
+        """ Returns all input channels used by this Interface. """
         return self._pinin
 
 
     def get_output_channels(self):
-        """ Returns all output channels used by this Interface """
+        """ Returns all output channels used by this Interface. """
         return self._pinout
