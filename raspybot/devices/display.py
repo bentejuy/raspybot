@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/19/2015
-# Modified:     12/20/2015
-# Version:      0.0.23
+# Modified:     01/03/2016
+# Version:      0.0.27
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -31,14 +31,15 @@
 
 from device import Device
 
-from ..io.interface import InterfaceI2C
 from ..io.interface import InterfaceGPIO
+from ..io.interface import InterfaceI2CSlave
 
-from ..utils.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported
+from ..utils.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported, \
+                               InterfaceTypeMustBe, InterfaceSizeMustBe
 
 from displays.sevensegment import SevenSegment
 from displays.sevensegment import SevenSegments
-from displays.liquidcrital import LiquidCristal
+from displays.liquidcrystal import LiquidCrystal
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

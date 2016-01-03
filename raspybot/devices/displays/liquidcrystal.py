@@ -2,13 +2,13 @@
 # -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
-# Name:         liquidcristal
+# Name:         liquidcrystal
 # Purpose:
 #
 # Author:       Bentejuy Lopez
 # Created:      11/29/2015
-# Modified:     11/29/2015
-# Version:      0.0.03
+# Modified:     01/03/2016
+# Version:      0.0.27
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -31,8 +31,10 @@
 
 from ..display import Device
 
-from ..display import InterfaceI2C
 from ..display import InterfaceGPIO
+from ..display import InterfaceI2CSlave
+
+from ..display import InterfaceNoSupported, InterfaceTypeMustBe, InterfaceSizeMustBe
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -42,13 +44,66 @@ from ..display import InterfaceGPIO
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-class LiquidCristal(Device):
-    """  """
+class LiquidCrystal(Device):
+    """
 
-    LCD5110,
-    HD4466_DIRECT, \
-    HD4466_I2C = range(2)
+    """
+
+    LCD1602A_I2C, \
+    LCD1602A_GPIO = range(2)
 
 
-    def __init__(self, iface, model=None, name=None):
-        pass
+    def __init__(self, iface, model, name=None):
+
+        if model == self.LCD1602A_GPIO:
+            raise NotImplementedError
+
+        elif model == self.LCD1602A_I2C:
+            raise NotImplementedError
+
+
+    def on(self):
+        """  """
+        raise NotImplementedError
+
+
+    def off(self):
+        """  """
+        raise NotImplementedError
+
+
+    def clear(self):
+        """  """
+        raise NotImplementedError
+
+
+    def home(self):
+        """  """
+        raise NotImplementedError
+
+
+    def goto(self, x, y):
+        """  """
+        raise NotImplementedError
+
+
+    def blinker(self, on=None):
+        """  """
+        raise NotImplementedError
+
+
+    def write(self, char, x, y):
+        """  """
+        raise NotImplementedError
+
+
+    def writeln(self, text):
+        """ """
+        raise NotImplementedError
+
+
+    def set_cursor(self, enable, blink=True):
+        """  """
+        raise NotImplementedError
+
+

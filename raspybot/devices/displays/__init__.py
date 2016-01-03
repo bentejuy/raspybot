@@ -1,2 +1,2 @@
 
-_all__ = ('sevensegment', 'liquidcristal')
+_all__ = ('sevensegment', 'liquidcrystal')
