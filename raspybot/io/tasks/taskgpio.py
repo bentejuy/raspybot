@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/24/2015
-# Modified:     11/06/2015
-# Version:      0.0.39
+# Modified:     01/01/2016
+# Version:      0.0.41
 # Copyright:    (c) 2013-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -55,4 +55,4 @@ class TaskGPIO(Task):
 
 
     def __str__(self):
-        return '{} => action: {} :: data: {} :: state: {} :: started: {}'.format(self.__class__, self.action, self.data, self._state, self._started)
+        return '{} => action: {} :: data: {} :: state: {} :: started: {} :: timeout: {}'.format(self.__class__, self.action, self.data, self._state, self._started, self._timeout)
