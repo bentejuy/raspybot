@@ -8,7 +8,7 @@
 # Author:       Bentejuy Lopez
 # Created:      11/29/2015
 # Modified:     01/03/2016
-# Version:      0.0.27
+# Version:      0.0.33
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -56,10 +56,26 @@ class LiquidCrystal(Device):
     def __init__(self, iface, model, name=None):
 
         if model == self.LCD1602A_GPIO:
-            raise NotImplementedError
+            if not isinstance(iface, InterfaceGPIO):
+                raise InterfaceTypeMustBe(self.__class__, iface.__class__)
+
+            if not len(iface) in (6, 10):
+                raise InterfaceSizeMustBe(iface.__class__, 6)
+
+            try:
+                from parts.lcd1602a import LCD1602AD as lcd
+
+            except ImportError as error:
+               raise ImportError("Can't load the {0} LCD model module: {1}".format('', error))
 
         elif model == self.LCD1602A_I2C:
             raise NotImplementedError
+
+
+        part = lcd(iface)
+
+        for mth in [mth for mth in dir(part) if not mth.startswith('__') and hasattr(getattr(part, mth), '__call__')]:
+            setattr(self, mth, getattr(part, mth))
 
 
     def on(self):
