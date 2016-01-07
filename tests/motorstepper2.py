@@ -22,11 +22,11 @@ from raspybot.io.interface import InterfaceManager, InterfaceGPIO
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 def startinfo(motor):
-    print('Starting Motor =>', motor.get_name()
+    print('Starting Motor =>', motor.get_name())
 
 
 def stopinfo(motor):
-    print('Stopping Motor =>', motor.get_name()
+    print('Stopping Motor =>', motor.get_name())
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
