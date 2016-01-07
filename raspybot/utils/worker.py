@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/17/2013
-# Modified:     11/27/2015
-# Version:      0.1.93
+# Modified:     01/04/2015
+# Version:      0.1.95
 # Copyright:    (c) 2013-2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -84,26 +84,33 @@ class Worker(object):
 
 
     def set(self):
+        """  """
         self._event.set()
 
 
     def clear(self):
+        """  """
         self._event.clear()
 
 
     def wait(self, delay=None):
+        """  """
         return self._event.wait(delay)
 
 
     def is_set(self):
+        """  """
         return self._event.is_set()
 
 
     def alive(self):
+        """  """
         return self._thread and self._thread.is_alive()
 
 
     def join(self, timeout=None):
+        """  """
+
         if self._thread:
             self._thread.join(timeout)
 
@@ -192,3 +199,8 @@ class WorkerTask(Worker):
 
         finally:
             self._lock.release()
+
+
+    def empty(self):
+        """  """
+        return self._queue.empty()
