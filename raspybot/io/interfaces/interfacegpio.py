@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/03/2015
-# Version:      0.0.83
+# Modified:     01/04/2015
+# Version:      0.0.87
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -186,11 +186,15 @@ class InterfaceGPIO(InterfaceActive):
             super(self.__class__, self).__start__()
 
 
-    def quickly(self, data):
-        """ Writes directly to the output channels without delay, only if it does not have any queued task. """
+    def write_quick(self, data):
+        """ Writes directly to the output channels without delay, only if it does not have any queued task. Returns True if successful. """
 
-        if not self.alive():
+        if self.empty():
             self.__write__(data)
+
+            return True
+
+        return False
 
 
     def get_input_channels(self):
