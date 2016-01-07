@@ -61,15 +61,15 @@ class MotorDC(MotorBase):
     GPIO_SIMPLE: This is the most basic mode and only allows us to start and stop
     the engine. To function, we need a InterfaceGPIO with a single output channel.
 
-    GPIO_REVERSIBLE: wor start and stop the engine, it allows us to reverse the
-    direction of rotation. On the electronic level needs a H-bridge for controlling
-    the motor and an InterfaceGPIO with two output channels.
+    GPIO_REVERSIBLE: Besides to starting and stopping the motor, it allows us to
+    reverse the direction of rotation. On the electronic level needs a H-bridge
+    for controlling the motor and an InterfaceGPIO with two output channels.
 
     PWM_SIMPLE: It works exactly like the GPIO SIMPLE mode but with the ability to
     control the speed. For this you need an InterfacePWM with one output channel.
 
-    PWM_REVERSIBLE: In this mode besides controlling the rotational speed, it allows
-    change the direction. Require an InterfacePWM with two output channels. Like the
+    PWM_REVERSIBLE: In this mode besides controlling the rotational speed, allows
+    change the direction. Requires an InterfacePWM with two output channels. Like the
     GPIO_REVERSIBLE mode, we need an H-bridge to control the motor.
 
     ADV_REVERSIBLE: This mode is intended to control dc motors through integrated
