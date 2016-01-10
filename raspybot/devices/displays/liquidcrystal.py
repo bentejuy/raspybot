@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      11/29/2015
-# Modified:     01/03/2016
-# Version:      0.0.33
+# Modified:     01/10/2016
+# Version:      0.0.57
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -34,7 +34,7 @@ from ..display import Device
 from ..display import InterfaceGPIO
 from ..display import InterfaceI2CSlave
 
-from ..display import InterfaceNoSupported, InterfaceTypeMustBe, InterfaceSizeMustBe
+from ..display import InterfaceNoSupported, InvalidInterfaceError, InterfaceSizeMustBe
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -49,77 +49,70 @@ class LiquidCrystal(Device):
 
     """
 
-    LCD1602A_I2C, \
-    LCD1602A_GPIO = range(2)
+    LCD1602A = range(1)
 
 
     def __init__(self, iface, model, name=None):
 
-        if model == self.LCD1602A_GPIO:
-            if not isinstance(iface, InterfaceGPIO):
-                raise InterfaceTypeMustBe(self.__class__, iface.__class__)
-
-            if not len(iface) in (6, 10):
-                raise InterfaceSizeMustBe(iface.__class__, 6)
-
-            try:
-                from parts.lcd1602a import LCD1602AD as lcd
-
-            except ImportError as error:
-               raise ImportError("Can't load the {0} LCD model module: {1}".format('', error))
-
-        elif model == self.LCD1602A_I2C:
-            raise NotImplementedError
+        try:
+            if model == self.LCD1602A:
+                from parts.lcd1602a import LCD1602A as lcd
 
 
-        part = lcd(iface)
+        except ImportError as error:
+           raise ImportError("Can't load the {0} LCD model module: {1}".format('', error))  # Corregir y extraer nombre de la exception
 
-        for mth in [mth for mth in dir(part) if not mth.startswith('__') and hasattr(getattr(part, mth), '__call__')]:
-            setattr(self, mth, getattr(part, mth))
+        except:
+            raise
+
+        self._part = lcd(iface)
+
+        for mth in [mth for mth in dir(self._part) if not mth.startswith('__') and hasattr(getattr(self._part, mth), '__call__')]:
+            if not hasattr(self, mth):
+                setattr(self, mth, getattr(self._part, mth))
 
 
     def on(self):
         """  """
-        raise NotImplementedError
+        self._part.on()
 
 
     def off(self):
         """  """
-        raise NotImplementedError
+        self._part.off()
 
 
     def clear(self):
         """  """
-        raise NotImplementedError
+        self._part.clear()
 
 
     def home(self):
         """  """
-        raise NotImplementedError
+        self._part.home()
 
 
-    def goto(self, x, y):
+    def goto(self, col, row):
         """  """
-        raise NotImplementedError
+        self._part.goto(col, row)
 
 
     def blinker(self, on=None):
         """  """
-        raise NotImplementedError
+        self._part.blinker(on)
 
 
-    def write(self, char, x, y):
+    def write(self, char, col=None, row=None):
         """  """
-        raise NotImplementedError
+        self._part.write(char, col, row)
 
 
     def writeln(self, text):
         """ """
-        raise NotImplementedError
+        self._part.writeln(text)
 
 
     def set_cursor(self, enable, blink=True):
         """  """
-        raise NotImplementedError
-
+        self._part.set_cursor(enable, blink)
 
