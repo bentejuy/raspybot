@@ -49,7 +49,8 @@ class LiquidCrystal(Device):
 
     """
 
-    LCD1602A = range(1)
+    LCD1602A, \
+    LCD2004A = range(2)
 
 
     def __init__(self, iface, model, name=None):
@@ -58,6 +59,8 @@ class LiquidCrystal(Device):
             if model == self.LCD1602A:
                 from parts.lcd1602a import LCD1602A as lcd
 
+            elif model == self.LCD2004A:
+                from parts.lcd2004a import LCD2004A as lcd
 
         except ImportError as error:
            raise ImportError("Can't load the {0} LCD model module: {1}".format('', error))  # Corregir y extraer nombre de la exception
