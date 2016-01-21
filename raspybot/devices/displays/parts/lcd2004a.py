@@ -12,7 +12,6 @@
 # Copyright:
 # Licence:      GLPv3
 #
-#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from .hd44780 import HD44780
@@ -52,4 +51,3 @@ class LCD2004A(HD44780):
             raise InvalidInterfaceError
 
         super(LCD2004A, self).__init__(iface)
-

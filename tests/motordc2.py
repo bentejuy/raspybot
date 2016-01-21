@@ -21,8 +21,8 @@ def show_help():
     print('Testing MotorDC in PWM_SIMPLE mode')
     print(' f : Move motor to right side')
     print(' s : stop motor')
-    print(' + : increment the speed')
-    print(' - : decrement the speed')
+    print(' + : increment speed')
+    print(' - : decrement speed')
     print(' q : quit...')
     print(' h : show this help\n\n')
 

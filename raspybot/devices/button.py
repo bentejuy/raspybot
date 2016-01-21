@@ -2,7 +2,7 @@
 # -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
-# Name:         buttons
+# Name:         button
 # Purpose:
 #
 # Author:       Bentejuy Lopez
