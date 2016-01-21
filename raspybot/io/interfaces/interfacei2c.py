@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     12/28/2015
-# Version:      0.0.69
+# Modified:     01/16/2016
+# Version:      0.0.75
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -60,7 +60,7 @@ class InterfaceI2CSlave(InterfaceSlave):
     def __init__(self, manager, address, comm=0, success=None, failure=None):
 
         if not isinstance(address, (int, long)):
-            raise TypeError('...')
+            raise TypeError('The I2C Address  must be a valid number')
 
         if address < 0x03 or address > 0x77:
             raise OutRangeError('address')
@@ -69,14 +69,7 @@ class InterfaceI2CSlave(InterfaceSlave):
         self._master = manager.get_connection(self)
         self._address = address
 
-        if success and not hasattr(success, '__call__'):
-            raise InvalidFunctionError('success')
-
-        if failure and not hasattr(failure, '__call__'):
-            raise InvalidFunctionError('failure')
-
-        self._success = success
-        self._failure = failure
+        self.set_callback(success, failure)
 
         manager.append(self)
 
@@ -96,6 +89,19 @@ class InterfaceI2CSlave(InterfaceSlave):
     def get_address(self):
         """  """
         return self._address
+
+
+    def set_callback(self, success, failure=None):
+        """  """
+
+        if success and not hasattr(success, '__call__'):
+            raise InvalidFunctionError('success')
+
+        if failure and not hasattr(failure, '__call__'):
+            raise InvalidFunctionError('failure')
+
+        self._success = success
+        self._failure = failure
 
 
     def write(self, data):
@@ -209,7 +215,7 @@ class InterfaceI2CMaster(InterfaceActive):
 
     def __contains__(self, item):
         if isinstance(item, (int, long)):
-            return item in self._pinout_
+            return item in self._pinout
 
         elif isinstance(item, InterfaceI2CSlave):
             return item.get_address() in self._slaves
@@ -337,7 +343,7 @@ class InterfaceI2CMaster(InterfaceActive):
 
 
     def register(self, iface):
-        """ Register a I2C slave interface to the master """
+        """ Register an I2C slave interface to the master """
 
         if isinstance(iface, InterfaceI2CSlave):
             if iface.get_address() in self._slaves:
