@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/17/2015
-# Modified:     12/15/2015
-# Version:      0.0.59
+# Modified:     01/16/2015
+# Version:      0.0.63
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -234,7 +234,7 @@ class SevenSegments(Device):
 
             self._displays[int(log(index, 2))].on()
 
-            self._iface.write(index ^ self.xord)
+            self._iface.write_quick(index ^ self.xord)
             self._worker.wait(delay)
 
             index >>= 1
