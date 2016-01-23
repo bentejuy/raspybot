@@ -163,7 +163,7 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def clear(self):
-        """ Empty the tasks from queue read and write. """
+        """ Empty tasks from queue read and write. """
         super(self.__class__, self).__stop__()
 
 

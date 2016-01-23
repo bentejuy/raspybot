@@ -33,6 +33,6 @@ from device import Device
 from ..io.interface import InterfaceI2CSlave
 from ..utils.exceptions import InvalidFunctionError, InterfaceNoSupported, OutRangeError
 
-from sensors.bmp180 import BMP180
+from .sensors.bmp180 import BMP180
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

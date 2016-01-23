@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     12/29/2015
-# Version:      0.0.85
+# Modified:     01/21/2016
+# Version:      0.0.87
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -40,12 +40,12 @@ from ..io.interface import InterfacePWM
 from ..io.interface import InterfaceGPIO
 from ..io.interface import InterfaceI2CSlave
 
-from motors.motorbase import MotorBase
+from .motors.motorbase import MotorBase
 
-from motors.motordc import MotorDC
-from motors.motorservo import MotorServo
-from motors.motorstepper import MotorStepper
-from motors.motorstepperbipolar import MotorStepperBipolar
-from motors.motorstepperunipolar import MotorStepperUnipolar
+from .motors.motordc import MotorDC
+from .motors.motorservo import MotorServo
+from .motors.motorstepper import MotorStepper
+from .motors.motorstepperbipolar import MotorStepperBipolar
+from .motors.motorstepperunipolar import MotorStepperUnipolar
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      05/04/2015
-# Modified:     12/28/2015
-# Version:      0.0.11
+# Modified:     01/21/2016
+# Version:      0.0.13
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -39,7 +39,7 @@ from ..utils.worker import Worker
 from ..utils.exceptions import OutRangeError, InvalidFunctionError, InvalidTypeError, \
                                 MinMaxValueError, IsRunningError, InterfaceNoSupported
 
-from logical.blinker import Blinker
-from logical.flipflop import FlipFlop
+from .logical.blinker import Blinker
+from .logical.flipflop import FlipFlop
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

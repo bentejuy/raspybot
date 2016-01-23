@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/19/2015
-# Modified:     01/10/2016
-# Version:      0.0.33
+# Modified:     01/21/2016
+# Version:      0.0.35
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -38,9 +38,9 @@ from ..utils.worker import Worker
 from ..utils.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported, \
                                InterfaceTypeMustBe, InterfaceSizeMustBe, InvalidInterfaceError
 
-from displays.sevensegment import SevenSegment
-from displays.sevensegment import SevenSegments
-from displays.liquidcrystal import LiquidCrystal
+from .displays.sevensegment import SevenSegment
+from .displays.sevensegment import SevenSegments
+from .displays.liquidcrystal import LiquidCrystal
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

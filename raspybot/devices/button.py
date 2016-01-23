@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     10/17/2015
-# Version:      0.0.15
+# Modified:     01/21/2016
+# Version:      0.0.17
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,7 +33,7 @@ from device import Device
 from ..io.interface import gpio, InterfaceGPIO
 from ..utils.exceptions import InvalidFunctionError, NoChannelInterfaceError, InterfaceNoSupported
 
-from buttons.buttons import Buttons
-from buttons.switches import Switches
+from .buttons.buttons import Buttons
+from .buttons.switches import Switches
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
