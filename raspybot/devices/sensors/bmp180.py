@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/16/2016
-# Modified:     01/21/2016
-# Version:      0.0.27
+# Modified:     01/23/2016
+# Version:      0.0.33
 # Copyright:
 # Licence:      GLPv3
 #
@@ -79,6 +79,22 @@ class BMP180(Device):
 
         self._iface.read_to(self.INFORMATION, 2)
         self._iface.read_to(self.CALIBRATION, 22)
+
+
+    def __wait_reply__(self, timeout=0.01):
+        if self._reading is False:
+            return True
+
+        else:
+            timeout /=  10.0
+
+            for tries in range(10):
+                if self._reading is False:
+                    return True
+
+                sleep(timeout)
+
+        return False
 
 
     def __read_data__(self, addr, comm, data):
@@ -173,11 +189,8 @@ class BMP180(Device):
         else:
             self.update(False, True)
 
-            for tries in range(10):
-                if not self._reading:
-                    return self._pres
-
-                sleep(0.01)
+            if self.__wait_reply__():
+                return self._pres
 
         return None
 
@@ -191,10 +204,17 @@ class BMP180(Device):
         else:
             self.update(True, False)
 
-            for tries in range(10):
-                if not self._reading:
-                    return self._temp
-
-                sleep(0.01)
+            if self.__wait_reply__():
+                return self._temp
 
         return None
+
+
+    def get_altitude(self, sealevelpressure, update=False):
+        """  """
+
+        if update:
+            self.update(True, True)
+            sleep(0.01)
+
+        return round(44330.0 * (1.0 - pow(self._pres / sealevelpressure, 0.190294)), 2)
