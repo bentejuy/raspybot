@@ -1,2 +1,2 @@
 
-__all__ = ('device', 'motor', 'button', 'logic')
+__all__ = ('device', 'motor', 'button', 'logic', 'sensor', 'analogic')
