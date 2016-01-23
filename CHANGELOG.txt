@@ -1,72 +1,97 @@
 Change Log
 ==========
 
+0.1.9
+-----
+
+- Added test files for new objects
+- Added support to integrated circuit PCF8591 AD/DA converter
+- Updated BMP180 object
+- Updated the InterfaceI2C object
+- Added support to integrated circuit BMP180
+- SevenSegments object optimized
+- Small corrections
+- Added support to LCD2004A
+- Updated LiquidCrystal and LCD1604A objects
+- Updated the LiquidCrystal object
+- Added object for the control of LCD 1604A
+- Fixed small bug in test file
+- Updated the InterfaceGPIO object
+- Added new method on WorkerTask
+- Corrected some bad translations
+- Fixed bugs in SevenSegments object
+- Fixed bugs on files of LiquidCrystal
+- More details debugging task objects
+- Documented the InterfaceGPIO object
+- Added function in InterfaceGPIO for write quickly
+
+
 0.1.8
 -----
 
-Added support to Interface I2C in the MotorStepper object
-Added support to Interface I2C in the Blinker object
-Updated new changes in I2C Objects
-Small corrections in test files
-Changed exceptions syntax
-Updated I2C objects
-Added LiquidCrystal Object
-Updated SevenSegments object
-Forgot exception
-Added functions to read in InterfaceI2CSlave
-Fixed small bugs in Interfacei2c
-Updated and simplified test files
-Updated InterfaceManager object to support the I2C protocol
-Adding the necessary classes to support I2C protocol
-Fixed bug: Function name misspelled
-Removed backward compatibility functions
-Removed unused import modules
-Fixed small bug
+- Added support to Interface I2C in the MotorStepper object
+- Added support to Interface I2C in the Blinker object
+- Updated new changes in I2C Objects
+- Small corrections in test files
+- Changed exceptions syntax
+- Updated I2C objects
+- Added LiquidCrystal Object
+- Updated SevenSegments object
+- Forgot exception
+- Added functions to read in InterfaceI2CSlave
+- Fixed small bugs in Interfacei2c
+- Updated and simplified test files
+- Updated InterfaceManager object to support the I2C protocol
+- Adding the necessary classes to support I2C protocol
+- Fixed bug: Function name misspelled
+- Removed backward compatibility functions
+- Removed unused import modules
+- Fixed small bug
 
 
 0.1.7
 -----
 
-Updated test files
-It does not change the dutycycle value of rotation changes
-Fixed bug: don't stop in PWM_REVERSIBLE mode
-Syntax wrong
-Added new test files for MotorDC
-Added new operation mode for MotorDC
-Corrected and updated exceptions
-Allows control of one or more interface objects by a device
-Added two new operating modes to MotorDC
-Updated the Blinker object
-Updated motorservo2 test file
-Updated SevenSegments object
-Corrected the methods to control speed
-Added MotorDC object.
-Renamed SevenSegmentGroup to SevenSegments and updated object.
-Added function
-Added some test files
-Small modifications in InterfacePWM
-Added default value in wait function
-Updated to inline if statement
-Small modification in exception message
-Removed unused exception
+- Updated test files
+- It does not change the dutycycle value of rotation changes
+- Fixed bug: don't stop in PWM_REVERSIBLE mode
+- Syntax wrong
+- Added new test files for MotorDC
+- Added new operation mode for MotorDC
+- Corrected and updated exceptions
+- Allows control of one or more interface objects by a device
+- Added two new operating modes to MotorDC
+- Updated the Blinker object
+- Updated motorservo2 test file
+- Updated SevenSegments object
+- Corrected the methods to control speed
+- Added MotorDC object.
+- Renamed SevenSegmentGroup to SevenSegments and updated object.
+- Added function
+- Added some test files
+- Small modifications in InterfacePWM
+- Added default value in wait function
+- Updated to inline if statement
+- Small modification in exception message
+- Removed unused exception
 
 
 0.1.6
 -----
 
-Small modifications in SimonSay tests file
-Some corrections in exceptions file
-Sets default data value when it's not defined
-Small fixed bug
-The "logging" module removed from files where it's not used
-Included motorservo module to __init__ file
-SevenSegment object rewrited
-Text correction.
-Updated tests files.
-Added timeout parameter to the "join" method in Worker class
-Fixed bug: Limited the time to wait to stop a Worker object
-Cosmetic changes
-Renamed some InterfaceGPIO class functions
+- Small modifications in SimonSay tests file
+- Some corrections in exceptions file
+- Sets default data value when it's not defined
+- Small fixed bug
+- The "logging" module removed from files where it's not used
+- Included motorservo module to __init__ file
+- SevenSegment object rewrited
+- Text correction.
+- Updated tests files.
+- Added timeout parameter to the "join" method in Worker class
+- Fixed bug: Limited the time to wait to stop a Worker object
+- Cosmetic changes
+- Renamed some InterfaceGPIO class functions
 
 
 0.1.5
