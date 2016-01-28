@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/17/2013
-# Modified:     01/04/2015
-# Version:      0.1.95
-# Copyright:    (c) 2013-2015 Bentejuy Lopez
+# Modified:     01/25/2016
+# Version:      0.2.05
+# Copyright:    (c) 2013-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -65,7 +65,7 @@ class Worker(object):
 
         self._event.clear()
         self._thread = threading.Thread(target=self._runner, args=args)
-        self._thread.setDaemon(True)
+#       self._thread.setDaemon(True)
         self._thread.start()
 
 
@@ -104,12 +104,12 @@ class Worker(object):
 
 
     def alive(self):
-        """  """
+        """ Checks if the Worker is alive. """
         return self._thread and self._thread.is_alive()
 
 
     def join(self, timeout=None):
-        """  """
+        """ Wait until the worker terminates or until the seconds defined in "timeout" has elapsed. """
 
         if self._thread:
             self._thread.join(timeout)
@@ -125,21 +125,17 @@ class Worker(object):
 
 
 class WorkerTask(Worker):
-    def __init__(self, parser, delay, checker=None):
+    def __init__(self, parser, delay):
         super(WorkerTask, self).__init__(self.__run__)
 
         if not hasattr(parser, '__call__'):
             raise InvalidFunctionError('parser')
-
-        if checker and not hasattr(checker, '__call__'):
-            raise InvalidFunctionError('checker')
 
         self._delay = delay
         self._lock  = threading.Lock()
         self._queue = Queue.Queue()
 
         self._parser  = parser
-        self._checker = checker
 
 
     def __start__(self):
@@ -181,7 +177,7 @@ class WorkerTask(Worker):
 
                 else:
                     self._lock.acquire()
-                    task = self._queue.get()
+                    task = self._queue.get_nowait()
                     self._lock.release()
 
                     self._event.wait(self._delay)
@@ -202,5 +198,5 @@ class WorkerTask(Worker):
 
 
     def empty(self):
-        """  """
+        """ Checks if the task queue is empty. """
         return self._queue.empty()
