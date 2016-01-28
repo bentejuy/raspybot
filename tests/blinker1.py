@@ -6,7 +6,7 @@
 # Purpose:
 #
 # Created:       04/02/2015
-# Modified:      12/17/2015
+# Modified:      01/28/2016
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -37,7 +37,7 @@ blinker = Blinker(iface, 'Blinker Test 1', delay=0.3, initial=0b10000001, start=
 try:
     blinker.start()
 
-    for x in xrange(50):
+    for x in range(50):
         if x == 10:
             blinker.stop()
             blinker.set_value(0b00001111)
@@ -61,8 +61,10 @@ try:
         time.sleep(1.5)
 
 except KeyboardInterrupt:
-    blinker.stop()
+    pass
 
 finally:
+    blinker.stop()
+
     manager.delete(iface)
     manager.cleanup()
