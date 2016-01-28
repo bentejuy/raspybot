@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     12/19/2015
-# Version:      0.0.79
+# Modified:     01/24/2016
+# Version:      0.0.83
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -58,15 +58,15 @@ try:
     import RPi.GPIO as gpio
 
 except ImportError:
-    import interfaces.fakegpio as gpio
-    logger.warn('Initializing "InterfaceManager" in debug mode because RPi.GPIO module was not found')
+    from .interfaces import fakegpio as gpio
+#    logger.warn('Initializing "InterfaceManager" in debug mode because RPi.GPIO module was not found')
 
 try:
     import smbus
 
 except ImportError:
-    import interfaces.fakesmbus as smbus
-    logger.warn('Error importing the "smbus" module, using the "fakesmbus" module  by default')
+    from .interfaces import fakesmbus as smbus
+#    logger.warn('Error importing the "smbus" module, using the "fakesmbus" module  by default')
 
 
 from .task import TaskPWM
@@ -76,14 +76,13 @@ from .task import TaskGPIO
 from ..utils.worker import WorkerTask
 from ..utils.exceptions import InvalidTypeError, InvalidFunctionError, InvalidInterfaceError, OutRangeError, ExceptionFmt
 
-from interfaces.interface import Interface
-from interfaces.interface import InterfaceSlave
-from interfaces.interface import InterfaceActive
-from interfaces.interfacepwm import InterfacePWM
-from interfaces.interfacegpio import InterfaceGPIO
-from interfaces.interfacei2c import InterfaceI2CSlave
-from interfaces.interfacei2c import InterfaceI2CMaster
-from interfaces.interfacemanager import InterfaceManager
+from .interfaces.interface import Interface
+from .interfaces.interface import InterfaceSlave
+from .interfaces.interface import InterfaceActive
+from .interfaces.interfacepwm import InterfacePWM
+from .interfaces.interfacegpio import InterfaceGPIO
+from .interfaces.interfacei2c import InterfaceI2CSlave
+from .interfaces.interfacei2c import InterfaceI2CMaster
+from .interfaces.interfacemanager import InterfaceManager
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
