@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     10/24/2015
-# Version:      0.0.37
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/28/2016
+# Version:      0.0.39
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GPLv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,8 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from ..logic import Device
-from ..logic import OutRangeError,InvalidFunctionError, InvalidTypeError, InterfaceNoSupported
+from ..logic import OutRangeError,InvalidFunctionError, InvalidTypeError, \
+                    InterfaceNoSupported
 
 from ..logic import InterfaceGPIO
 
@@ -45,7 +46,10 @@ from ..logic import InterfaceGPIO
 
 
 class FlipFlop(Device):
-    """ Store the value of one or more states for work with him and simulate a FlipFlop electronic element. """
+    """
+    Store the value of one or more states for work with him and
+    simulate a FlipFlop electronic element.
+    """
 
     def __init__(self, iface, name=None, initial=0):
 
@@ -90,8 +94,8 @@ class FlipFlop(Device):
         Set one channel, a tuple or list of channel to 1 logical.
 
         index: An integer, tuple or list of integers where the the integer is the index
-               position into channel, starting of zero. If "index" is not defined then all
-               channel are set to 1.
+               position into channel, starting of zero. If "index" is not defined then
+               all channel are set to 1.
         """
 
         if index is not None:
@@ -113,8 +117,8 @@ class FlipFlop(Device):
         Set one channel, a tuple or list of channel to 0 logical.
 
         index: An integer, tuple or list of integers where the the integer is the index
-               position into channel, starting of zero. If "index" is not defined then all
-               channel are set to 0.
+               position into channel, starting of zero. If "index" is not defined then
+               all channel are set to 0.
         """
 
         if index is not None:
@@ -134,5 +138,5 @@ class FlipFlop(Device):
     def toggle(self):
         """ Invert the value of all channels. """
 
-        self._value = ~ self._value
+        self._value = ~self._value
         self.__write__(self._value)

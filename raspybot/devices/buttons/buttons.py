@@ -97,6 +97,7 @@ class Buttons(Device):
     def __on_pressed__(self, pin):
         if not self._on_pressed:
             logger.error('The "pressed" callback was not defined')
+
         else:
             self._on_pressed(self, pin, self.PRESSED)
 
@@ -104,6 +105,7 @@ class Buttons(Device):
     def __on_release__(self, pin):
         if not self._on_release:
             logger.error('The "release" callback was not defined')
+
         else:
             self._on_release(self, pin, self.RELEASE)
 

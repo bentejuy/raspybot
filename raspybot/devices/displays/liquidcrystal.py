@@ -52,8 +52,8 @@ class LiquidCrystal(Device):
     LCD1602A, \
     LCD2004A = range(2)
 
-
     def __init__(self, iface, model, name=None):
+        super(LiquidCrystal, self).__init__(iface, name)
 
         try:
             if model == self.LCD1602A:

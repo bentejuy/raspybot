@@ -144,8 +144,6 @@ class HD44780(object):
             sleep(timeout)
 
         else:
-#           print("Imprimiendo comando", "{:08b}-{:03b}".format(data, flags))
-
             lbits = (data & 0x0F) << 3 | flags
             hbits = (data & 0xF0) >> 1 | flags
 

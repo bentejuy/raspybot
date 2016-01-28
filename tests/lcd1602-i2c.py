@@ -6,7 +6,7 @@
 # Purpose:
 #
 # Created:      01/27/2016
-# Modified:     01/27/2016
+# Modified:     01/28/2016
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -17,7 +17,7 @@ from __future__ import print_function
 import time
 
 from raspybot.devices.display import LiquidCrystal
-from raspybot.io.interface import InterfaceManager, InterfaceGPIO
+from raspybot.io.interface import InterfaceManager, InterfaceI2CMaster, InterfaceI2CSlave
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -31,7 +31,7 @@ ifs = InterfaceI2CSlave(mgr, 0x27)
 
 lcd = LiquidCrystal(ifs, LiquidCrystal.LCD2004A)
 
-try
+try:
     lcd.set_cursor(False)
     time.sleep(1.5)
 
@@ -42,7 +42,6 @@ try
 
     time.sleep(2)
 
-    lcd.home()
     lcd.clear()
     lcd.set_cursor(True)
 

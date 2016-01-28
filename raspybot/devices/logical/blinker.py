@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     12/21/2015
-# Version:      0.0.57
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/28/2016
+# Version:      0.0.59
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -126,7 +126,7 @@ class Blinker(ActionDevice):
 
 
     def stop(self):
-        """ Stops the working of Blinker object """
+        """ Stops and sets all output to zero. """
 
         if self._worker.alive():
             self._worker.__stop__()
@@ -145,7 +145,7 @@ class Blinker(ActionDevice):
 
 
     def set_delay(self, delay):
-        """ Sets the delay between changes of state """
+        """ Sets the delay between changes of state. """
 
         if not isinstance(delay, (int, long, float)):
             raise InvalidTypeError('The delay', 'numeric')
@@ -157,7 +157,7 @@ class Blinker(ActionDevice):
 
 
     def set_value(self, value):
-        """ Sets the value that stored by the 'Blinker' object """
+        """ Sets the value that stored by the Blinker object. """
 
         if not isinstance(value, (int, long, float)):
             raise InvalidTypeError('The delay', 'numeric')
@@ -172,7 +172,7 @@ class Blinker(ActionDevice):
 
 
     def set_callback(self, callback):
-        """ Sets the callback that define the next value depending on the value received """
+        """ Sets the callback that define the next value depending on the value received. """
 
         if callback and not hasattr(callback, '__call__'):
             raise InvalidFunctionError('checker')
@@ -189,7 +189,7 @@ class Blinker(ActionDevice):
 
 
     def set(self, delay, initial, checker=None):
-        """ Sets all configurations parameters in only one call """
+        """ Sets all configurations parameters in only one call. """
 
         self.set_delay(delay)
         self.set_value(initial)

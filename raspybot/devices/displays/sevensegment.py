@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/17/2015
-# Modified:     01/16/2015
-# Version:      0.0.63
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/28/2016
+# Version:      0.0.65
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -252,10 +252,10 @@ class SevenSegments(Device):
             raise Exception('The display parameter must be a valid SevenSegment object')
 
         if len(self._iface) < len(self._displays):
-            raise Exception('La Interfaz definida no puede soportar mas display de siete Segmentos')
+            raise Exception('The Interface defined does not support more SevenSegment displays')
 
         if any([display.get_mode() != x.get_mode() for x in self._display]):
-            raise Exception('Todas los display necesitan trabajar en el mismo modo')
+            raise Exception('All Sevensegment objects must work in the same mode')
 
         self._display.append(display)
 

@@ -40,7 +40,7 @@ class LCD1602A(HD44780):
             RS, RW, EN, D4-D7 or RS, RW, EN, D0-D7,
 
         With the mode I2C, its assumed that the low byte are the control bits
-        (RS, RW, EN and BackLight) and the high bits are the data (D4 to D7). 
+        (RS, RW, EN and BackLight) and the high bits are the data (D4 to D7).
         This bit distribution is intended for the PCF8574 integrated circuit or
         equivalents.
 
