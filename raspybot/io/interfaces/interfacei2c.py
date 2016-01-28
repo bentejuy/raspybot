@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     01/16/2016
-# Version:      0.0.75
+# Modified:     01/28/2016
+# Version:      0.0.77
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -58,20 +58,18 @@ class InterfaceI2CSlave(InterfaceSlave):
     """
 
     def __init__(self, manager, address, comm=0, success=None, failure=None):
-
         if not isinstance(address, (int, long)):
-            raise TypeError('The I2C Address  must be a valid number')
+            raise TypeError('The I2C Address must be a valid number')
 
         if address < 0x03 or address > 0x77:
             raise OutRangeError('address')
 
         self._comm = comm
-        self._master = manager.get_connection(self)
         self._address = address
 
         self.set_callback(success, failure)
 
-        manager.append(self)
+        super(InterfaceI2CSlave, self).__init__(manager)
 
 
     def __success__(self, task):
@@ -87,7 +85,7 @@ class InterfaceI2CSlave(InterfaceSlave):
 
 
     def get_address(self):
-        """  """
+        """ Returns the I2C address defined for this interface. """
         return self._address
 
 
@@ -197,9 +195,7 @@ class InterfaceI2CMaster(InterfaceActive):
     def __init__(self, manager):
         super(InterfaceI2CMaster, self).__init__(manager, self.__parser__)
 
-        self._bus = manager.get_connection(self)
         self._slaves = {}
-        self._manager = manager
 
         if self._manager.get_mode() == gpio.BOARD:
             self._pinout = (2, 3)
@@ -210,7 +206,6 @@ class InterfaceI2CMaster(InterfaceActive):
 
         self._manager.setup(self._pinout[0], gpio.I2C)
         self._manager.setup(self._pinout[1], gpio.I2C)
-        self._manager.append(self)
 
 
     def __contains__(self, item):

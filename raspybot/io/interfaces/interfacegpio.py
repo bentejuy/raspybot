@@ -50,12 +50,12 @@ logger = logging.getLogger(__name__)
 
 class InterfaceGPIO(InterfaceActive):
     """
-        Interface to interact directly with the GPIO ports, it can receive four parameters.
+    Interface to interact directly with the GPIO ports, it can receive four parameters.
 
-        manager: The manager interfaces
-        pinin  : An integer, tuple or list of integers used as data inputs.
-        pinout : An integer, tuple or list of integers used as data output.
-        callback: Function that will be called when data is received at the input channels (pinint)
+    manager: The manager interfaces
+    pinin  : An integer, tuple or list of integers used as data inputs.
+    pinout : An integer, tuple or list of integers used as data output.
+    callback: Function that will be called when data is received at the input channels (pinint)
     """
 
     def __init__(self, manager, pinin=None, pinout=None, callback=None):
@@ -71,8 +71,6 @@ class InterfaceGPIO(InterfaceActive):
 
         if pinin:
             self.setup(pinin, self._bus.IN, callback)
-
-        self._manager.append(self)
 
 
     def __len__(self):
@@ -163,7 +161,7 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def clear(self):
-        """ Empty tasks from queue read and write. """
+        """ Empty all tasks from queue. """
         super(self.__class__, self).__stop__()
 
 

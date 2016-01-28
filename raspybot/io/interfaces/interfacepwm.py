@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/22/2015
-# Modified:     12/01/2015
-# Version:      0.0.37
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/28/2016
+# Version:      0.0.39
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -62,8 +62,6 @@ class InterfacePWM(InterfaceActive):
 
         if pinout:
             self.setup(pinout, frequency)
-
-        self._manager.append(self)
 
 
     def __len__(self):
@@ -119,6 +117,7 @@ class InterfacePWM(InterfaceActive):
 
         if isinstance(pin, (tuple, list)):
             map(append_in, pin)
+
         else:
             append_in(pin)
 

@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     06/07/2015
-# Version:      0.0.65
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/28/2016
+# Version:      0.0.67
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -54,9 +54,11 @@ class Interface(object):
 
 
 class InterfaceSlave(Interface):
-    def __init__(self, master):
+    def __init__(self, manager):
 
-        self._master = master
+        self._master = manager.get_connection(self)
+
+        manager.append(self)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -69,10 +71,13 @@ class InterfaceSlave(Interface):
 
 
 class InterfaceActive(Interface, WorkerTask):
-    def __init__(self, manager, parser, delay=0.0001, checker=None):
-        super(InterfaceActive, self).__init__(parser, delay)
+    def __init__(self, manager, parser, delay=0.0001):
 
-        self._bus = None
+        Interface.__init__(self)
+        WorkerTask.__init__(self, parser, delay)
+
+        self._bus = manager.get_connection(self)
         self._manager = manager
 
+        manager.append(self)
 
