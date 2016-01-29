@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     01/28/2016
-# Version:      0.0.59
+# Modified:     01/29/2016
+# Version:      0.0.63
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -122,14 +122,14 @@ class Blinker(ActionDevice):
             if timelive < self._delay:
                 raise MinMaxValueError('timelive', 'parameter', 'greater', 'the delay time')
 
-        self._worker.__start__((timelive,))
+        self._worker.start((timelive,))
 
 
     def stop(self):
         """ Stops and sets all output to zero. """
 
         if self._worker.alive():
-            self._worker.__stop__()
+            self._worker.stop()
 
         self.__write__(0)
 

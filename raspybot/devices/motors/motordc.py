@@ -261,7 +261,7 @@ class MotorDC(MotorBase):
         """ Stops the motor """
 
         if self._worker.alive():
-            self._worker.__stop__()
+            self._worker.stop()
 
             if not self._pwm_enabled:
                 self._iface.write(0)
@@ -280,7 +280,7 @@ class MotorDC(MotorBase):
         """ Move the motor to the right """
 
         self.set_dutycycle(dutycycle)
-        self._worker.__start__(args=(self.MOVE_RIGHT, timeout))
+        self._worker.start(args=(self.MOVE_RIGHT, timeout))
 
 
     def backward(self, dutycycle=None, timeout=None):
@@ -290,4 +290,4 @@ class MotorDC(MotorBase):
             return
 
         self.set_dutycycle(dutycycle)
-        self._worker.__start__(args=(self.MOVE_LEFT, timeout))
+        self._worker.start(args=(self.MOVE_LEFT, timeout))

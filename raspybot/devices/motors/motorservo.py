@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/27/2015
-# Modified:     11/26/2015
-# Version:      0.0.41
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     11/29/2015
+# Version:      0.0.43
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -123,7 +123,7 @@ class MotorServo(MotorBase):
 
         if self._worker.alive():
             self._iface.stop(0)
-            self._worker.__stop__()
+            self._worker.stop()
 
 
     def alive(self):
@@ -209,12 +209,12 @@ class MotorServo(MotorBase):
 
     def backward(self):
         """ Move the servo to minimun angle """
-        self._worker.__start__(args=(self.__pulses2dutycycle__(self._pulses[0]), self.__degrees2time__(self._angles[1])))
+        self._worker.start(args=(self.__pulses2dutycycle__(self._pulses[0]), self.__degrees2time__(self._angles[1])))
 
 
     def forward(self):
         """ Move the servo to maximum angle """
-        self._worker.__start__(args=(self.__pulses2dutycycle__(self._pulses[1]), self.__degrees2time__(self._angles[1])))
+        self._worker.start(args=(self.__pulses2dutycycle__(self._pulses[1]), self.__degrees2time__(self._angles[1])))
 
 
     def angle_to(self, degrees):
@@ -229,4 +229,4 @@ class MotorServo(MotorBase):
         if degrees > self._angles[1]:
             raise MinMaxValueError('degrees parameter', 'angle', 'less', 'maximum')
 
-        self._worker.__start__(args=(self.__degrees2dutycycle__(degrees), self.__degrees2time__(degrees)))
+        self._worker.start(args=(self.__degrees2dutycycle__(degrees), self.__degrees2time__(degrees)))

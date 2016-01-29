@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/17/2015
-# Modified:     01/28/2016
-# Version:      0.0.65
+# Modified:     01/29/2016
+# Version:      0.0.67
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -264,14 +264,14 @@ class SevenSegments(Device):
         """ Turns on all SevenSegment displays  """
 
         if not self._worker.alive():
-            self._worker.__start__()
+            self._worker.start()
 
 
     def off(self):
         """ Turns off all SevenSegment displays """
 
         if self._worker.alive():
-            self._worker.__stop__()
+            self._worker.stop()
 
 
     def write(self, value=0):
@@ -285,8 +285,8 @@ class SevenSegments(Device):
 
 
         if self._worker.alive():
-            self._worker.__stop__()
+            self._worker.stop()
 
         self._value = abs(value)
-        self._worker.__start__()
+        self._worker.start()
 

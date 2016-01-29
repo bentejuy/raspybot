@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     01/28/2016
-# Version:      0.0.77
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/29/2016
+# Version:      0.0.79
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -310,27 +310,27 @@ class InterfaceI2CMaster(InterfaceActive):
         task.data = data
         task.action = action
 
-        super(self.__class__, self).__append__(task)
+        super(self.__class__, self).append(task)
 
         if not self.alive():
-            super(self.__class__, self).__start__()
+            super(self.__class__, self).start()
 
 
     def __failure__(self, action, task, error):
         task.data = error
         task.action = action
 
-        super(self.__class__, self).__append__(task)
+        super(self.__class__, self).append(task)
 
         if not self.alive():
-            super(self.__class__, self).__start__()
+            super(self.__class__, self).start()
 
 
     def free(self):
         """  """
 
         try:
-            self.__stop__()
+            self.stop()
 
         finally:
             self._bus.close()
@@ -358,10 +358,10 @@ class InterfaceI2CMaster(InterfaceActive):
         """ Add a new task to the I2C interface queue """
 
         if isinstance(task, TaskI2C):
-            super(self.__class__, self).__append__(task)
+            super(self.__class__, self).append(task)
 
             if not self.alive():
-                super(self.__class__, self).__start__()
+                super(self.__class__, self).start()
         else:
             logger.critical('Error, adding a not valid task to I2C master interface')
 

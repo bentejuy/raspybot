@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/04/2015
-# Version:      0.0.87
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/29/2016
+# Version:      0.0.89
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -162,26 +162,26 @@ class InterfaceGPIO(InterfaceActive):
 
     def clear(self):
         """ Empty all tasks from queue. """
-        super(self.__class__, self).__stop__()
+        super(self.__class__, self).stop()
 
 
     def stop(self):
         """ Stops all pending writes and sets all channel to zero. """
 
-        super(self.__class__, self).__stop__()
-        super(self.__class__, self).__append__(TaskGPIO(TaskGPIO.GPIO_STOP))
+        super(self.__class__, self).stop()
+        super(self.__class__, self).append(TaskGPIO(TaskGPIO.GPIO_STOP))
 
         if not self.alive():
-            super(self.__class__, self).__start__()
+            super(self.__class__, self).start()
 
 
     def write(self, data, timeout=-1):
         """ Adds a binary value to the queue to write in the output channels. """
 
-        super(self.__class__, self).__append__(TaskGPIO(TaskGPIO.GPIO_WRITE, data, timeout))
+        super(self.__class__, self).append(TaskGPIO(TaskGPIO.GPIO_WRITE, data, timeout))
 
         if not self.alive():
-            super(self.__class__, self).__start__()
+            super(self.__class__, self).start()
 
 
     def write_quick(self, data):

@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/22/2015
-# Modified:     01/28/2016
-# Version:      0.0.39
+# Modified:     01/29/2016
+# Version:      0.0.41
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -125,11 +125,11 @@ class InterfacePWM(InterfaceActive):
     def stop(self, index=0):
         """  """
 
-        super(self.__class__, self).__stop__()
-        super(self.__class__, self).__append__(TaskPWM(TaskPWM.PWM_STOP, index=index))
+        super(self.__class__, self).stop()
+        super(self.__class__, self).append(TaskPWM(TaskPWM.PWM_STOP, index=index))
 
         if not self.alive():
-            super(self.__class__, self).__start__()
+            super(self.__class__, self).start()
 
 
     def write(self, index, dutycycle, timeout=0):
@@ -138,10 +138,10 @@ class InterfacePWM(InterfaceActive):
         if not self._pwm[index]:
             self._pwm[index] = self._bus.PWM(self._pin[index], self._frequency)
 
-        super(self.__class__, self).__append__(TaskPWM(TaskPWM.PWM_START, dutycycle, index, timeout))
+        super(self.__class__, self).append(TaskPWM(TaskPWM.PWM_START, dutycycle, index, timeout))
 
         if not self.alive():
-            super(self.__class__, self).__start__()
+            super(self.__class__, self).start()
 
 
     def set_frequency(self, freq):

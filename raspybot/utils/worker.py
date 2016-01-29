@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/17/2013
-# Modified:     01/25/2016
-# Version:      0.2.05
+# Modified:     01/29/2016
+# Version:      0.2.07
 # Copyright:    (c) 2013-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -30,15 +30,10 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 import Queue
-import logging
 import threading
 
-from tasks import Task
-from exceptions import InvalidFunctionError
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logging.getLogger(__name__)
+from .tasks import Task
+from .exceptions import InvalidFunctionError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -59,17 +54,21 @@ class Worker(object):
         self._thread = None
 
 
-    def __start__(self, args):
+    def start(self, args):
+        """ Start the worker."""
+
         if self.alive():
-            self.__stop__()
+            self.stop()
 
         self._event.clear()
         self._thread = threading.Thread(target=self._runner, args=args)
-#       self._thread.setDaemon(True)
+        self._thread.setDaemon(True)
         self._thread.start()
 
 
-    def __stop__(self):
+    def stop(self):
+        """ Stops the worker. """
+
         self._event.set()
 
         try:
@@ -105,7 +104,7 @@ class Worker(object):
 
     def alive(self):
         """ Checks if the Worker is alive. """
-        return self._thread and self._thread.is_alive()
+        return not self._thread is None and self._thread.is_alive()
 
 
     def join(self, timeout=None):
@@ -132,28 +131,9 @@ class WorkerTask(Worker):
             raise InvalidFunctionError('parser')
 
         self._delay = delay
-        self._lock  = threading.Lock()
         self._queue = Queue.Queue()
 
         self._parser  = parser
-
-
-    def __start__(self):
-        super(WorkerTask, self).__start__(())
-
-
-    def __stop__(self):
-        super(WorkerTask, self).__stop__()
-
-        try:
-            self._lock.acquire()
-
-            while not self._queue.empty():
-                self._queue.get_nowait()
-                self._queue.task_done()
-
-        finally:
-            self._lock.release()
 
 
     def __run__(self):
@@ -172,31 +152,38 @@ class WorkerTask(Worker):
 
             else:
                 if self._queue.empty():
-                    task = self._queue.get(True)
+                    task = self._queue.get()
                     self._queue.task_done()
 
                 else:
-                    self._lock.acquire()
                     task = self._queue.get_nowait()
-                    self._lock.release()
 
+                    self._queue.task_done()
                     self._event.wait(self._delay)
 
+    def start(self):
+        """ Start the worker."""
+        super(WorkerTask, self).start(())
 
-    def __append__(self, *tasks):
-        try:
-            self._lock.acquire()
 
-            for task in tasks:
-                self._queue.put(task)
+    def stop(self):
+        """ Stops the worker and clear all task pending. """
 
-        except Exception as error:
-            logger.critical(error)
+        super(WorkerTask, self).stop()
 
-        finally:
-            self._lock.release()
+        while not self._queue.empty():
+            self._queue.get_nowait()
+            self._queue.task_done()
 
 
     def empty(self):
         """ Checks if the task queue is empty. """
         return self._queue.empty()
+
+
+    def append(self, *tasks):
+        """ Adds tasks to the worker. """
+
+        for task in tasks:
+            self._queue.put(task)
+

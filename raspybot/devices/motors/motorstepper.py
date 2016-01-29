@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     12/29/2015
-# Version:      0.0.87
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/29/2016
+# Version:      0.0.89
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -124,7 +124,7 @@ class MotorStepper(MotorBase):
 
         if self._worker.alive():
             self.__write__(0)
-            self._worker.__stop__()
+            self._worker.stop()
 
 
     def join(self):
@@ -186,7 +186,7 @@ class MotorStepper(MotorBase):
         if degrees:
             steps = self.__angle2steps__(degrees)
 
-        self._worker.__start__(args=(steps, self.MOVE_LEFT))
+        self._worker.start(args=(steps, self.MOVE_LEFT))
 
 
     def forward(self, steps=-1, degrees=0):
@@ -196,7 +196,7 @@ class MotorStepper(MotorBase):
         if degrees:
             steps = self.__angle2steps__(degrees)
 
-        self._worker.__start__(args=(steps, self.MOVE_RIGHT))
+        self._worker.start(args=(steps, self.MOVE_RIGHT))
 
 
     def angle_to(self, degrees):
