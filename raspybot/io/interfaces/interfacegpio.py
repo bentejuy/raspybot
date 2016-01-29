@@ -88,7 +88,7 @@ class InterfaceGPIO(InterfaceActive):
 
 
     def __parser__(self, task):
-        state = task.get_state()
+        state = task.state
 
         if task.action == task.GPIO_WRITE:
             if state == task.WAITING:

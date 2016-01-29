@@ -69,7 +69,7 @@ class InterfacePWM(InterfaceActive):
 
 
     def __parser__(self, task):
-        state = task.get_state()
+        state = task.state
 
         if state == task.WAITING:
             if task.action == task.PWM_START:

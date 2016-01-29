@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/14/2013
-# Modified:     11/29/2015
-# Version:      0.1.37
-# Copyright:    (c) 2013 Bentejuy Lopez
+# Modified:     01/29/2016
+# Version:      0.1.43
+# Copyright:    (c) 2013-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -56,7 +56,8 @@ class Task(object):
         self._timeout = timeout
 
 
-    def get_state(self):
+    @property
+    def state(self):
         if self._state >= self.CONSTANT:
             return self._state
 
@@ -67,7 +68,8 @@ class Task(object):
         return self._state
 
 
-    def set_state(self, state):
+    @state.setter
+    def state(self, state):
         self._state = state
 
         if state == self.RUNNING:
