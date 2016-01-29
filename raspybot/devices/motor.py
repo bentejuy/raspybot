@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/21/2016
-# Version:      0.0.87
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/29/2016
+# Version:      0.0.89
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -31,9 +31,8 @@
 
 from device import ActionDevice
 
-from ..utils.worker import Worker
-from ..utils.timeit import timeit
-from ..utils.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, \
+from ..core.worker import Worker
+from ..core.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, \
                                MinMaxValueError, InterfaceNoSupported, InterfaceTypeMustBe, InterfaceSizeMustBe
 
 from ..io.interface import InterfacePWM

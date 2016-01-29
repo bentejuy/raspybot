@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/19/2015
-# Modified:     01/21/2016
-# Version:      0.0.35
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/29/2016
+# Version:      0.0.37
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -34,8 +34,8 @@ from device import Device
 from ..io.interface import InterfaceGPIO
 from ..io.interface import InterfaceI2CSlave
 
-from ..utils.worker import Worker
-from ..utils.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported, \
+from ..core.worker import Worker
+from ..core.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSupported, \
                                InterfaceTypeMustBe, InterfaceSizeMustBe, InvalidInterfaceError
 
 from .displays.sevensegment import SevenSegment

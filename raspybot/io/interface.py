@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/24/2016
-# Version:      0.0.83
+# Modified:     01/29/2016
+# Version:      0.0.85
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -73,8 +73,9 @@ from .task import TaskPWM
 from .task import TaskI2C
 from .task import TaskGPIO
 
-from ..utils.worker import WorkerTask
-from ..utils.exceptions import InvalidTypeError, InvalidFunctionError, InvalidInterfaceError, OutRangeError, ExceptionFmt
+from ..core.worker import WorkerTask
+from ..core.exceptions import InvalidTypeError, InvalidFunctionError, InvalidInterfaceError, \
+                              OutRangeError, ExceptionFmt
 
 from .interfaces.interface import Interface
 from .interfaces.interface import InterfaceSlave

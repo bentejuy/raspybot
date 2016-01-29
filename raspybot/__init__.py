@@ -1,2 +1,2 @@
 
-__all__ = ('io',  'utils', 'devices')
+__all__ = ('io', 'core', 'utils', 'devices')

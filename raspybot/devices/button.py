@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     01/21/2016
-# Version:      0.0.17
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/29/2016
+# Version:      0.0.19
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@
 
 from device import Device
 from ..io.interface import gpio, InterfaceGPIO
-from ..utils.exceptions import InvalidFunctionError, NoChannelInterfaceError, InterfaceNoSupported
+from ..core.exceptions import InvalidFunctionError, NoChannelInterfaceError, InterfaceNoSupported
 
 from .buttons.buttons import Buttons
 from .buttons.switches import Switches

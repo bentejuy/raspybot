@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/16/2015
-# Modified:     12/05/2015
-# Version:      0.0.23
+# Modified:     01/29/2016
+# Version:      0.0.25
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,7 +33,7 @@
 import uuid
 
 from ..io.interface import Interface
-from ..utils.exceptions import InvalidInterfaceError, InvalidFunctionError
+from ..core.exceptions import InvalidInterfaceError, InvalidFunctionError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

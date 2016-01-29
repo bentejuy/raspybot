@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/16/2016
-# Modified:     01/21/2016
-# Version:      0.0.07
+# Modified:     01/29/2016
+# Version:      0.0.09
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -30,8 +30,9 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from device import Device
+
 from ..io.interface import InterfaceI2CSlave
-from ..utils.exceptions import InvalidFunctionError, InterfaceNoSupported, OutRangeError
+from ..core.exceptions import InvalidFunctionError, InterfaceNoSupported, OutRangeError
 
 from .sensors.bmp180 import BMP180
 

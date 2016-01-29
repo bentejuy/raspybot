@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      05/04/2015
-# Modified:     01/21/2016
-# Version:      0.0.13
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/29/2016
+# Version:      0.0.15
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -35,8 +35,8 @@ from device import ActionDevice
 from ..io.interface import InterfaceGPIO
 from ..io.interface import InterfaceI2CSlave
 
-from ..utils.worker import Worker
-from ..utils.exceptions import OutRangeError, InvalidFunctionError, InvalidTypeError, \
+from ..core.worker import Worker
+from ..core.exceptions import OutRangeError, InvalidFunctionError, InvalidTypeError, \
                                 MinMaxValueError, IsRunningError, InterfaceNoSupported
 
 from .logical.blinker import Blinker
