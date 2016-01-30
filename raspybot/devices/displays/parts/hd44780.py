@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      12/28/2015
-# Modified:     01/09/2016
-# Version:      0.0.63
+# Modified:     01/30/2016
+# Version:      0.0.65
 # Copyright:
 # Licence:      GLPv3
 #
@@ -114,7 +114,7 @@ class HD44780(object):
         sleep(0.0005)
         self._iface.write_byte(data | 0x04 | self._light)
         sleep(0.0005)
-        self._iface.write_byte(data & 0xFB | self._light)
+        self._iface.write_byte(data & 0xF3 | self._light)
 
 
     def __enable_data_gpio__(self, data):
