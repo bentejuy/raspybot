@@ -7,8 +7,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     01/29/2016
-# Version:      0.0.79
+# Modified:     01/30/2016
+# Version:      0.0.81
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -109,7 +109,7 @@ class InterfaceI2CSlave(InterfaceSlave):
 
     def write_byte(self, data, comm=None):
         """  """
-        self._master.append(TaskI2C(TaskI2C.WRITE_BYTE, self._address, data, self._comm if comm is None else comm))
+        self._master.append(TaskI2C(TaskI2C.WRITE if comm is None else TaskI2C.WRITE_BYTE, self._address, data, comm))
 
 
     def write_to(self, comm, data, length=0):
