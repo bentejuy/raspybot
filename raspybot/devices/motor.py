@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         Motor
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/29/2016
-# Version:      0.0.89
+# Modified:     01/31/2016
+# Version:      0.0.91
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,11 +27,12 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from device import ActionDevice
+from .device import ActionDevice
 
 from ..core.worker import Worker
-from ..core.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, InvalidRangeError, \
-                               MinMaxValueError, InterfaceNoSupported, InterfaceTypeMustBe, InterfaceSizeMustBe
+from ..core.exceptions import InvalidTypeError, UnknowMotorModeError, IsRunningError, OutRangeError, \
+                              InvalidRangeError, MinMaxValueError, InterfaceNoSupported, InterfaceTypeMustBe, \
+                              InterfaceSizeMustBe
 
 from ..io.interface import InterfacePWM
 from ..io.interface import InterfaceGPIO

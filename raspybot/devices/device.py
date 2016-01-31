@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         device
@@ -7,7 +5,7 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/16/2015
-# Modified:     01/29/2016
+# Modified:     01/31/2016
 # Version:      0.0.25
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
@@ -56,7 +54,7 @@ class Device(object):
         elif not isinstance(iface, Interface):
             raise InvalidInterfaceError()
 
-        self._name = name or str(uuid.uuid4())
+        self._name = name if name else str(uuid.uuid4())
         self._iface = iface
 
 
@@ -82,7 +80,8 @@ class Device(object):
 
 
 class ActionDevice(Device):
-    """ The same as Device class, but with callback functions to supervise when it started and it stopped actions. """
+    """ Same as Device class, but with callback functions to supervise when
+        it started and it stopped actions. """
 
     def __init__(self, iface, name, start=None, stop=None):
         super(ActionDevice, self).__init__(iface, name)
@@ -99,12 +98,14 @@ class ActionDevice(Device):
 
     def action_start(self):
         """ Calls the 'start' callback function if it was defined """
+
         if self._on_start:
             self._on_start(self)
 
 
     def action_stop(self):
         """ Calls the 'stop' callback function if it was defined """
+
         if self._on_stop:
             self._on_stop(self)
 

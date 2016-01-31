@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         liquidcrystal
@@ -7,9 +5,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      11/29/2015
-# Modified:     01/10/2016
-# Version:      0.0.57
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/24/2016
+# Version:      0.0.59
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify

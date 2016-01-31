@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         MotorStepperUnipolar
@@ -7,9 +5,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     03/27/2015
+# Modified:     03/31/2015
 # Version:      0.0.63
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify

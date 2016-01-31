@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         blinker
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     01/29/2016
-# Version:      0.0.63
+# Modified:     01/31/2016
+# Version:      0.0.65
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -31,7 +29,6 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 import time
-import logging
 
 from ..logic import Worker
 from ..logic import ActionDevice
@@ -40,10 +37,6 @@ from ..logic import OutRangeError, InvalidFunctionError, InvalidTypeError, \
 
 from ..logic import InterfaceGPIO
 from ..logic import InterfaceI2CSlave
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logging.getLogger(__name__)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

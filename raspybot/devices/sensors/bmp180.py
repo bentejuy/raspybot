@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         bmp180
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/16/2016
-# Modified:     01/23/2016
-# Version:      0.0.33
+# Modified:     01/31/2016
+# Version:      0.0.35
 # Copyright:
 # Licence:      GLPv3
 #
@@ -55,16 +53,13 @@ class BMP180(Device):
     INFORMATION = 0xD0
 
     def __init__(self, iface, mode=2, name=None):
+        super(BMP180, self).__init__(iface, name)
 
         if not isinstance(iface, InterfaceI2CSlave):
             raise InterfaceNoSupported(self.__class__, iface.__class__)
 
         if iface.get_address() != 0x77:
             raise Exception('The BMP180 need an i2c interface with the address 0x77')
-
-        super(BMP180, self).__init__(iface, name)
-
-        self._iface.set_callback(self.__read_data__)
 
         self._id = None
         self._version = None
@@ -76,6 +71,8 @@ class BMP180(Device):
         self._temp = None
         self._delay = (0.005, 0.01, 0.015, 0.03)
         self._reading = False
+
+        self._iface.set_callback(self.__read_data__)
 
         self._iface.read_to(self.INFORMATION, 2)
         self._iface.read_to(self.CALIBRATION, 22)

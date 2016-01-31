@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         display
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      09/19/2015
-# Modified:     01/29/2016
-# Version:      0.0.37
+# Modified:     01/31/2016
+# Version:      0.0.39
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,7 +27,7 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from device import Device
+from .device import Device
 
 from ..io.interface import InterfaceGPIO
 from ..io.interface import InterfaceI2CSlave
@@ -41,6 +39,5 @@ from ..core.exceptions import OutRangeError, InvalidTypeError, InterfaceNoSuppor
 from .displays.sevensegment import SevenSegment
 from .displays.sevensegment import SevenSegments
 from .displays.liquidcrystal import LiquidCrystal
-
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

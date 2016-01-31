@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         logic
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      05/04/2015
-# Modified:     01/29/2016
-# Version:      0.0.15
+# Modified:     01/31/2016
+# Version:      0.0.17
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,8 +27,8 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from device import Device
-from device import ActionDevice
+from .device import Device
+from .device import ActionDevice
 
 from ..io.interface import InterfaceGPIO
 from ..io.interface import InterfaceI2CSlave

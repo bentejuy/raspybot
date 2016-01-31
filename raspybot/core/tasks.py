@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         tasks
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/14/2013
-# Modified:     01/29/2016
-# Version:      0.1.43
+# Modified:     01/31/2016
+# Version:      0.1.45
 # Copyright:    (c) 2013-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,7 +27,7 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import time
+from time import time
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -62,7 +60,7 @@ class Task(object):
             return self._state
 
         if self._timeout and self._started:
-            if self._started + self._timeout < time.time():
+            if self._started + self._timeout < time():
                 self._state = self.TIMEOUT
 
         return self._state
@@ -73,7 +71,7 @@ class Task(object):
         self._state = state
 
         if state == self.RUNNING:
-            self._started = time.time()
+            self._started = time()
 
             return self._timeout
 

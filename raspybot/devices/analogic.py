@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         analogic
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2016
-# Modified:     01/29/2016
-# Version:      0.0.09
+# Modified:     01/31/2016
+# Version:      0.0.11
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #

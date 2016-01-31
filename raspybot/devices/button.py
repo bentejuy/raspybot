@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         button
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     01/29/2016
-# Version:      0.0.19
+# Modified:     01/31/2016
+# Version:      0.0.21
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,7 +27,8 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from device import Device
+from .device import Device
+
 from ..io.interface import gpio, InterfaceGPIO
 from ..core.exceptions import InvalidFunctionError, NoChannelInterfaceError, InterfaceNoSupported
 

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         MotorStepper
@@ -7,7 +5,7 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/29/2016
+# Modified:     01/31/2016
 # Version:      0.0.89
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
@@ -200,8 +198,8 @@ class MotorStepper(MotorBase):
 
 
     def angle_to(self, degrees):
-        """ This function moves the motor a certain number of degrees. To function properly, previously you need
-            set the ratio of degrees per steps determined by the manufacturer. """
+        """ This function moves the motor a certain number of degrees. To function properly, previously you
+            need set the ratio of degrees per steps determined by the manufacturer. """
 
         if degrees > 0:
             self.forward(degrees=degrees)

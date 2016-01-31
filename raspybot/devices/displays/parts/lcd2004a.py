@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         lcd2004a
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/08/2016
-# Modified:     01/10/2016
-# Version:      0.0.13
+# Modified:     01/24/2016
+# Version:      0.0.15
 # Copyright:
 # Licence:      GLPv3
 #

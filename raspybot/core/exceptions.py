@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         exceptions
@@ -7,9 +5,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2015
-# Modified:     12/05/2015
-# Version:      0.0.55
-# Copyright:    (c) 2012-2015 Bentejuy Lopez
+# Modified:     01/25/2016
+# Version:      0.0.57
+# Copyright:    (c) 2012-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify

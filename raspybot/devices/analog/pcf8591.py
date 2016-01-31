@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         pcf8591
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/19/2016
-# Modified:     01/23/2016
-# Version:      0.0.27
+# Modified:     01/24/2016
+# Version:      0.0.29
 # Copyright:
 # Licence:      GLPv3
 #

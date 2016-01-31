@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         hd44780
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      12/28/2015
-# Modified:     01/30/2016
-# Version:      0.0.65
+# Modified:     01/31/2016
+# Version:      0.0.67
 # Copyright:
 # Licence:      GLPv3
 #

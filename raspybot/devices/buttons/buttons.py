@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         buttons
@@ -7,9 +5,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/01/2015
-# Modified:     10/24/2015
-# Version:      0.0.31
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     01/24/2016
+# Version:      0.0.33
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify

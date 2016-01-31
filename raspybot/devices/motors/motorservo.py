@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         MotorServo
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/27/2015
-# Modified:     11/29/2015
-# Version:      0.0.43
+# Modified:     01/31/2016
+# Version:      0.0.45
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -37,7 +35,8 @@
 
 from ..motor import Worker
 from ..motor import MotorBase
-from ..motor import InvalidTypeError, OutRangeError, IsRunningError, InvalidRangeError, MinMaxValueError, InterfaceNoSupported
+from ..motor import InvalidTypeError, OutRangeError, IsRunningError, \
+                    InvalidRangeError, MinMaxValueError, InterfaceNoSupported
 
 from ..motor import InterfacePWM
 
@@ -102,7 +101,7 @@ class MotorServo(MotorBase):
 
 
     def __degrees2dutycycle__(self, degrees):
-        if any(x is None for x in self._angles) and any(x is None for x in self._pulses):
+        if None in self._angles or None in self._pulses:
             raise Exception('The "minimum" and "maximum" values of angles and pulses must be defined')
 
         if degrees < self._angles[0] or degrees > self._angles[1]:
@@ -132,7 +131,8 @@ class MotorServo(MotorBase):
 
 
     def set_speed(self, speed):
-        """ Allows define the time it takes the servo to move a degrees, this parameter depends on the design/voltage of the servo """
+        """ Allows define the time it takes the servo to move a degrees, this parameter
+            depends on the design/voltage of the servo. """
 
         if not isinstance(speed, (int, long, float)):
             raise InvalidTypeError('The speed for degrees', 'numeric')
@@ -208,17 +208,17 @@ class MotorServo(MotorBase):
 
 
     def backward(self):
-        """ Move the servo to minimun angle """
+        """ Move the servo to minimun angle. """
         self._worker.start(args=(self.__pulses2dutycycle__(self._pulses[0]), self.__degrees2time__(self._angles[1])))
 
 
     def forward(self):
-        """ Move the servo to maximum angle """
+        """ Move the servo to maximum angle. """
         self._worker.start(args=(self.__pulses2dutycycle__(self._pulses[1]), self.__degrees2time__(self._angles[1])))
 
 
     def angle_to(self, degrees):
-        """ Move the servo to a specific angle """
+        """ Move the servo to a specific angle. """
 
         if any(x is None for x in self._angles):
             raise Exception('The "minimum" and "maximum" values of angles must be defined')

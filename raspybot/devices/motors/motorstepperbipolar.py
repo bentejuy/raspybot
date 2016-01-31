@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         MotorStepperBipolar
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      07/01/2015
-# Modified:     11/26/2015
-# Version:      0.0.73
+# Modified:     01/31/2016
+# Version:      0.0.75
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         interfacegpio
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/29/2016
-# Version:      0.0.89
+# Modified:     01/31/2016
+# Version:      0.0.93
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,15 +27,9 @@
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import logging
-
 from ..interface import TaskGPIO
 from ..interface import InterfaceActive
 from ..interface import InvalidTypeError
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-logger = logging.getLogger(__name__)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -63,8 +55,6 @@ class InterfaceGPIO(InterfaceActive):
 
         self._pinin  = []
         self._pinout = []
-
-        self._bus = manager.get_connection(self)
 
         if pinout:
             self.setup(pinout, self._bus.OUT)
@@ -96,21 +86,18 @@ class InterfaceGPIO(InterfaceActive):
 
                 return task.set_state(task.RUNNING)
 
-            if state == task.CONSTANT:
+            elif state == task.CONSTANT:
                 self.__write__(task.data)
 
                 return 0
 
-            if state >= task.STOPPED:
+            elif state >= task.STOPPED:
                 self.__write__(0)
 
                 return 0
 
-            if state == task.RUNNING:
+            elif state == task.RUNNING:
                 return 0
-
-        else:
-            pass
 
         return 0
 

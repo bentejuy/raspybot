@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         interfacei2c
@@ -8,7 +6,7 @@
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
 # Modified:     01/30/2016
-# Version:      0.0.81
+# Version:      0.0.83
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -327,7 +325,7 @@ class InterfaceI2CMaster(InterfaceActive):
 
 
     def free(self):
-        """  """
+        """ Frees all interfaces slaves and close the I2C bus. """
 
         try:
             self.stop()
@@ -363,5 +361,5 @@ class InterfaceI2CMaster(InterfaceActive):
             if not self.alive():
                 super(self.__class__, self).start()
         else:
-            logger.critical('Error, adding a not valid task to I2C master interface')
+            logger.critical('Error adding a not valid task to I2C master interface')
 

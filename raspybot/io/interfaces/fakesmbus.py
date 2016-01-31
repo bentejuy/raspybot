@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -+- coding: utf-8 -+-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Name:         fakesmbus
@@ -7,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      12/07/2015
-# Modified:     12/07/2015
-# Version:      0.0.03
+# Modified:     01/24/2016
+# Version:      0.0.07
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -44,7 +42,6 @@ logger = logging.getLogger(__name__)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 FAKE = True
-
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -84,6 +81,7 @@ class SMBus(object):
 
         return 0
 
+
     def write_byte(self, addr, val):
         logger.debug('Writing a byte on I2C bus {0:#X}, value => {1}'.format(addr, val))
 
@@ -92,6 +90,7 @@ class SMBus(object):
         logger.debug('Reading a byte data transaction on I2C bus {0:#X} :: cmd => {1}'.format(addr, cmd))
 
         return 0
+
 
     def write_byte_data(self, addr, cmd, val):
         logger.debug('Writing a byte data transaction on I2C bus {0:#X} :: cmd => {1} :: value => {2}'.format(addr, cmd, val))
@@ -118,6 +117,7 @@ class SMBus(object):
 
         return 0
 
+
     def write_block_data(self, addr, cmd, vals):
         logger.debug('Writing a block data transaction on I2C bus {0:#X} :: cmd => {1} :: value => {2}'.format(addr, cmd, vals))
 
@@ -141,6 +141,7 @@ class SMBus(object):
     @property
     def pec(self):
         return self._pec
+
 
     @pec.setter
     def pec(self, value):
