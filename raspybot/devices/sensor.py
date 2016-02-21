@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/16/2016
-# Modified:     01/31/2016
-# Version:      0.0.11
+# Modified:     02/15/2016
+# Version:      0.0.13
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -33,5 +33,6 @@ from ..io.interface import InterfaceI2CSlave
 from ..core.exceptions import InvalidFunctionError, InterfaceNoSupported, OutRangeError
 
 from .sensors.bmp180 import BMP180
+from .sensors.hmc5883l import HMC5883L
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
