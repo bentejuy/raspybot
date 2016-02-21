@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     01/31/2016
-# Version:      0.0.65
+# Modified:     02/11/2016
+# Version:      0.0.69
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -29,6 +29,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 import time
+import logging
 
 from ..logic import Worker
 from ..logic import ActionDevice
@@ -37,6 +38,10 @@ from ..logic import OutRangeError, InvalidFunctionError, InvalidTypeError, \
 
 from ..logic import InterfaceGPIO
 from ..logic import InterfaceI2CSlave
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+logger = logging.getLogger(__name__)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -84,26 +89,23 @@ class Blinker(ActionDevice):
         self._counter = 0
 
         while not self._worker.is_set():
-            try:
-                self.__write__(self._value)
+            self.__write__(self._value)
 
-                if not self._checker:
-                    self._value = ~self._value & 0xFF
-                else:
-                    try:
-                        self._value = self._checker(self._value, self._counter)
-                        self._counter += 1
+            if not self._checker:
+                self._value = ~self._value & 0xFF
+            else:
+                try:
+                    self._value = self._checker(self._value, self._counter)
+                    self._counter += 1
 
-                    except:
-                        self.stop()
-
-                self._worker.wait(self._delay)
-
-                if timelive and timelive <= time.time():
+                except Exception as error:
                     self.stop()
+                    logger.error(error)
 
-            except Exception as error:
-                logger.critical(error)
+            self._worker.wait(self._delay)
+
+            if timelive and timelive <= time.time():
+                self.stop()
 
         self.action_stop()
 
