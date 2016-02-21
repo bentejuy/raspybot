@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/16/2016
-# Modified:     01/31/2016
-# Version:      0.0.35
+# Modified:     02/17/2016
+# Version:      0.0.39
 # Copyright:
 # Licence:      GLPv3
 #
@@ -102,9 +102,11 @@ class BMP180(Device):
         elif comm == self.CALIBRATION:
             self._cald = unpack('>hhhHHHhhhhh', pack(''.rjust(22, 'B'), *data))
 
-
         elif comm == self.MEASURES:
             if self._reading == self.PRESSURE:
+                if isinstance(data, int):
+                    return
+
                 data.reverse()
                 raw = unpack('i', pack('BBB', *data) + '\x00')[0] >> (8 - self._mode)
 
@@ -214,4 +216,8 @@ class BMP180(Device):
             self.update(True, True)
             sleep(0.01)
 
-        return round(44330.0 * (1.0 - pow(self._pres / sealevelpressure, 0.190294)), 2)
+        if not self._pres is None:
+            return round(44330.0 * (1.0 - pow(self._pres / sealevelpressure, 0.190294)), 2)
+
+        return None
+
