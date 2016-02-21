@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      11/29/2015
-# Modified:     01/24/2016
-# Version:      0.0.59
+# Modified:     02/08/2016
+# Version:      0.0.63
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -108,9 +108,9 @@ class LiquidCrystal(Device):
         self._part.write(char, col, row)
 
 
-    def writeln(self, text):
+    def writeln(self, text, line=None):
         """ """
-        self._part.writeln(text)
+        self._part.writeln(text, line)
 
 
     def set_cursor(self, enable, blink=True):

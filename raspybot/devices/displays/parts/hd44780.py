@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      12/28/2015
-# Modified:     01/31/2016
-# Version:      0.0.67
+# Modified:     02/08/2016
+# Version:      0.0.73
 # Copyright:
 # Licence:      GLPv3
 #
@@ -14,6 +14,8 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from time import sleep
+
+from ...display import OutRangeError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -51,6 +53,8 @@ class HD44780(object):
         self.__write__(*self.__command__(self.TURN_OFF))
         self.__write__(*self.__command__(self.CLEAR_DISPLAY))
         self.__write__(*self.__command__(self.ENTRY_MODE))
+
+        self.set_cursor(False, False)
 
 
     def __command__(self, cmd):
@@ -191,6 +195,12 @@ class HD44780(object):
 
 
     def goto(self, col, row):
+        if col < 0 or col > self._cols:
+            raise OutRangeError('col parameter', col)
+
+        if row < 0 or row > self._rows:
+            raise OutRangeError('row parameter', row)
+
         cmd, flags, timeout = self.__command__(self.CURSOR_TO)
         cmd |= self.__row_offset__(col, row)
 
@@ -204,7 +214,10 @@ class HD44780(object):
         self.__write__(ord(char), 0x01, 0.0005)
 
 
-    def writeln(self, text):
+    def writeln(self, text, line=None):
+        if not line is None:
+            self.goto(0, line)
+
         for char in text:
             if char == '\n':
                 self.__write__(0xC0, 0, 0.0005)
@@ -221,5 +234,12 @@ class HD44780(object):
 
     def set_backlight(self, on):
         self._light = 0x08 if on else 0
-
         self.__write__(*self.__command__(self.TURN_ON))
+
+
+    def get_cols(self):
+        return self._cols
+
+
+    def get_rows(self):
+        return self._rows
