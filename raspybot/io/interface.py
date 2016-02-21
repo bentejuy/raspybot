@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/29/2016
-# Version:      0.0.85
+# Modified:     02/21/2016
+# Version:      0.0.89
 # Copyright:    (c) 2015 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -52,19 +52,21 @@
 """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+from ..utils import logger
+
 try:
     import RPi.GPIO as gpio
 
 except ImportError:
     from .interfaces import fakegpio as gpio
-#    logger.warn('Initializing "InterfaceManager" in debug mode because RPi.GPIO module was not found')
+    logger.warn('Initializing "InterfaceManager" in debug mode because RPi.GPIO module was not found')
 
 try:
     import smbus
 
 except ImportError:
     from .interfaces import fakesmbus as smbus
-#    logger.warn('Error importing the "smbus" module, using the "fakesmbus" module  by default')
+    logger.warn('Error importing the "smbus" module, using the "fakesmbus" module  by default')
 
 
 from .task import TaskPWM
