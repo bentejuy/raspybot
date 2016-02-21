@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     01/30/2016
-# Version:      0.0.83
+# Modified:     02/19/2016
+# Version:      0.0.85
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -78,6 +78,7 @@ class InterfaceI2CSlave(InterfaceSlave):
     def __failure__(self, task):
         if self._failure:
             self._failure(task.address, task.comm, task.data)
+
         else:
             logger.error(task)
 
@@ -361,5 +362,5 @@ class InterfaceI2CMaster(InterfaceActive):
             if not self.alive():
                 super(self.__class__, self).start()
         else:
-            logger.critical('Error adding a not valid task to I2C master interface')
+            logger.warn('Error adding a not valid task to I2C master interface')
 

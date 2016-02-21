@@ -16,11 +16,11 @@ logger = logging.getLogger(__name__)
 def timeit(method):
     def timed(*args, **kwargs):
         ts = time.time()
-        result = method(*args, **kwargs)
+        rs = method(*args, **kwargs)
         te = time.time()
 
         logger.debug('{0!r} ({1!r}, {2!r}) :: {3:2.5f}'.format(method.__name__, args, kwargs, te - ts))
 
-        return result
+        return rs
 
     return timed

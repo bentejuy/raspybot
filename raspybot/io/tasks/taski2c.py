@@ -7,9 +7,9 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/29/2015
-# Modified:     12/23/2015
-# Version:      0.0.27
-# Copyright:    (c) 2015 Bentejuy Lopez
+# Modified:     02/08/2016
+# Version:      0.0.29
+# Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -73,4 +73,4 @@ class TaskI2C(Task):
 
 
     def __str__(self):
-        return '{} => action: {} :: data: {} :: address: {:#x} :: comm: {:#x} :: started: {}'.format(self.__class__, self.action, self.data, self.address, self.comm, self._started)
+        return '{} => action: {} :: data: {} :: address: {:#x} :: comm: {:#x} :: started: {}'.format(self.__class__, self.action, self.data, self.address, 0 if self.comm is None else self.comm, self._started)

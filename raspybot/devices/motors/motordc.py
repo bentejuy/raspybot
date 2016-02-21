@@ -82,7 +82,7 @@ class MotorDC(MotorBase):
     GPIO_REVERSIBLE, \
     PWM_SIMPLE, \
     PWM_REVERSIBLE, \
-    ADV_REVERSIBLE = range(5);
+    ADV_REVERSIBLE = range(5)
 
     def __init__(self, iface, mode=0, frequency=100, dutycycle=100, name=None, start=None, stop=None):
 

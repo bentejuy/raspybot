@@ -1,2 +1,2 @@
 
-__all__ = ('timeit')
+__all__ = ('logger', 'timeit')
