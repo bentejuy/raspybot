@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/31/2016
-# Version:      0.0.93
+# Modified:     03/29/2016
+# Version:      0.0.99
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -124,12 +124,14 @@ class InterfaceGPIO(InterfaceActive):
             if mode == self._bus.IN:
                 if pin in self._pinout:
                     self._pinout.remove(pin)
+
                 if pin not in self._pinin:
                     self._pinin.append(pin)
 
             else:
                 if pin in self._pinin:
                     self._pinin.remove(p)
+
                 if pin not in self._pinout:
                     self._pinout.append(pin)
 
@@ -156,19 +158,27 @@ class InterfaceGPIO(InterfaceActive):
         """ Stops all pending writes and sets all channel to zero. """
 
         super(self.__class__, self).stop()
-        super(self.__class__, self).append(TaskGPIO(TaskGPIO.GPIO_STOP))
+        self.append(TaskGPIO(TaskGPIO.GPIO_STOP))
 
         if not self.alive():
-            super(self.__class__, self).start()
+            self.start()
+
+    def read(self, pin):
+        """ Reads the state of a pin, return False on error. """
+
+        if pin in self._pinin:
+            return self._bus.input(pin)
+
+        return False
 
 
     def write(self, data, timeout=-1):
         """ Adds a binary value to the queue to write in the output channels. """
 
-        super(self.__class__, self).append(TaskGPIO(TaskGPIO.GPIO_WRITE, data, timeout))
+        self.append(TaskGPIO(TaskGPIO.GPIO_WRITE, data, timeout))
 
         if not self.alive():
-            super(self.__class__, self).start()
+            self.start()
 
 
     def write_quick(self, data):

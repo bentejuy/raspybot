@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      10/26/2015
-# Modified:     02/19/2016
-# Version:      0.0.85
+# Modified:     03/13/2016
+# Version:      0.0.87
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -279,7 +279,6 @@ class InterfaceI2CMaster(InterfaceActive):
             self.__response__(TaskI2C.WRITE_ERROR, task, error)
 
 
-
     def __parser__(self, task):
         if task.action < TaskI2C.QUERY:
             self.__read__(task)
@@ -312,7 +311,7 @@ class InterfaceI2CMaster(InterfaceActive):
         super(self.__class__, self).append(task)
 
         if not self.alive():
-            super(self.__class__, self).start()
+            self.start()
 
 
     def __failure__(self, action, task, error):
@@ -322,7 +321,7 @@ class InterfaceI2CMaster(InterfaceActive):
         super(self.__class__, self).append(task)
 
         if not self.alive():
-            super(self.__class__, self).start()
+            self.start()
 
 
     def free(self):
@@ -360,7 +359,8 @@ class InterfaceI2CMaster(InterfaceActive):
             super(self.__class__, self).append(task)
 
             if not self.alive():
-                super(self.__class__, self).start()
+                self.start()
+
         else:
             logger.warn('Error adding a not valid task to I2C master interface')
 
