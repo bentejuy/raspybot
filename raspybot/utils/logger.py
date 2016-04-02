@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      02/19/2016
-# Modified:     02/19/2016
-# Version:      0.0.03
+# Modified:     03/27/2016
+# Version:      0.0.07
 # Copyright:    (c) 2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -32,12 +32,12 @@ import logging
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-log = logging.getLogger()
-log.setLevel(logging.DEBUG if __debug__ else logging.WARNING)
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG if __debug__ else logging.WARNING)
 
-if not log.handlers:
+if not logger.handlers:
     hld = logging.StreamHandler(sys.stdout)
     hld.setLevel(logging.DEBUG if __debug__ else logging.WARNING)
     hld.setFormatter(logging.Formatter('%(levelname)s :: %(name)s [%(lineno)d] => %(message)s'))
 
-    log.addHandler(hld)
+    logger.addHandler(hld)
