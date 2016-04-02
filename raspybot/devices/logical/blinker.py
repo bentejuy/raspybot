@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      03/13/2015
-# Modified:     02/11/2016
-# Version:      0.0.69
+# Modified:     03/27/2016
+# Version:      0.0.73
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -93,6 +93,7 @@ class Blinker(ActionDevice):
 
             if not self._checker:
                 self._value = ~self._value & 0xFF
+
             else:
                 try:
                     self._value = self._checker(self._value, self._counter)
@@ -154,11 +155,11 @@ class Blinker(ActionDevice):
     def set_value(self, value):
         """ Sets the value that stored by the Blinker object. """
 
-        if not isinstance(value, (int, long, float)):
-            raise InvalidTypeError('The delay', 'numeric')
+        if not isinstance(value, int):
+            raise InvalidTypeError('The value', 'integer')
 
         if self._worker.alive():
-            raise IsRunningError(self.__class__, 'delay')
+            raise IsRunningError(self.__class__, 'value')
 
         if value < 0x00 and value > 0xFF:
             raise OutRangeError('The initial value')
