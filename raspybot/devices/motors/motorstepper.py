@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/31/2016
-# Version:      0.0.89
+# Modified:     02/28/2016
+# Version:      0.0.93
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -81,7 +81,7 @@ class MotorStepper(MotorBase):
                     steps -= 1
 
                 elif steps == 0:
-                    break
+                    self._worker.set()
 
                 if self._worker.is_set():
                     break
@@ -96,7 +96,7 @@ class MotorStepper(MotorBase):
                     steps -= 1
 
                 elif steps == 0:
-                    break;
+                    self._worker.set()
 
                 if self._worker.is_set():
                     break
