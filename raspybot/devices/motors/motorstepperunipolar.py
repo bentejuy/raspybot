@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      01/07/2015
-# Modified:     01/31/2016
-# Version:      0.0.79
+# Modified:     02/28/2016
+# Version:      0.0.81
 # Copyright:    (c) 2015-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -119,7 +119,7 @@ class MotorStepperUnipolar(MotorStepper):
 
 
     def set_mode(self, mode):
-        """ """
+        """ Sets the working mode of the stepper motor. """
 
         if not isinstance(mode, (int, long)):
             raise InvalidTypeError('Mode' , 'motor mode')

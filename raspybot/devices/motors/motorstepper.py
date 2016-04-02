@@ -118,7 +118,7 @@ class MotorStepper(MotorBase):
 
 
     def stop(self):
-        """  """
+        """ Stops the motor. """
 
         if self._worker.alive():
             self.__write__(0)
@@ -126,12 +126,12 @@ class MotorStepper(MotorBase):
 
 
     def join(self):
-        """  """
+        """ Waits until the last action terminates or until the "stop" function is called. """
         self._worker.join()
 
 
     def alive(self):
-        """  """
+        """ Checks if the motor is alive. """
         return self._worker.alive()
 
 
@@ -151,7 +151,7 @@ class MotorStepper(MotorBase):
 
 
     def set_speed(self, rpm):
-        """  """
+        """ Defines the motor rotation speed in RPM.. """
 
         if self._worker.alive():
             raise IsRunningError(self.__class__, 'speed')
@@ -163,7 +163,8 @@ class MotorStepper(MotorBase):
 
 
     def set_degrees(self, degrees):
-        """  """
+        """ Defines the degrees per step declared by the manufacturer, necessary for a correct operation
+            when it comes to moving the motor by degrees. """
 
         if self._worker.alive():
             raise IsRunningError(self.__class__, 'degrees per step')
@@ -203,5 +204,6 @@ class MotorStepper(MotorBase):
 
         if degrees > 0:
             self.forward(degrees=degrees)
+
         elif degrees < 0:
             self.backward(degrees=degrees * -1)

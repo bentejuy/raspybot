@@ -5,8 +5,8 @@
 #
 # Author:       Bentejuy Lopez
 # Created:      04/17/2013
-# Modified:     01/29/2016
-# Version:      0.2.07
+# Modified:     02/28/2016
+# Version:      0.2.11
 # Copyright:    (c) 2013-2016 Bentejuy Lopez
 # Licence:      GLPv3
 #
@@ -81,22 +81,22 @@ class Worker(object):
 
 
     def set(self):
-        """  """
+        """ Enable internal flag. """
         self._event.set()
 
 
     def clear(self):
-        """  """
+        """ Disable internal flag. """
         self._event.clear()
 
 
     def wait(self, delay=None):
-        """  """
+        """ Waits until the "set" function is called or the seconds defined in the delay parameter. """
         return self._event.wait(delay)
 
 
     def is_set(self):
-        """  """
+        """ Returns True if the "set" function was called. """
         return self._event.is_set()
 
 
@@ -159,6 +159,7 @@ class WorkerTask(Worker):
                     self._queue.task_done()
                     self._event.wait(self._delay)
 
+
     def start(self):
         """ Start the worker."""
         super(WorkerTask, self).start(())
@@ -184,4 +185,3 @@ class WorkerTask(Worker):
 
         for task in tasks:
             self._queue.put(task)
-

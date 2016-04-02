@@ -108,4 +108,3 @@ class ActionDevice(Device):
 
         if self._on_stop:
             self._on_stop(self)
-
